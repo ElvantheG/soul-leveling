@@ -49,7 +49,7 @@ input,select,textarea{font-family:inherit;}
 .anim-glow{animation:glow-pulse 2s infinite;}
 
 /* Header */
-.header{padding:20px 0 14px;text-align:center;animation:fadeIn .5s ease;}
+.header{padding:28px 0 14px;text-align:center;animation:fadeIn .5s ease;}
 .header-sub{font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:3px;font-weight:700;}
 .header-title{font-size:20px;font-weight:800;color:var(--text-bright);margin-top:2px;}
 .header-xp{max-width:280px;margin:10px auto 0;}
@@ -286,8 +286,7 @@ input,select,textarea{font-family:inherit;}
 .jhana-level.active{background:linear-gradient(90deg,var(--accent),var(--accent-light));box-shadow:0 0 6px rgba(123,104,238,.4);}
 
 /* Date Banner */
-.date-banner{text-align:center;padding:6px 0 2px;font-size:12px;color:var(--text-dim);}
-.date-banner strong{color:var(--gold-light);font-weight:700;}
+/* date-banner removed — date now only in day navigator */
 
 /* Notif */
 .notif-wrap{position:fixed;top:80px;left:50%;transform:translateX(-50%);width:90%;max-width:480px;z-index:900;pointer-events:none;display:flex;flex-direction:column;gap:8px;}
@@ -803,14 +802,48 @@ const BOSS_TEMPLATES = [
 
 // ── Random Events ──
 const RANDOM_EVENTS = [
-  {title:"Bonus Dungeon!",desc:"Ring en gammel kontakt og f\u00F8lg op",xp:80,icon:"\uD83D\uDDDD\uFE0F",category:"business"},
-  {title:"Hemmelig Quest!",desc:"Tag 100 pushups fordelt over dagen",xp:60,icon:"\uD83C\uDF1F",category:"fitness"},
-  {title:"Mystisk Portal!",desc:"20 min ekstra meditation i dag",xp:50,icon:"\uD83C\uDF00",category:"mind"},
-  {title:"Skovens Kald!",desc:"30 min walk i naturen uden telefon",xp:55,icon:"\uD83C\uDF33",category:"activation"},
-  {title:"Handelsguden!",desc:"Skriv 5 ekstra DMs til potentielle leads",xp:70,icon:"\u26A1",category:"business"},
-  {title:"Den Glemte Rune!",desc:"L\u00E6s 20 sider i en bog",xp:45,icon:"\uD83D\uDCDA",category:"mind"},
-  {title:"Krigerens Pr\u00F8ve!",desc:"Cold shower + 50 squats",xp:75,icon:"\uD83D\uDD25",category:"fitness"},
-  {title:"Stjerneregn!",desc:"Skriv 3 ting du er taknemlig for",xp:35,icon:"\u2728",category:"mind"},
+  {title:"Bonus Dungeon!",icon:"\uD83D\uDDDD\uFE0F",category:"business",xp:80,tasks:[
+    "Ring en gammel kontakt og f\u00F8lg op",
+    "Send 3 ekstra DMs til leads",
+    "Skriv et presell-post til social media",
+    "Gennemg\u00E5 din pipeline og prioriter top 3",
+    "Book \u00E9t opf\u00F8lgningsm\u00F8de"
+  ]},
+  {title:"Krigerens Pr\u00F8ve!",icon:"\uD83D\uDD25",category:"fitness",xp:75,tasks:[
+    "Tag 50 pushups",
+    "Tag 50 squats",
+    "Hold en 2-min plank",
+    "Tag en cold shower (30 sek+)",
+    "Str\u00E6k ud i 10 min"
+  ]},
+  {title:"Mystisk Portal!",icon:"\uD83C\uDF00",category:"mind",xp:60,tasks:[
+    "20 min ekstra meditation",
+    "Skriv 3 ting du er taknemlig for",
+    "L\u00E6s 20 sider i en bog",
+    "5 min breathwork (box breathing)",
+    "Skriv et brev til dit fremtidige selv"
+  ]},
+  {title:"Skovens Kald!",icon:"\uD83C\uDF33",category:"activation",xp:55,tasks:[
+    "30 min walk i naturen uden telefon",
+    "St\u00E5 stille 2 min og m\u00E6rk kroppen",
+    "Tag 10 dybe \u00E5ndedrag udend\u00F8rs",
+    "Find 3 ting i naturen du aldrig har lagt m\u00E6rke til",
+    "Sid 5 min med lukkede \u00F8jne og lyt"
+  ]},
+  {title:"Handelsguden!",icon:"\u26A1",category:"business",xp:70,tasks:[
+    "Skriv 5 ekstra DMs til potentielle leads",
+    "Optim\u00E9r \u00E9t element af dit tilbud",
+    "Skriv en kundehistorie / testimonial",
+    "Research 3 nye potentielle kunder",
+    "Send en opf\u00F8lgning til en tipper"
+  ]},
+  {title:"Stjerneregn!",icon:"\u2728",category:"mind",xp:50,tasks:[
+    "Skriv 3 ting du er taknemlig for",
+    "Ring til \u00E9n du holder af og sig det",
+    "G\u00F8r noget uventet godt for en fremmed",
+    "Skriv ned: hvad ville du g\u00F8re uden frygt?",
+    "5 min stille refleksion over dagens mening"
+  ]},
 ];
 
 // ═══ STATE ═══
@@ -831,6 +864,7 @@ let S = {
     {id:6,title:"Split Activation Walk",description:"Gå en tur i naturen — aktiver dit split",period:"evening",category:"activation",xp:35,habit:{time:"17:00",place:"Udendørs",trigger:"Når arbejdsdagen slutter",twoMin:"Tag skoene på og gå ud ad døren",reward:"Stå stille og mærk energien",why:"Jeg lever i alignment med min energi. Jeg ærer mit design."},days:[1,2,3,4,5,6,0],active:true},
     {id:7,title:"Aftenrefleksion",description:"Journaling — hvad lærte du i dag?",period:"evening",category:"mind",xp:25,habit:{time:"21:00",place:"Soveværelset",trigger:"Når du lægger telefonen",twoMin:"Skriv én sætning om dagen",reward:"10 min stille læsning",why:"Jeg er en der reflekterer. Jeg vokser bevidst med hver dag."},days:[1,2,3,4,5,6,0],active:true},
     {id:8,title:"Aftenstræk",description:"10 min stretching / mobility",period:"evening",category:"fitness",xp:20,habit:{time:"21:30",place:"Stuen",trigger:"Efter journaling",twoMin:"Rul din yogamåtte ud",reward:"Varm te og afslapning",why:"Jeg passer på mit fartøj. Min krop fortjener omsorg."},days:[1,2,3,4,5,6,0],active:true},
+    {id:11,title:"Fotografér Måltider",description:"Tag billede af hvert måltid — vær bevidst om hvad du spiser",period:"midday",category:"fitness",xp:20,habit:{time:"12:00",place:"Køkkenet / hvor du spiser",trigger:"Før du tager første bid",twoMin:"Åbn kameraet og tag ét billede af tallerkenen",reward:"Spis med fuld tilstedeværelse",why:"Jeg ærer min krop med bevidst næring. Jeg observerer hvad jeg giver mit meatsuit."},days:[1,2,3,4,5,6,0],active:true},
   ],
   completedToday: {},
   completedDates: {},
@@ -865,6 +899,27 @@ let S = {
   meditationLog: [],
   jhanaLevel: 0,
   reminders: {},
+  // Identity & Vision
+  identityStatements: [],
+  visionGoal: '',
+  visionWhy: '',
+  // Daily Actions (non-recurring to-dos)
+  dailyActions: [],
+  dailyActionsDone: {},
+  // Embodied Pipeline
+  pipeline: [],
+  // Direction Review
+  directionReviews: [],
+  // Leadership Session
+  leadershipSession: null,
+  leadershipLog: [],
+  // Core 5 Scoreboard
+  coreQuests: [],
+  // Evening Review
+  eveningReviews: {},
+  // Goals
+  monthlyGoals: ['','',''],
+  weeklyGoals: ['','',''],
 };
 
 // ── Persistence (localStorage + Supabase Cloud Sync) ──
@@ -932,6 +987,16 @@ function load() {
   } catch(e) {}
   S._lastDay = todayStr;
   S._syncId = SYNC_ID;
+  // Migration: add midday habits for existing users who don't have them
+  if(!S.quests.find(q=>q.id===9)){
+    S.quests.push({id:9,title:"Bevidst Frokost",description:"Spis langsomt og nærværende — ingen skærm",period:"midday",category:"mind",xp:20,habit:{time:"12:00",place:"Køkkenet",trigger:"Når klokken er 12",twoMin:"Læg telefonen væk og tag første bid bevidst",reward:"5 min stille kaffe efter",why:"Jeg er nærværende i hvert øjeblik. Jeg ærer min krop med bevidst næring."},days:[1,2,3,4,5],active:true});
+  }
+  if(!S.quests.find(q=>q.id===10)){
+    S.quests.push({id:10,title:"Middagsvandring",description:"15 min frisk luft \u2014 g\u00E5 uden telefon",period:"midday",category:"activation",xp:25,habit:{time:"14:00",place:"Udend\u00F8rs",trigger:"Efter frokost og kaffe",twoMin:"Rejs dig op og tag skoene p\u00E5",reward:"M\u00E6rk energien i kroppen",why:"Jeg tanker op med bev\u00E6gelse og luft. Naturen genoplader min sj\u00E6l."},days:[1,2,3,4,5,6,0],active:true});
+  }
+  if(!S.quests.find(q=>q.id===11)){
+    S.quests.push({id:11,title:"Fotograf\u00E9r M\u00E5ltider",description:"Tag billede af hvert m\u00E5ltid \u2014 v\u00E6r bevidst om hvad du spiser",period:"midday",category:"fitness",xp:20,habit:{time:"12:00",place:"K\u00F8kkenet / hvor du spiser",trigger:"F\u00F8r du tager f\u00F8rste bid",twoMin:"\u00C5bn kameraet og tag \u00E9t billede af tallerkenen",reward:"Spis med fuld tilstedev\u00E6relse",why:"Jeg \u00E6rer min krop med bevidst n\u00E6ring. Jeg observerer hvad jeg giver mit meatsuit."},days:[1,2,3,4,5,6,0],active:true});
+  }
   save();
   // Also try to load from cloud (async — merges if cloud is newer)
   loadFromCloud(SYNC_ID).then(cloudState => {
@@ -1475,24 +1540,287 @@ function completeQuest(id) {
   save(); render();
 }
 
-function completeEvent() {
-  if (!S.currentEvent || !S.eventActive) return;
-  const e = S.currentEvent;
-  S.totalXp += e.xp;
-  S.categoryXp[e.category] += e.xp;
-  S.eventsCompleted = (S.eventsCompleted||0) + 1;
-  S.eventActive = false;
-  notify(`\uD83C\uDF1F Event Complete: ${e.title} +${e.xp} XP`, 'event');
-  if (S.soundOn) AudioFX.play('event');
-  showXpFloat(e.xp);
-  checkAchievements();
+function togglePastCompletion(qId, dateStr) {
+  if(!S.completedDates[dateStr]) S.completedDates[dateStr]=[];
+  const arr=S.completedDates[dateStr];
+  const idx=arr.indexOf(qId);
+  if(idx>=0) {
+    arr.splice(idx,1);
+    notify('Fjernet fra '+dateStr,'xp');
+  } else {
+    arr.push(qId);
+    if(S.soundOn) AudioFX.play('complete');
+    notify('\u2713 Rettet for '+dateStr,'xp');
+  }
+  save(); if(document.getElementById('month-habit-modal')) openMonthHabitModal(_monthModalQuestId); else render();
+}
+
+// ═══ MONTH HABIT MODAL — large tappable date grid ═══
+let _monthModalQuestId=null;
+function openMonthHabitModal(qId) {
+  _monthModalQuestId=qId;
+  const q=S.quests.find(x=>x.id===qId);
+  if(!q) return;
+  const now=new Date();
+  const year=now.getFullYear(), month=now.getMonth();
+  const daysInMonth=new Date(year,month+1,0).getDate();
+  const _mn=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];
+  const _dn=['Søn','Man','Tir','Ons','Tor','Fre','Lør'];
+  const todayD=now.getDate();
+
+  let html='';
+  html+='<div class="modal-overlay" onclick="closeMonthHabitModal()" style="z-index:1100">';
+  html+='<div onclick="event.stopPropagation()" style="background:linear-gradient(135deg,var(--bg-card),var(--bg));border-radius:18px;padding:20px;border:2px solid rgba(212,163,64,.35);max-width:360px;width:92%;max-height:85vh;overflow-y:auto">';
+
+  // Header
+  const cat=getCat(q.category);
+  const emoji=q.emoji||cat.icon;
+  html+='<div style="text-align:center;margin-bottom:14px">';
+  html+='<div style="font-size:28px">'+emoji+'</div>';
+  html+='<div style="font-size:15px;font-weight:800;color:var(--gold-light)">'+q.title+'</div>';
+  html+='<div style="font-size:11px;color:var(--text-dim)">'+_mn[month]+' '+year+' — tryk for at rette</div>';
+  html+='</div>';
+
+  // Day-of-week headers
+  html+='<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:4px">';
+  ['Man','Tir','Ons','Tor','Fre','Lør','Søn'].forEach(function(d){
+    html+='<div style="text-align:center;font-size:9px;font-weight:700;color:var(--text-dim);padding:2px 0">'+d+'</div>';
+  });
+  html+='</div>';
+
+  // Calendar grid — start on correct weekday (Mon=0)
+  html+='<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px">';
+  var firstDay=new Date(year,month,1).getDay();
+  var startOffset=(firstDay===0?6:firstDay-1); // Mon-based offset
+  for(var e=0;e<startOffset;e++){
+    html+='<div></div>';
+  }
+
+  for(var day=1;day<=daysInMonth;day++){
+    var d=new Date(year,month,day);
+    var ds=d.toISOString().slice(0,10);
+    var isToday=(day===todayD);
+    var scheduled=q.days.includes(d.getDay());
+    var isPast=d<new Date(year,month,todayD);
+    var isFuture=day>todayD;
+    var wasDone=false;
+    if(isToday){ wasDone=!!S.completedToday[q.id]; }
+    else { wasDone=(S.completedDates[ds]||[]).includes(q.id); }
+
+    if(!scheduled){
+      // Not scheduled — dim dot
+      html+='<div style="text-align:center;padding:8px 2px;font-size:10px;color:var(--text-dim);opacity:.3;border-radius:8px">'+day+'</div>';
+    } else if(isFuture){
+      // Future — neutral
+      html+='<div style="text-align:center;padding:8px 2px;font-size:12px;color:var(--text-dim);border-radius:8px;border:1px solid rgba(255,255,255,.05)">'+day+'</div>';
+    } else {
+      // Past or today — tappable
+      var bg=wasDone?'rgba(78,205,196,.18)':'rgba(232,93,74,.1)';
+      var border=wasDone?'rgba(78,205,196,.5)':'rgba(232,93,74,.3)';
+      var color=wasDone?'var(--success)':'var(--danger)';
+      var icon=wasDone?'✓':'✗';
+      var clickFn=isToday?'completeQuest('+q.id+')':'togglePastCompletion('+q.id+',\''+ds+'\')';
+      html+='<div onclick="'+clickFn+'" style="text-align:center;padding:6px 2px;border-radius:8px;cursor:pointer;background:'+bg+';border:1.5px solid '+border+';transition:all .15s';
+      if(isToday) html+=';box-shadow:0 0 8px rgba(212,163,64,.3)';
+      html+='">';
+      html+='<div style="font-size:13px;font-weight:700;color:'+color+'">'+icon+'</div>';
+      html+='<div style="font-size:10px;color:'+(isToday?'var(--gold)':'var(--text-dim)')+'">'+day+'</div>';
+      html+='</div>';
+    }
+  }
+  html+='</div>';
+
+  // Stats summary
+  var totalScheduled=0, totalDone=0;
+  for(var day2=1;day2<=Math.min(todayD,daysInMonth);day2++){
+    var d2=new Date(year,month,day2);
+    if(!q.days.includes(d2.getDay())) continue;
+    totalScheduled++;
+    var ds2=d2.toISOString().slice(0,10);
+    if(day2===todayD){ if(S.completedToday[q.id]) totalDone++; }
+    else { if((S.completedDates[ds2]||[]).includes(q.id)) totalDone++; }
+  }
+  var pct=totalScheduled?Math.round(totalDone/totalScheduled*100):0;
+  html+='<div style="text-align:center;margin-top:14px;padding:10px;background:rgba(212,163,64,.06);border-radius:10px">';
+  html+='<span style="font-size:20px;font-weight:800;color:'+(pct>=80?'var(--success)':pct>=50?'var(--gold-light)':'var(--danger)')+'">'+pct+'%</span>';
+  html+='<span style="font-size:11px;color:var(--text-dim);margin-left:8px">'+totalDone+'/'+totalScheduled+' dage denne måned</span>';
+  html+='</div>';
+
+  // Close button
+  html+='<button onclick="closeMonthHabitModal()" style="width:100%;margin-top:12px;padding:10px;background:rgba(212,163,64,.1);border:1px solid rgba(212,163,64,.2);border-radius:10px;color:var(--gold-light);font-weight:700;font-size:13px;cursor:pointer">Luk</button>';
+  html+='</div></div>';
+
+  // Inject without full re-render
+  var existing=document.getElementById('month-habit-modal');
+  if(existing) { existing.innerHTML=html; }
+  else {
+    var div=document.createElement('div');
+    div.id='month-habit-modal';
+    div.innerHTML=html;
+    document.body.appendChild(div);
+  }
+}
+
+function closeMonthHabitModal() {
+  _monthModalQuestId=null;
+  var el=document.getElementById('month-habit-modal');
+  if(el) el.remove();
+}
+
+function toggleDailyAction(id) {
+  if(!S.dailyActionsDone) S.dailyActionsDone={};
+  if(!S.dailyActionsDone[todayStr]) S.dailyActionsDone[todayStr]=[];
+  const arr=S.dailyActionsDone[todayStr];
+  const i=arr.indexOf(id);
+  if(i>=0) { arr.splice(i,1); }
+  else {
+    arr.push(id);
+    if(S.soundOn) AudioFX.play('complete');
+    celebrate();
+    notify('\u2705 Action done!','xp');
+  }
   save(); render();
+}
+
+function toggleBonusTask(idx) {
+  if(!S.eventTasksDone) S.eventTasksDone=[];
+  const i=S.eventTasksDone.indexOf(idx);
+  if(i>=0) S.eventTasksDone.splice(i,1);
+  else {
+    S.eventTasksDone.push(idx);
+    if(S.soundOn) AudioFX.play('complete');
+    celebrate();
+  }
+  // Check if all done
+  const e=S.currentEvent;
+  if(e && e.tasks && S.eventTasksDone.length>=e.tasks.length) {
+    S.totalXp += e.xp;
+    S.categoryXp[e.category] += e.xp;
+    S.eventsCompleted = (S.eventsCompleted||0) + 1;
+    S.eventActive = false;
+    S.eventTasksDone = [];
+    notify(`\u2B50 BONUS COMPLETE: ${e.title} +${e.xp} XP`, 'event');
+    if(S.soundOn) AudioFX.play('allclear');
+    showXpFloat(e.xp);
+    spawnConfetti();
+    checkAchievements();
+    S.view='dashboard';
+  }
+  save(); render();
+}
+
+function renderBonusEvent() {
+  const e=S.currentEvent;
+  if(!e||!S.eventActive) return `<div class="card" style="text-align:center;padding:40px"><div style="font-size:32px;margin-bottom:12px">\u2705</div><div style="color:var(--text-dim)">Ingen aktiv bonus lige nu</div><button class="biz-btn" style="margin-top:16px" onclick="setView('dashboard')">Tilbage</button></div>`;
+  if(!S.eventTasksDone) S.eventTasksDone=[];
+  const tasks=e.tasks||[];
+  const done=S.eventTasksDone.length;
+  const cat=getCat(e.category);
+  let h=`<div style="padding:16px 0">`;
+
+  // Header
+  h+=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+    <button style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-dim)" onclick="setView('dashboard')">\u2190</button>
+    <div style="flex:1"><div style="font-size:10px;color:var(--gold);text-transform:uppercase;letter-spacing:2px;font-weight:700">\u2B50 Bonus Event</div>
+    <div style="font-size:18px;font-weight:800;color:var(--text-bright)">${e.icon} ${e.title}</div></div>
+    <div style="text-align:right"><div style="font-size:18px;font-weight:800;color:var(--success)">+${e.xp} XP</div>
+    <div style="font-size:10px;color:${cat.color}">${cat.icon} ${cat.name}</div></div>
+  </div>`;
+
+  // Progress
+  const pct=tasks.length?Math.round(done/tasks.length*100):0;
+  h+=`<div class="card">
+    <div class="prog-hdr"><span class="prog-lbl">Bonus Fremskridt</span>
+    <span class="prog-pct" style="color:${pct===100?'var(--success)':'var(--gold-light)'}">${pct}%</span></div>
+    ${xpBar(done,tasks.length||1,pct===100?'#4ecdc4':'#d4a340')}
+    <div class="xp-text" style="text-align:left;margin-top:3px">${done} af ${tasks.length} tasks</div>
+  </div>`;
+
+  // Task checklist
+  h+=`<div style="display:flex;flex-direction:column;gap:8px">`;
+  tasks.forEach((task,idx)=>{
+    const isDone=S.eventTasksDone.includes(idx);
+    h+=`<div class="qi ${isDone?'done':''}" style="border-color:${isDone?'rgba(78,205,196,.3)':'rgba(212,163,64,.15)'}" onclick="toggleBonusTask(${idx})">
+      <div class="qi-check ${isDone?'done':''}" style="${isDone?'background:var(--success);border-color:var(--success)':'border-color:var(--gold)'}">
+        ${isDone?'<span style="color:#fff;font-size:14px;font-weight:800">\u2713</span>':''}
+      </div>
+      <div class="qi-body">
+        <div class="qi-title ${isDone?'done':''}">${task}</div>
+      </div>
+      <div class="qi-right">
+        <span style="font-size:16px">${isDone?'\u2705':'\u2B1C'}</span>
+      </div>
+    </div>`;
+  });
+  h+=`</div>`;
+
+  // Hint
+  h+=`<div style="text-align:center;margin-top:20px;font-size:11px;color:var(--text-dim);line-height:1.5">
+    Gennemf\u00F8r alle ${tasks.length} tasks for at f\u00E5 <strong style="color:var(--success)">+${e.xp} XP</strong> bonus!
+  </div>`;
+
+  h+=`</div>`;
+  return h;
 }
 
 function setView(v) { S.view=v; S.editingQuest=null; save(); render(); }
 function setSubView(v) { S.subView=v; render(); }
-function editQuest(q) { S.editingQuest=q?{...q,habit:{...q.habit},days:[...q.days]}:null; S.view="edit"; render(); }
+function editQuest(q, returnTo) { S.editingQuest=q?{...q,habit:{...q.habit},days:[...q.days]}:null; S._editReturnTo=returnTo||null; S.view="edit"; render(); }
 function toggleQuestActive(id) { const q=S.quests.find(x=>x.id===id); if(q)q.active=!q.active; save(); render(); }
+
+function saveEveningReview() {
+  const gratitude=(document.getElementById('er_gratitude')||{}).value||'';
+  const landed=(document.getElementById('er_landed')||{}).value||'';
+  const score=(document.getElementById('er_score')||{}).value||'';
+  if(!gratitude.trim() && !landed.trim() && !score) { notify('Udfyld mindst \u00E9t felt!','event'); return; }
+  if(!S.eveningReviews) S.eveningReviews={};
+  S.eveningReviews[todayStr]={ gratitude: gratitude.trim(), landed: landed.trim(), identityScore: score, timestamp: Date.now() };
+  const xpGain=20;
+  S.totalXp+=xpGain;
+  S.categoryXp.mind=(S.categoryXp.mind||0)+xpGain;
+  save();
+  if(S.soundOn) AudioFX.play('complete');
+  notify('\uD83C\uDF19 Aften-review gemt! +'+xpGain+'XP','xp');
+  render();
+}
+function renderGoalsSection() {
+  if(!S.monthlyGoals) S.monthlyGoals=['','',''];
+  if(!S.weeklyGoals) S.weeklyGoals=['','',''];
+  let h='';
+
+  // Monthly Goals
+  h+=`<div class="card" style="border-color:rgba(212,163,64,.2);margin-top:8px">
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px">
+      <span style="font-size:14px">\uD83C\uDFAF</span>
+      <span style="font-size:12px;font-weight:800;color:var(--gold-light);letter-spacing:0.5px">M\u00C5NEDSM\u00C5L</span>
+      <span style="font-size:9px;color:var(--text-dim);margin-left:auto">Hvad bygger jeg denne m\u00E5ned?</span>
+    </div>`;
+  for(let i=0;i<3;i++){
+    const val=S.monthlyGoals[i]||'';
+    h+=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+      <span style="font-size:11px;font-weight:800;color:var(--gold);width:18px;text-align:center">${i+1}</span>
+      <input class="fi" style="flex:1;font-size:12px;padding:6px 10px;border-color:rgba(212,163,64,.15)" value="${esc(val)}" placeholder="${['Prim\u00E6rt m\u00E5l...','Sekund\u00E6rt m\u00E5l...','Tredje m\u00E5l...'][i]}" onchange="S.monthlyGoals[${i}]=this.value;save()">
+    </div>`;
+  }
+  h+=`</div>`;
+
+  // Weekly Goals
+  h+=`<div class="card" style="border-color:rgba(123,104,238,.2)">
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px">
+      <span style="font-size:14px">\u26A1</span>
+      <span style="font-size:12px;font-weight:800;color:var(--accent-light);letter-spacing:0.5px">UGEM\u00C5L</span>
+      <span style="font-size:9px;color:var(--text-dim);margin-left:auto">Denne uges konkrete output</span>
+    </div>`;
+  for(let i=0;i<3;i++){
+    const val=S.weeklyGoals[i]||'';
+    h+=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+      <span style="font-size:11px;font-weight:800;color:var(--accent-light);width:18px;text-align:center">${i+1}</span>
+      <input class="fi" style="flex:1;font-size:12px;padding:6px 10px;border-color:rgba(123,104,238,.15)" value="${esc(val)}" placeholder="${['Vigtigste output...','N\u00E6ste output...','Tredje output...'][i]}" onchange="S.weeklyGoals[${i}]=this.value;save()">
+    </div>`;
+  }
+  h+=`</div>`;
+  return h;
+}
 function deleteQuest(id) { S.quests=S.quests.filter(q=>q.id!==id); S.view="quests"; save(); render(); }
 function dismissLevelUp() { S.showLevelUp=false; render(); }
 function toggleSound() { S.soundOn=!S.soundOn; save(); render(); }
@@ -1502,7 +1830,7 @@ function saveQuest(data) {
   const idx=S.quests.findIndex(q=>q.id===data.id);
   if(idx>=0) S.quests[idx]=data;
   else S.quests.push({...data,id:Date.now()});
-  S.view="quests"; S.editingQuest=null; save(); render();
+  S.view=S._editReturnTo||"quests"; S._editReturnTo=null; S.editingQuest=null; save(); render();
 }
 
 function toggleEditDay(d) {
@@ -1561,12 +1889,6 @@ function render() {
     </div></div>`;
   }
 
-  // Date Banner
-  const _now=new Date();
-  const _dayNames=['Søndag','Mandag','Tirsdag','Onsdag','Torsdag','Fredag','Lørdag'];
-  const _monthNames=['Januar','Februar','Marts','April','Maj','Juni','Juli','August','September','Oktober','November','December'];
-  h+=`<div class="date-banner">${_dayNames[_now.getDay()]} <strong>${_now.getDate()}. ${_monthNames[_now.getMonth()]} ${_now.getFullYear()}</strong></div>`;
-
   // Header with Rank
   const rank=getRank(lv);
   h+=`<div class="header">
@@ -1592,6 +1914,7 @@ function render() {
   else if(S.view==='character') h+=renderCharacter();
   else if(S.view==='quests') h+=renderManage();
   else if(S.view==='edit') h+=renderEditor();
+  else if(S.view==='bonus') h+=renderBonusEvent();
   else if(S.view==='stats') h+=renderStatsHub();
   else if(S.view==='settings') h+=renderSettings();
 
@@ -1603,55 +1926,259 @@ function render() {
   app.innerHTML=h;
 }
 
+// ── Date helpers for navigation ──
+if(!S.dashViewMode) S.dashViewMode='day';
+if(!S.dashOffset) S.dashOffset=0; // 0=today, -1=yesterday, etc
+function getDashDate(){ const d=new Date(); d.setDate(d.getDate()+S.dashOffset); return d; }
+function getDashDateStr(){ return getDashDate().toISOString().slice(0,10); }
+function questsForDate(d){ const dow=d.getDay(); return S.quests.filter(q=>q.days.includes(dow)&&q.active); }
+function isQuestDoneOnDate(qId,dateStr){ if(dateStr===todayStr) return !!S.completedToday[qId]; return (S.completedDates[dateStr]||[]).includes(qId); }
+
 // ── Dashboard ──
 function renderDashboard() {
-  const tq=todayQuests(), done=tq.filter(q=>S.completedToday[q.id]).length;
+  const isToday=(S.dashOffset===0);
+  const viewDate=getDashDate();
+  const viewDateStr=getDashDateStr();
+  const _dn=['S\u00F8n','Man','Tir','Ons','Tor','Fre','L\u00F8r'];
+  const _dnFull=['S\u00F8ndag','Mandag','Tirsdag','Onsdag','Torsdag','Fredag','L\u00F8rdag'];
+  const _mn=['Jan','Feb','Mar','Apr','Maj','Jun','Jul','Aug','Sep','Okt','Nov','Dec'];
+
+  // Quests & progress for view date
+  const tq=questsForDate(viewDate);
+  const done=tq.filter(q=>isQuestDoneOnDate(q.id,viewDateStr)).length;
   const pct=tq.length?Math.round(done/tq.length*100):0;
   let h='';
 
-  // System Banner (mini notification on dashboard)
+  // System Banner (always on top)
   const sysBanner = getSystemPrompt();
   if(sysBanner && !S.showSystemModal) {
     h+=`<div class="sys-banner" onclick="S.systemPrompt=getSystemPrompt();S.showSystemModal=true;if(S.soundOn)AudioFX.play('event');render()">
       <div class="sys-banner-icon">\uD83D\uDDA5\uFE0F</div>
       <div class="sys-banner-body"><div class="sys-banner-title">[SYSTEM] ${sysBanner.title}</div>
-        <div class="sys-banner-text">Tryk for at læse systembesked...</div></div></div>`;
+        <div class="sys-banner-text">Tryk for at l\u00E6se systembesked...</div></div></div>`;
   }
 
-  // Random Event Banner
+  // Bonus Event Banner
   if(S.eventActive && S.currentEvent) {
     const e=S.currentEvent;
-    h+=`<div class="event-banner" onclick="completeEvent()">
+    if(!S.eventTasksDone) S.eventTasksDone=[];
+    const eDone=S.eventTasksDone.length;
+    const eTotal=(e.tasks||[]).length||1;
+    h+=`<div class="event-banner" onclick="S.view='bonus';render()">
       <div class="event-icon">${e.icon}</div>
-      <div class="event-body"><div class="event-title">${e.title}</div><div class="event-desc">${e.desc}</div></div>
+      <div class="event-body"><div class="event-title">\u2B50 BONUS: ${e.title}</div><div class="event-desc">${eDone}/${eTotal} tasks \u2014 tryk for at \u00E5bne</div></div>
       <div class="event-xp">+${e.xp} XP</div></div>`;
   }
 
-  // Progress
-  h+=`<div class="card"><div class="prog-hdr"><span class="prog-lbl">Dagens Fremskridt</span>
-    <span class="prog-pct" style="color:${pct===100?'var(--success)':'var(--gold-light)'}">${pct}%</span></div>
-    ${xpBar(done,tq.length||1,pct===100?'#4ecdc4':'#d4a340')}
-    <div class="xp-text" style="text-align:left;margin-top:3px">${done} af ${tq.length} quests fuldført${pct===100?' \uD83C\uDF1F':''}</div></div>`;
+  // View mode toggle + day navigator grouped together
+  h+=`<div style="background:var(--bg-card);border-radius:12px;padding:8px;border:1px solid var(--border);margin-bottom:12px">`;
+  h+=`<div style="display:flex;gap:4px;margin-bottom:${S.dashViewMode==='day'?'8px':'0'}">
+    <button style="flex:1;padding:7px;border-radius:8px;border:none;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;${S.dashViewMode==='day'?'background:rgba(212,163,64,.2);color:var(--gold-light)':'background:transparent;color:var(--text-dim)'}" onclick="S.dashViewMode='day';S.dashOffset=0;render()">Dag</button>
+    <button style="flex:1;padding:7px;border-radius:8px;border:none;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;${S.dashViewMode==='week'?'background:rgba(212,163,64,.2);color:var(--gold-light)':'background:transparent;color:var(--text-dim)'}" onclick="S.dashViewMode='week';S.dashOffset=0;render()">Uge</button>
+    <button style="flex:1;padding:7px;border-radius:8px;border:none;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;${S.dashViewMode==='month'?'background:rgba(212,163,64,.2);color:var(--gold-light)':'background:transparent;color:var(--text-dim)'}" onclick="S.dashViewMode='month';S.dashOffset=0;render()">M\u00E5ned</button>
+  </div>`;
+  // Day navigator (only in day view)
+  if(S.dashViewMode==='day') {
+    h+=`<div style="display:flex;align-items:center;justify-content:center;gap:12px;padding:8px 0 4px;border-top:1px solid var(--border)">
+      <button style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-dim);padding:2px 8px" onclick="S.dashOffset--;save();render()">\u2190</button>
+      <div style="text-align:center;min-width:160px">
+        <div style="font-size:15px;font-weight:800;color:var(--text-bright)">${isToday?'I dag \u2014 '+_dnFull[viewDate.getDay()]:_dnFull[viewDate.getDay()]}</div>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:2px">${viewDate.getDate()}. ${_mn[viewDate.getMonth()]} ${viewDate.getFullYear()}</div>
+      </div>
+      <button style="background:none;border:none;font-size:20px;cursor:pointer;color:${isToday?'var(--border)':'var(--text-dim)'};padding:2px 8px" ${isToday?'disabled':''}onclick="S.dashOffset=Math.min(S.dashOffset+1,0);save();render()">\u2192</button>
+    </div>`;
+  }
+  h+=`</div>`;
 
-  // Stat Grid
-  h+=`<div class="stat-grid">${CATS.map(cat=>{
-    const xp=S.categoryXp[cat.id]||0,clv=getLevel(xp),cur=getXpIn(xp),nxt=getXpNext(xp);
-    const catTitle=cat.titles[Math.min(Math.floor(clv/10),cat.titles.length-1)];
-    const bestStreak=Math.max(0,...S.quests.filter(q=>q.category===cat.id).map(q=>S.questStreaks[q.id]||0));
-    return `<div class="stat-card" style="border:1px solid ${cat.color}33;box-shadow:0 0 12px ${cat.color}12">
-      <div class="stat-hdr"><span class="stat-nm" style="color:${cat.color}">${cat.icon} ${cat.name}</span><span class="stat-lv">Lv.${clv}</span></div>
-      ${xpBar(cur,nxt,cat.color,7)}
-      <div style="display:flex;justify-content:space-between;margin-top:4px">
-        <span class="stat-streak" style="color:${bestStreak>=7?'#ff6600':cat.color}">${bestStreak>0?'\uD83D\uDD25'+bestStreak:''}</span>
-        <span style="font-size:9px;color:var(--text-dim)">${catTitle}</span>
-      </div></div>`;
-  }).join('')}</div>`;
+  // ════ DAY VIEW ════
+  if(S.dashViewMode==='day') {
+    // Progress bar
+    h+=`<div class="card"><div class="prog-hdr"><span class="prog-lbl">${isToday?'Dagens':'Dags'} Fremskridt</span>
+      <span class="prog-pct" style="color:${pct===100?'var(--success)':'var(--gold-light)'}">${pct}%</span></div>
+      ${xpBar(done,tq.length||1,pct===100?'#4ecdc4':'#d4a340')}
+      <div class="xp-text" style="text-align:left;margin-top:3px">${done} af ${tq.length} quests${pct===100?' \uD83C\uDF1F':''}</div></div>`;
 
-  // Daily Quests
-  h+=`<div class="sec-title">\uD83D\uDCCB Daglige Quests</div>`;
-  h+=renderPeriod('Morgen','\uD83C\uDF05','morning');
-  h+=renderPeriod('Middag','\u2600\uFE0F','midday');
-  h+=renderPeriod('Aften','\uD83C\uDF19','evening');
+    // Stat grid (only for today)
+    if(isToday) {
+      h+=`<div class="stat-grid">${CATS.map(cat=>{
+        const catQuests=tq.filter(q=>q.category===cat.id);
+        const catDone=catQuests.filter(q=>S.completedToday[q.id]).length;
+        const catTotal=catQuests.length;
+        const catPct=catTotal?Math.round(catDone/catTotal*100):0;
+        const bestStreak=Math.max(0,...S.quests.filter(q=>q.category===cat.id).map(q=>S.questStreaks[q.id]||0));
+        const clv=getLevel(S.categoryXp[cat.id]||0);
+        return `<div class="stat-card" style="border:1px solid ${cat.color}33;box-shadow:0 0 12px ${cat.color}12">
+          <div class="stat-hdr"><span class="stat-nm" style="color:${cat.color}">${cat.icon} ${cat.name}</span><span class="stat-lv" style="color:${catPct===100?'var(--success)':cat.color};font-weight:800">${catPct}%</span></div>
+          ${xpBar(catDone,catTotal||1,catPct===100?'#4ecdc4':cat.color,7)}
+          <div style="display:flex;justify-content:space-between;margin-top:4px">
+            <span class="stat-streak" style="color:${bestStreak>=7?'#ff6600':cat.color}">${bestStreak>0?'\uD83D\uDD25'+bestStreak:''}</span>
+            <span style="font-size:9px;color:var(--text-dim)">Lv.${clv} \u00B7 ${catDone}/${catTotal}</span>
+          </div></div>`;
+      }).join('')}</div>`;
+    }
+
+    // Quest list by period
+    if(isToday) {
+      h+=`<div class="sec-title">\uD83D\uDCCB Daglige Quests (Input Goals)</div>`;
+      h+=renderPeriod('Morgen','\uD83C\uDF05','morning');
+      h+=renderPeriod('Middag','\u2600\uFE0F','midday');
+      h+=renderPeriod('Aften','\uD83C\uDF19','evening');
+
+    } else {
+      // History view — show completed/missed for that date (read-only)
+      h+=`<div class="sec-title">\uD83D\uDCCB Quests for ${_dnFull[viewDate.getDay()]}</div>`;
+      const doneList=S.completedDates[viewDateStr]||[];
+      ['morning','midday','evening'].forEach(period=>{
+        const pLabel={morning:'Morgen',midday:'Middag',evening:'Aften'}[period];
+        const pIcon={morning:'\uD83C\uDF05',midday:'\u2600\uFE0F',evening:'\uD83C\uDF19'}[period];
+        const qs=tq.filter(q=>q.period===period);
+        if(!qs.length) return;
+        h+=`<div style="margin-bottom:12px"><div style="display:flex;align-items:center;gap:8px;padding:6px 0;color:var(--gold-light);font-size:13px;font-weight:600">${pIcon} ${pLabel}</div>`;
+        qs.forEach(q=>{
+          const wasDone=doneList.includes(q.id);
+          const cat=getCat(q.category);
+          h+=`<div class="qi ${wasDone?'done':''}" style="border-color:${wasDone?'rgba(78,205,196,.2)':'rgba(232,93,74,.1)'};cursor:pointer" onclick="togglePastCompletion(${q.id},'${viewDateStr}')">
+            <div style="width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;${wasDone?'background:var(--success);color:#fff':'background:rgba(232,93,74,.15);color:var(--danger)'}">${wasDone?'\u2713':'\u2717'}</div>
+            <div class="qi-body"><div class="qi-title ${wasDone?'done':''}">${q.title}</div></div>
+            <div class="qi-right"><span style="font-size:11px;color:${wasDone?'var(--success)':'var(--danger)'}">${wasDone?'Done':'Missed'}</span></div>
+          </div>`;
+        });
+        h+=`</div>`;
+      });
+    }
+  }
+
+  // ════ WEEK VIEW ════
+  else if(S.dashViewMode==='week') {
+    const startOfWeek=new Date(); startOfWeek.setDate(startOfWeek.getDate()-startOfWeek.getDay()+1); // Monday
+    const weekDays=[];
+    for(let i=0;i<7;i++){ const d=new Date(startOfWeek); d.setDate(d.getDate()+i); weekDays.push(d); }
+    const nowDate=new Date();
+    let weekDone=0,weekTotal=0;
+
+    // Render by period
+    [{period:'morning',label:'Morgen',icon:'\uD83C\uDF05'},{period:'midday',label:'Middag',icon:'\u2600\uFE0F'},{period:'evening',label:'Aften',icon:'\uD83C\uDF19'}].forEach(per=>{
+      const periodQuests=S.quests.filter(q=>q.active&&q.period===per.period);
+      if(!periodQuests.length) return;
+
+      h+=`<div style="margin-bottom:14px">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;padding:4px 0">
+          <span style="font-size:13px">${per.icon}</span>
+          <span style="font-size:12px;font-weight:700;color:var(--gold-light)">${per.label}</span>
+        </div>`;
+
+      h+=`<div class="matrix-wrap"><table class="matrix-table"><thead><tr><th style="text-align:left;min-width:90px">Quest</th>`;
+      weekDays.forEach(d=>{
+        const ds=d.toISOString().slice(0,10);
+        const isT=(ds===todayStr);
+        h+=`<th class="${isT?'today-col':''}" style="padding:3px 4px;${isT?'color:var(--gold);font-weight:800':''}">${_dn[d.getDay()]}<br><span style="font-size:8px">${d.getDate()}</span></th>`;
+      });
+      h+=`<th style="padding:3px 4px;font-size:9px;color:var(--text-dim)">Done</th><th style="padding:3px 4px;font-size:9px;color:var(--text-dim)">%</th></tr></thead><tbody>`;
+
+      periodQuests.forEach(q=>{
+        let qDone=0, qScheduled=0;
+        h+=`<tr><td class="matrix-quest">${q.title}</td>`;
+        weekDays.forEach(d=>{
+          const ds=d.toISOString().slice(0,10);
+          const isT=(ds===todayStr);
+          const scheduled=q.days.includes(d.getDay());
+          if(!scheduled){ h+=`<td class="na" style="padding:3px 4px">\u00B7</td>`; return; }
+          if(d<=nowDate) { qScheduled++; weekTotal++; }
+          const wasDone=isQuestDoneOnDate(q.id,ds);
+          if(wasDone && d<=nowDate) { qDone++; weekDone++; }
+          if(isT){
+            h+=`<td class="today-col ${wasDone?'done':''}" style="cursor:pointer;font-size:14px;padding:3px 4px" onclick="completeQuest(${q.id})">${wasDone?'<span style="color:var(--success)">\u2713</span>':'<span style="color:var(--text-dim)">\u25CB</span>'}</td>`;
+          } else if(d<nowDate){
+            h+=`<td class="${wasDone?'done':'missed'}" style="padding:3px 4px;cursor:pointer" onclick="togglePastCompletion(${q.id},'${ds}')">${wasDone?'\u2713':'\u2717'}</td>`;
+          } else {
+            h+=`<td class="hm-future" style="padding:3px 4px">\u00B7</td>`;
+          }
+        });
+        const qPct=qScheduled?Math.round(qDone/qScheduled*100):0;
+        h+=`<td style="text-align:center;font-size:10px;font-weight:700;color:var(--text-dim);padding:3px 4px">${qDone}/${qScheduled}</td>`;
+        h+=`<td style="text-align:center;font-size:10px;font-weight:800;color:${qPct===100?'var(--success)':qPct>=50?'var(--gold-light)':'var(--danger)'};padding:3px 4px">${qPct}%</td>`;
+        h+=`</tr>`;
+      });
+      h+=`</tbody></table></div></div>`;
+    });
+
+    // Week summary
+    const weekPct=weekTotal?Math.round(weekDone/weekTotal*100):0;
+    h+=`<div class="card" style="margin-top:10px"><div class="prog-hdr"><span class="prog-lbl">Ugentlig Score</span><span class="prog-pct" style="color:${weekPct>=80?'var(--success)':'var(--gold-light)'}">${weekPct}%</span></div>
+      ${xpBar(weekDone,weekTotal||1,weekPct>=80?'#4ecdc4':'#d4a340')}<div class="xp-text" style="text-align:left;margin-top:3px">${weekDone}/${weekTotal} quests denne uge</div></div>`;
+  }
+
+  // ════ MONTH VIEW ════
+  else if(S.dashViewMode==='month') {
+    const now=new Date();
+    const year=now.getFullYear(), month=now.getMonth();
+    const daysInMonth=new Date(year,month+1,0).getDate();
+    const monthDays=[];
+    for(let i=1;i<=daysInMonth;i++) monthDays.push(new Date(year,month,i));
+
+    h+=`<div style="font-size:14px;font-weight:700;color:var(--gold-light);margin-bottom:10px;text-align:center">${_mn[month]} ${year}</div>`;
+
+    [{period:'morning',label:'Morgen',icon:'\uD83C\uDF05'},{period:'midday',label:'Middag',icon:'\u2600\uFE0F'},{period:'evening',label:'Aften',icon:'\uD83C\uDF19'}].forEach(per=>{
+      const periodQuests=S.quests.filter(q=>q.active&&q.period===per.period);
+      if(!periodQuests.length) return;
+
+      h+=`<div style="margin-bottom:14px">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;padding:4px 0">
+          <span style="font-size:13px">${per.icon}</span>
+          <span style="font-size:12px;font-weight:700;color:var(--gold-light)">${per.label}</span>
+        </div>`;
+
+      h+=`<div class="matrix-wrap"><table class="matrix-table"><thead><tr><th style="text-align:left;min-width:90px">Quest</th>`;
+      monthDays.forEach(d=>{
+        const ds=d.toISOString().slice(0,10);
+        const isT=(ds===todayStr);
+        h+=`<th class="${isT?'today-col':''}" style="padding:2px 1px;font-size:7px;${isT?'color:var(--gold);font-weight:800':''}">${d.getDate()}</th>`;
+      });
+      h+=`<th style="padding:2px 3px;font-size:8px;color:var(--text-dim)">%</th></tr></thead><tbody>`;
+
+      periodQuests.forEach(q=>{
+        let qDone=0, qScheduled=0;
+        h+=`<tr onclick="openMonthHabitModal(${q.id})" style="cursor:pointer"><td class="matrix-quest" style="position:relative;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px">`;
+        const todayDone=!!S.completedToday[q.id];
+        h+=`${q.title}</td>`;
+        monthDays.forEach(d=>{
+          const ds=d.toISOString().slice(0,10);
+          const isT=(ds===todayStr);
+          const scheduled=q.days.includes(d.getDay());
+          if(!scheduled){ h+=`<td style="padding:2px 1px" class="na"></td>`; return; }
+          if(d<=now) { qScheduled++; }
+          const wasDone=isQuestDoneOnDate(q.id,ds);
+          if(wasDone && d<=now) { qDone++; }
+          if(d>now){
+            h+=`<td style="padding:2px 1px" class="hm-future"></td>`;
+          } else {
+            h+=`<td style="padding:2px 1px;font-size:8px" class="${isT?'today-col ':''} ${wasDone?'done':'missed'}">${wasDone?'\u2713':''}</td>`;
+          }
+        });
+        const qPct=qScheduled?Math.round(qDone/qScheduled*100):0;
+        h+=`<td style="text-align:center;font-size:9px;font-weight:800;color:${qPct===100?'var(--success)':qPct>=50?'var(--gold-light)':'var(--danger)'};padding:2px 3px">${qPct}%</td>`;
+        h+=`</tr>`;
+      });
+      h+=`</tbody></table></div></div>`;
+    });
+  }
+
+  // ═══ SHARED ELEMENTS (visible in all views) ═══
+
+  // Quest management button
+  h+=`<div style="text-align:center;margin:14px 0 12px">
+    <button style="background:rgba(212,163,64,.06);border:1px solid rgba(212,163,64,.15);border-radius:10px;padding:8px 18px;color:var(--gold-light);font-size:11px;font-weight:600;cursor:pointer;transition:all .2s" onclick="S.view='quests';render()">
+      ⚙️ Administrer Quests
+    </button>
+  </div>`;
+
+  // Goals (Monthly + Weekly)
+  if(!S.monthlyGoals) S.monthlyGoals=['','',''];
+  if(!S.weeklyGoals) S.weeklyGoals=['','',''];
+  h+=renderGoalsSection();
+
+  // Only show soul reminder and extras in day view
+  if(S.dashViewMode==='day' && isToday) {
 
   // Soul Reminder — gentle, breathing presence at bottom of dashboard
   const soulReminders = [
@@ -1685,6 +2212,49 @@ function renderDashboard() {
       <span style="font-size:11px;color:var(--danger);font-weight:600">🍅 Pomodoro aktiv</span>
       <span id="pomo-display" style="font-size:18px;font-weight:800;color:var(--danger);margin-left:8px;font-family:monospace">--:--</span>
       <button class="biz-btn" style="margin-left:8px" onclick="stopPomodoro()">Stop</button>
+    </div>`;
+  }
+
+  } // end if(day view && isToday)
+
+  // ═══ EVENING REVIEW — always last, visible after 19:00 ═══
+  if(new Date().getHours()>=19 && !S.eveningReviews[todayStr]) {
+    h+=`<div class="card anim-fadein" style="border:1px solid rgba(123,104,238,.25);background:linear-gradient(135deg,rgba(22,33,62,.95),rgba(26,26,46,.9));margin-top:14px">
+      <div style="text-align:center;margin-bottom:10px">
+        <span style="font-size:20px">\uD83C\uDF19</span>
+        <div style="font-size:13px;font-weight:800;color:var(--accent-light);margin-top:4px">Aften-Review</div>
+        <div style="font-size:10px;color:var(--text-dim)">2 minutter \u2014 afslut dagen bevidst</div>
+      </div>
+      <div class="fg" style="margin-bottom:10px">
+        <label class="fl" style="color:var(--success)">\u2728 Hvad er jeg taknemlig for i dag?</label>
+        <input id="er_gratitude" class="fi" style="font-size:12px" placeholder="Skriv 1\u20133 ting du er taknemlig for...">
+      </div>
+      <div class="fg" style="margin-bottom:10px">
+        <label class="fl" style="color:var(--gold-light)">\uD83C\uDFC6 Hvad fik jeg skabt / gjort i dag?</label>
+        <input id="er_landed" class="fi" style="font-size:12px" placeholder="Hvad blev f\u00E6rdigt? Hvad rykkede sig?">
+      </div>
+      <div class="fg" style="margin-bottom:10px">
+        <label class="fl" style="color:var(--accent-light)">Levede jeg som min identitet i dag?</label>
+        <div style="display:flex;gap:6px">
+          <button class="biz-btn" id="er_yes" style="flex:1;padding:7px;font-size:11px" onclick="document.getElementById('er_yes').style.borderColor='var(--success)';document.getElementById('er_yes').style.background='rgba(78,205,196,.12)';document.getElementById('er_no').style.borderColor='';document.getElementById('er_no').style.background='';document.getElementById('er_score').value='yes'">\u2714 Ja</button>
+          <button class="biz-btn" id="er_no" style="flex:1;padding:7px;font-size:11px" onclick="document.getElementById('er_no').style.borderColor='var(--danger)';document.getElementById('er_no').style.background='rgba(232,93,74,.08)';document.getElementById('er_yes').style.borderColor='';document.getElementById('er_yes').style.background='';document.getElementById('er_score').value='no'">\u2718 Ikke helt</button>
+        </div>
+        <input type="hidden" id="er_score" value="">
+      </div>
+      <button class="biz-btn" style="width:100%;padding:10px;background:rgba(123,104,238,.12);border-color:rgba(123,104,238,.3);color:var(--accent-light);font-weight:700;font-size:13px" onclick="saveEveningReview()">
+        \uD83C\uDF19 Gem Aften-Review
+      </button>
+    </div>`;
+  } else if(S.eveningReviews[todayStr]) {
+    h+=`<div style="text-align:center;padding:8px;font-size:11px;color:var(--success)">\u2713 Aften-review gemt i dag</div>`;
+  }
+
+  // Link to review log
+  if(Object.keys(S.eveningReviews||{}).length>0) {
+    h+=`<div style="text-align:center;padding:6px;margin-bottom:8px">
+      <button style="background:none;border:none;font-size:11px;color:var(--text-dim);cursor:pointer;text-decoration:underline" onclick="S.statsTab='eveninglog';S.view='stats';render()">
+        \uD83D\uDCD3 Se aften-review log (${Object.keys(S.eveningReviews).length} dage)
+      </button>
     </div>`;
   }
 
@@ -1822,6 +2392,66 @@ function renderCharacter() {
 
 function renderSoulPhilosophy() {
   let h='';
+
+  // ═══ IDENTITY & VISION ═══
+  if(!S.identityStatements) S.identityStatements=[];
+  h+=`<div class="soul-card" style="border-color:rgba(212,163,64,.25)">
+    <div class="soul-card-title" style="color:var(--gold-light)">\uD83D\uDD25 Identitet — Hvem Er Jeg Ved At Blive?</div>
+    <div style="font-size:11px;color:var(--text-dim);margin-bottom:12px;line-height:1.5">
+      Dine habits er input goals. De former din karakter.<br>Skriv de identiteter du lever ind i — ikke m\u00E5l, men <strong style="color:var(--accent-light)">hvem du ER</strong>.
+    </div>`;
+  S.identityStatements.forEach((stmt,i)=>{
+    h+=`<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(212,163,64,.06);border:1px solid rgba(212,163,64,.12);border-radius:10px;margin-bottom:6px">
+      <span style="font-size:16px">\uD83D\uDD2E</span>
+      <span style="flex:1;font-size:13px;color:var(--text-bright);font-style:italic">"${esc(stmt)}"</span>
+      <button style="background:none;border:none;font-size:12px;color:var(--danger);cursor:pointer;padding:4px" onclick="S.identityStatements.splice(${i},1);save();render()">\u2717</button>
+    </div>`;
+  });
+  h+=`<div style="display:flex;gap:6px;margin-top:8px">
+    <input id="new_identity" class="fi" style="flex:1;font-size:12px" placeholder="Jeg er en...">
+    <button class="biz-btn" onclick="const v=document.getElementById('new_identity').value.trim();if(v){S.identityStatements.push(v);save();notify('\uD83D\uDD2E Ny identitet tilf\u00F8jet!','xp');render()}">+</button>
+  </div>
+  </div>`;
+
+  // ═══ VISION / OUTPUT GOAL ═══
+  h+=`<div class="soul-card" style="border-color:rgba(78,205,196,.2)">
+    <div class="soul-card-title" style="color:var(--success)">\uD83C\uDF1F Vision — Impact & Retning</div>
+    <div style="font-size:11px;color:var(--text-dim);margin-bottom:10px;line-height:1.5">
+      Ikke fordi du skal bevise noget. Men fordi din sj\u00E6l br\u00E6nder for det.<br>
+      <em style="color:var(--accent-light)">Detach fra outcome. Attach til processen.</em>
+    </div>
+    <div class="fg"><label class="fl" style="color:var(--success)">Min vision / output goal</label>
+      <input id="vision_goal" class="fi" value="${esc(S.visionGoal||'')}" placeholder="F.eks. Hj\u00E6lpe 100 mennesker med at transformere deres liv"
+        onchange="S.visionGoal=this.value;save()">
+    </div>
+    <div class="fg"><label class="fl" style="color:var(--accent-light)">Hvorfor? (den dybere mening)</label>
+      <input id="vision_why" class="fi" value="${esc(S.visionWhy||'')}" placeholder="Fordi..."
+        onchange="S.visionWhy=this.value;save()">
+    </div>
+  </div>`;
+
+  // ═══ IDENTITY STANDARDS ═══
+  if(!S.identityStandards) S.identityStandards=[];
+  h+=`<div class="soul-card" style="border-color:rgba(123,104,238,.2)">
+    <div class="soul-card-title" style="color:var(--accent-light)">\u2694\uFE0F Standards \u2014 Hvad G\u00F8r Den Identitet?</div>
+    <div style="font-size:11px;color:var(--text-dim);margin-bottom:10px;line-height:1.5">
+      Reglerne din karakter lever efter. Ikke m\u00E5l \u2014 men <strong style="color:var(--gold-light)">principper</strong>.<br>
+      <em>"Jeg bygger som owner, ikke som worker."</em>
+    </div>`;
+  S.identityStandards.forEach((std,i)=>{
+    h+=`<div style="display:flex;align-items:center;gap:8px;padding:7px 12px;background:rgba(123,104,238,.06);border:1px solid rgba(123,104,238,.12);border-radius:8px;margin-bottom:5px">
+      <span style="font-size:14px">\u2694\uFE0F</span>
+      <span style="flex:1;font-size:12px;color:var(--text-bright)">${esc(std)}</span>
+      <button style="background:none;border:none;font-size:12px;color:var(--danger);cursor:pointer;padding:4px" onclick="S.identityStandards.splice(${i},1);save();render()">\u2717</button>
+    </div>`;
+  });
+  h+=`<div style="display:flex;gap:6px;margin-top:8px">
+    <input id="new_standard" class="fi" style="flex:1;font-size:12px" placeholder="Jeg g\u00F8r altid... / Jeg g\u00F8r aldrig...">
+    <button class="biz-btn" onclick="const v=document.getElementById('new_standard').value.trim();if(v){if(!S.identityStandards)S.identityStandards=[];S.identityStandards.push(v);save();notify('\u2694\uFE0F Standard tilf\u00F8jet!','xp');render()}">+</button>
+  </div>
+  </div>`;
+
+  h+=`<div class="soul-divider"></div>`;
 
   // The Core Truth
   h+=`<div class="soul-card" style="text-align:center">
@@ -2302,36 +2932,400 @@ function renderBoss() {
 }
 
 function renderBusiness() {
-  const stats=[
-    {key:'leads',label:'Leads genereret',icon:'\uD83D\uDCE3'},
-    {key:'conversations',label:'Samtaler (T2)',icon:'\uD83E\uDD1D'},
-    {key:'offers',label:'Tilbud sendt (T3)',icon:'\uD83D\uDCDD'},
-    {key:'sales',label:'Salg lukket',icon:'\uD83C\uDFC6'},
-    {key:'revenue',label:'Omsætning (DKK)',icon:'\uD83D\uDCB0'},
+  if(!S.pipeline) S.pipeline=[];
+  const STAGES=[
+    {id:'signal',label:'Signal',icon:'\u2728',color:'#7b68ee',desc:'Noget er levende'},
+    {id:'conversation',label:'Samtale',icon:'\uD83E\uDD1D',color:'#4ecdc4',desc:'Reel kontakt'},
+    {id:'offer',label:'Tilbud',icon:'\uD83D\uDCDD',color:'#d4a340',desc:'Tilbud sendt'},
+    {id:'landed',label:'Landed',icon:'\uD83C\uDFC6',color:'#4ecdc4',desc:'Lukket i 3D'},
+    {id:'closed',label:'Lukket',icon:'\u2705',color:'#8b8299',desc:'Afsluttet'}
   ];
-  let h=`<div class="sec-title">\uD83C\uDFF0 Business Dashboard</div><div class="card">`;
-  stats.forEach(s=>{
-    h+=`<div class="biz-stat"><div style="display:flex;align-items:center;gap:8px">
-      <span style="font-size:16px">${s.icon}</span><span class="biz-label">${s.label}</span></div>
-      <div style="display:flex;align-items:center;gap:6px">
-        <button class="biz-btn" onclick="updateBizStat('${s.key}',-1)">−</button>
-        <span class="biz-val">${S.businessStats[s.key]||0}</span>
-        <button class="biz-btn" onclick="updateBizStat('${s.key}',1)">+</button>
+  let h=`<div class="sec-title">\uD83C\uDFF0 Embodied Pipeline</div>`;
+
+  // Quick stats
+  const active=S.pipeline.filter(p=>p.stage!=='closed'&&p.stage!=='landed');
+  const landed=S.pipeline.filter(p=>p.stage==='landed');
+  h+=`<div style="display:flex;gap:8px;margin-bottom:14px">
+    <div class="stat-card" style="flex:1;text-align:center;border-color:rgba(123,104,238,.2)">
+      <div style="font-size:20px;font-weight:800;color:var(--accent-light)">${active.length}</div>
+      <div style="font-size:9px;color:var(--text-dim)">Aktive</div></div>
+    <div class="stat-card" style="flex:1;text-align:center;border-color:rgba(78,205,196,.2)">
+      <div style="font-size:20px;font-weight:800;color:var(--success)">${landed.length}</div>
+      <div style="font-size:9px;color:var(--text-dim)">Landed i 3D</div></div>
+  </div>`;
+
+  // Add new contact
+  h+=`<div class="card" style="border-color:rgba(212,163,64,.15)">
+    <div style="display:flex;gap:6px;margin-bottom:8px">
+      <input id="pipe_name" class="fi" style="flex:1;font-size:12px" placeholder="Navn / mulighed...">
+      <button class="biz-btn" onclick="addPipelineEntry()">+ Tilf\u00F8j</button>
+    </div>
+  </div>`;
+
+  // Pipeline by stage
+  STAGES.filter(s=>s.id!=='closed').forEach(stage=>{
+    const items=S.pipeline.filter(p=>p.stage===stage.id);
+    if(!items.length && stage.id!=='signal') return;
+    h+=`<div style="margin-bottom:14px">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
+        <span style="font-size:14px">${stage.icon}</span>
+        <span style="font-size:12px;font-weight:700;color:${stage.color}">${stage.label}</span>
+        <span style="font-size:10px;color:var(--text-dim)">(${items.length})</span>
+      </div>`;
+    items.forEach(p=>{
+      const energyColors={hot:'#4ecdc4',warm:'#d4a340',cold:'#8b8299'};
+      const eColor=energyColors[p.energy||'warm']||'#8b8299';
+      const nextStage=STAGES[STAGES.findIndex(s=>s.id===p.stage)+1];
+      h+=`<div class="card" style="padding:10px 14px;margin-bottom:6px;border-left:3px solid ${stage.color}">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--text-bright)">${esc(p.name)}</div>
+            <div style="font-size:10px;color:var(--text-dim);margin-top:2px">${p.nextStep?'\u27A1 '+esc(p.nextStep):'Ingen next step endnu'}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:4px">
+            <span style="width:8px;height:8px;border-radius:50%;background:${eColor}" title="Energi: ${p.energy||'?'}"></span>
+          </div>
+        </div>
+        <div style="display:flex;gap:4px;margin-top:8px;flex-wrap:wrap">
+          <button class="biz-btn" style="font-size:10px;padding:3px 8px" onclick="editPipelineEntry(${p.id})">Rediger</button>
+          ${nextStage?`<button class="biz-btn" style="font-size:10px;padding:3px 8px;background:rgba(78,205,196,.1);border-color:rgba(78,205,196,.3);color:var(--success)" onclick="movePipelineStage(${p.id},'${nextStage.id}')">\u2192 ${nextStage.label}</button>`:''}
+          <button class="biz-btn" style="font-size:10px;padding:3px 8px;background:rgba(232,93,74,.08);border-color:rgba(232,93,74,.2);color:var(--danger)" onclick="S.pipeline=S.pipeline.filter(x=>x.id!==${p.id});save();render()">\u2717</button>
+        </div>
+      </div>`;
+    });
+    h+=`</div>`;
+  });
+
+  // Old counters (compact)
+  h+=`<div class="card" style="margin-top:8px"><div style="font-size:11px;font-weight:600;color:var(--text-dim);margin-bottom:6px">M\u00E5nedens Tal</div>`;
+  [{key:'leads',label:'Leads',icon:'\uD83D\uDCE3'},{key:'conversations',label:'Samtaler',icon:'\uD83E\uDD1D'},{key:'offers',label:'Tilbud',icon:'\uD83D\uDCDD'},{key:'sales',label:'Salg',icon:'\uD83C\uDFC6'},{key:'revenue',label:'DKK',icon:'\uD83D\uDCB0'}].forEach(s=>{
+    h+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--border)">
+      <span style="font-size:11px;color:var(--text-dim)">${s.icon} ${s.label}</span>
+      <div style="display:flex;align-items:center;gap:4px">
+        <button style="background:none;border:1px solid var(--border);border-radius:4px;color:var(--text-dim);cursor:pointer;width:20px;height:20px;font-size:12px;display:flex;align-items:center;justify-content:center" onclick="updateBizStat('${s.key}',-1)">\u2212</button>
+        <span style="font-size:13px;font-weight:700;color:var(--gold);min-width:28px;text-align:center">${S.businessStats[s.key]||0}</span>
+        <button style="background:none;border:1px solid var(--border);border-radius:4px;color:var(--text-dim);cursor:pointer;width:20px;height:20px;font-size:12px;display:flex;align-items:center;justify-content:center" onclick="updateBizStat('${s.key}',1)">+</button>
       </div></div>`;
   });
   h+=`</div>`;
+  return h;
+}
 
-  // Conversion funnel
-  const l=S.businessStats.leads||0, c=S.businessStats.conversations||0, o=S.businessStats.offers||0, sa=S.businessStats.sales||0;
-  h+=`<div class="card"><div class="sec-title" style="margin-bottom:8px">\uD83D\uDD04 Conversion Funnel</div>`;
-  [{from:'Leads',to:'Samtaler',val:l?Math.round(c/l*100):0},
-   {from:'Samtaler',to:'Tilbud',val:c?Math.round(o/c*100):0},
-   {from:'Tilbud',to:'Salg',val:o?Math.round(sa/o*100):0}].forEach(f=>{
-    h+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:12px">
-      <span style="color:var(--text-dim)">${f.from} → ${f.to}</span>
-      <span style="color:${f.val>=30?'var(--success)':f.val>=15?'var(--gold)':'var(--danger)'};font-weight:700">${f.val}%</span></div>`;
+// Pipeline helpers
+function addPipelineEntry(){
+  const name=document.getElementById('pipe_name').value.trim();
+  if(!name) return;
+  if(!S.pipeline) S.pipeline=[];
+  S.pipeline.push({id:Date.now(),name,stage:'signal',energy:'warm',nextStep:'',notes:'',created:todayStr});
+  save(); notify('\u2728 Ny pipeline entry!','xp'); render();
+}
+function movePipelineStage(id,newStage){
+  const p=S.pipeline.find(x=>x.id===id);
+  if(p){
+    p.stage=newStage;
+    if(newStage==='landed'){ notify('\uD83C\uDFC6 Landed i 3D! '+p.name,'levelup'); if(S.soundOn) AudioFX.play('allclear'); spawnConfetti(); }
+    else { notify('\u2192 '+p.name+' moved to '+newStage,'xp'); if(S.soundOn) AudioFX.play('complete'); }
+  }
+  save(); render();
+}
+function editPipelineEntry(id){
+  const p=S.pipeline.find(x=>x.id===id);
+  if(!p) return;
+  const name=prompt('Navn:',p.name); if(name) p.name=name;
+  const next=prompt('N\u00E6ste step:',p.nextStep||''); if(next!==null) p.nextStep=next;
+  const energy=prompt('Energi (hot/warm/cold):',p.energy||'warm'); if(energy) p.energy=energy;
+  save(); render();
+}
+
+// ── Leadership Session (Focus Mode) ──
+function renderLeadershipSession() {
+  if(!S.leadershipSession) S.leadershipSession=null;
+  if(!S.leadershipLog) S.leadershipLog=[];
+  const session=S.leadershipSession;
+  let h='';
+
+  // If session is active
+  if(session && session.active) {
+    const elapsed=Math.floor((Date.now()-session.startTime)/1000);
+    const mins=Math.floor(elapsed/60);
+    const secs=elapsed%60;
+
+    h+=`<div class="card anim-fadein" style="border:1px solid rgba(212,163,64,.3);background:linear-gradient(135deg,rgba(26,26,46,.95),rgba(22,33,62,.95))">
+      <div style="text-align:center;margin-bottom:16px">
+        <div style="font-size:28px;margin-bottom:6px">\uD83C\uDFAF</div>
+        <div style="font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;font-weight:700">Leadership Session Aktiv</div>
+      </div>
+
+      <div style="text-align:center;padding:14px;background:rgba(212,163,64,.06);border:1px solid rgba(212,163,64,.12);border-radius:12px;margin-bottom:14px">
+        <div style="font-size:10px;color:var(--text-dim);margin-bottom:4px">FOKUS</div>
+        <div style="font-size:16px;font-weight:700;color:var(--text-bright)">${esc(session.focus)}</div>
+        ${session.sacralResponse?`<div style="margin-top:6px;font-size:11px;color:var(--success)">\u2713 Sakral respons: ${esc(session.sacralResponse)}</div>`:''}
+      </div>
+
+      <div style="text-align:center;margin-bottom:14px">
+        <div style="font-size:32px;font-weight:800;color:${mins>=240?'var(--danger)':mins>=210?'#d4a340':'var(--gold)'};font-family:monospace" id="session-timer">${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}</div>
+        <div style="font-size:10px;color:var(--text-dim)">Tid i fokus</div>
+        ${mins>=240?'<div style="font-size:11px;color:var(--danger);font-weight:700;margin-top:4px;animation:glow-pulse 2s infinite">\u26A0\uFE0F 4 timer n\u00E5et \u2014 millionaire owner stopper her!</div>':mins>=210?'<div style="font-size:10px;color:#d4a340;margin-top:4px">\u23F0 3.5t \u2014 snart 4-timers gr\u00E6nsen</div>':''}
+      </div>
+
+      ${session.stateReg?`<div style="padding:8px 12px;background:rgba(123,104,238,.06);border:1px solid rgba(123,104,238,.12);border-radius:8px;margin-bottom:10px">
+        <span style="font-size:11px;color:var(--accent-light)">\uD83E\uDDD8 State: ${esc(session.stateReg)}</span>
+      </div>`:''}
+
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:14px">
+        <button class="biz-btn" style="background:rgba(78,205,196,.1);border-color:rgba(78,205,196,.3);color:var(--success);padding:8px 20px" onclick="endLeadershipSession()">
+          \u2713 Afslut Session
+        </button>
+      </div>
+    </div>`;
+
+    // Schedule timer start after render
+    setTimeout(startSessionTimer, 50);
+
+  } else {
+    // Start new session — Pre-session orientation
+    h+=`<div class="sec-title">\uD83C\uDFAF Leadership Session</div>`;
+    h+=`<div class="card" style="border-color:rgba(212,163,64,.15)">
+      <div style="font-size:12px;color:var(--text-dim);margin-bottom:14px;line-height:1.6">
+        <strong style="color:var(--gold-light)">Generator Focus Mode</strong><br>
+        En fokus-session med check-in og closure. Ikke bare "arbejd" \u2014 men bevidst leadership fra dit design.
+      </div>
+
+      <div class="fg" style="margin-bottom:12px">
+        <label class="fl" style="color:var(--gold-light)">\uD83C\uDFAF Hvad er den \u00E9n ting der betyder noget lige nu?</label>
+        <input id="ls_focus" class="fi" placeholder="F.eks. F\u00E6rdigg\u00F8r pipeline outreach til 3 leads">
+      </div>
+
+      <div class="fg" style="margin-bottom:12px">
+        <label class="fl" style="color:var(--success)">Sakral Check \u2014 F\u00E5r dette et YES i kroppen?</label>
+        <div style="display:flex;gap:6px">
+          <button class="biz-btn" id="ls_sacral_yes" style="flex:1;padding:8px" onclick="document.getElementById('ls_sacral_yes').style.borderColor='var(--success)';document.getElementById('ls_sacral_yes').style.background='rgba(78,205,196,.15)';document.getElementById('ls_sacral_no').style.borderColor='';document.getElementById('ls_sacral_no').style.background='';document.getElementById('ls_sacral_val').value='JA \u2014 fuld sakral respons'">\u2714 JA \u2014 kroppen siger ja</button>
+          <button class="biz-btn" id="ls_sacral_no" style="flex:1;padding:8px" onclick="document.getElementById('ls_sacral_no').style.borderColor='var(--danger)';document.getElementById('ls_sacral_no').style.background='rgba(232,93,74,.1)';document.getElementById('ls_sacral_yes').style.borderColor='';document.getElementById('ls_sacral_yes').style.background='';document.getElementById('ls_sacral_val').value='Nej \u2014 ikke nu'">\u2718 Nej \u2014 ikke lige nu</button>
+        </div>
+        <input type="hidden" id="ls_sacral_val" value="">
+      </div>
+
+      <div class="fg" style="margin-bottom:12px">
+        <label class="fl" style="color:var(--accent-light)">\uD83E\uDDD8 State Regulation (valgfrit)</label>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          ${['Breathwork','Musik','Kaffe-ritual','K\u00F8re en tur','St\u00E5 op og bev\u00E6g','Ingen \u2014 k\u00F8rer direkte'].map(opt=>`<button class="biz-btn" style="font-size:10px;padding:4px 10px" onclick="document.getElementById('ls_state').value='${opt}';this.style.borderColor='var(--accent)';this.style.background='rgba(123,104,238,.1)'">${opt}</button>`).join('')}
+        </div>
+        <input type="hidden" id="ls_state" value="">
+      </div>
+
+      <button class="biz-btn" style="width:100%;padding:10px;background:rgba(212,163,64,.12);border-color:rgba(212,163,64,.3);color:var(--gold-light);font-weight:700;font-size:14px;margin-top:8px" onclick="startLeadershipSession()">
+        \u2694\uFE0F Start Session
+      </button>
+    </div>`;
+
+    // Session log
+    if(S.leadershipLog.length) {
+      h+=`<div class="sec-title" style="margin-top:18px">\uD83D\uDCDC Session Historik</div>`;
+      S.leadershipLog.slice(-10).reverse().forEach(log=>{
+        const dur=log.duration?Math.floor(log.duration/60)+'m':'?';
+        h+=`<div class="card" style="padding:10px 14px;margin-bottom:6px;border-left:3px solid var(--gold)">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div style="font-size:12px;font-weight:600;color:var(--text-bright)">${esc(log.focus)}</div>
+              <div style="font-size:10px;color:var(--text-dim);margin-top:2px">${log.date} \u00B7 ${dur}</div>
+            </div>
+            ${log.landed?`<span style="font-size:10px;color:var(--success);font-weight:600">\u2713 Landed</span>`:''}
+          </div>
+          ${log.whatLanded?`<div style="font-size:11px;color:var(--success);margin-top:4px">\uD83C\uDFC6 ${esc(log.whatLanded)}</div>`:''}
+          ${log.nextBreadcrumb?`<div style="font-size:11px;color:var(--accent-light);margin-top:2px">\u27A1 ${esc(log.nextBreadcrumb)}</div>`:''}
+        </div>`;
+      });
+    }
+  }
+  return h;
+}
+
+function startSessionTimer() {
+  if(window._lsTimer) clearInterval(window._lsTimer);
+  window._lsTimer=setInterval(()=>{
+    const el=document.getElementById('session-timer');
+    if(!el){clearInterval(window._lsTimer);window._lsTimer=null;return;}
+    const s=S.leadershipSession;if(!s||!s.active){clearInterval(window._lsTimer);window._lsTimer=null;return;}
+    const e=Math.floor((Date.now()-s.startTime)/1000);
+    el.textContent=String(Math.floor(e/60)).padStart(2,'0')+':'+String(e%60).padStart(2,'0');
+  },1000);
+}
+
+function startLeadershipSession() {
+  const focus=document.getElementById('ls_focus').value.trim();
+  if(!focus) { notify('Skriv hvad du vil fokusere p\u00E5!','event'); return; }
+  const sacral=document.getElementById('ls_sacral_val').value;
+  const stateReg=document.getElementById('ls_state').value;
+
+  S.leadershipSession={
+    active: true,
+    focus: focus,
+    sacralResponse: sacral,
+    stateReg: stateReg,
+    startTime: Date.now(),
+    date: todayStr
+  };
+  save();
+  if(S.soundOn) AudioFX.play('complete');
+  notify('\u2694\uFE0F Leadership Session startet!','boss');
+  render();
+}
+
+function endLeadershipSession() {
+  if(!S.leadershipSession || !S.leadershipSession.active) return;
+  const session=S.leadershipSession;
+  const duration=Math.floor((Date.now()-session.startTime)/1000);
+
+  const whatLanded=prompt('Hvad landede i 3D? (hvad blev f\u00E6rdigt/skabt)','');
+  const nextBreadcrumb=prompt('N\u00E6ste breadcrumb? (hvad er det n\u00E6ste lille skridt)','');
+
+  if(!S.leadershipLog) S.leadershipLog=[];
+  S.leadershipLog.push({
+    focus: session.focus,
+    sacralResponse: session.sacralResponse,
+    stateReg: session.stateReg,
+    date: session.date,
+    duration: duration,
+    whatLanded: whatLanded||'',
+    nextBreadcrumb: nextBreadcrumb||'',
+    landed: !!whatLanded
   });
-  h+=`</div>`;
+
+  S.leadershipSession=null;
+  save();
+
+  if(whatLanded) {
+    spawnConfetti();
+    if(S.soundOn) AudioFX.play('allclear');
+    notify('\uD83C\uDFC6 Session afsluttet \u2014 landed i 3D!','levelup');
+    const xpGain=40;
+    S.totalXp+=xpGain;
+    S.categoryXp.business=(S.categoryXp.business||0)+xpGain;
+  } else {
+    if(S.soundOn) AudioFX.play('complete');
+    notify('\u2713 Session afsluttet','xp');
+  }
+  render();
+}
+
+// ── Direction Review (Weekly HD Review) ──
+function renderDirectionReview() {
+  if(!S.directionReviews) S.directionReviews=[];
+  let h=`<div class="sec-title">\uD83E\uDDED Direction Review</div>`;
+  h+=`<div style="font-size:11px;color:var(--text-dim);margin-bottom:14px;line-height:1.5;padding:0 4px">
+    Ugentlig gennemgang p\u00E5 dit designs pr\u00E6misser. Ikke hvad du "burde" \u2014 men hvad der var <strong style="color:var(--gold-light)">levende</strong> og hvad der skabte <strong style="color:var(--danger)">pres</strong>.
+  </div>`;
+
+  // New review form
+  h+=`<div class="card" style="border-color:rgba(212,163,64,.15)">
+    <div style="font-size:12px;font-weight:700;color:var(--gold-light);margin-bottom:12px">\uD83D\uDCDD Ny Direction Review</div>
+
+    <div class="fg" style="margin-bottom:12px">
+      <label class="fl" style="color:var(--success)">\u2728 Hvad gav tilfredshed denne uge?</label>
+      <textarea id="dr_satisfaction" class="fi" rows="2" placeholder="Hvad f\u00F8ltes rigtigt i kroppen? Hvad gav energi?"></textarea>
+    </div>
+
+    <div class="fg" style="margin-bottom:12px">
+      <label class="fl" style="color:var(--danger)">\uD83D\uDD25 Hvad skabte pres/frustration?</label>
+      <textarea id="dr_pressure" class="fi" rows="2" placeholder="Hvad dr\u00E6nede? Hvad var initieret af andre?"></textarea>
+    </div>
+
+    <div class="fg" style="margin-bottom:12px">
+      <label class="fl" style="color:var(--accent-light)">\u26A1 Hvad f\u00F8ltes levende?</label>
+      <textarea id="dr_alive" class="fi" rows="2" placeholder="Hvorn\u00E5r reagerede din sakrale energi? Hvad var sp\u00E6ndende?"></textarea>
+    </div>
+
+    <div class="fg" style="margin-bottom:12px">
+      <label class="fl" style="color:var(--text-dim)">\uD83D\uDD12 Hvad kr\u00E6ver closure?</label>
+      <textarea id="dr_closure" class="fi" rows="2" placeholder="Hvad h\u00E6nger? Hvad skal lukkes, droppes eller videregives?"></textarea>
+    </div>
+
+    <div class="fg" style="margin-bottom:12px">
+      <label class="fl" style="color:var(--gold-light)">\uD83C\uDFAF Hvad er det n\u00E6ste konkrete 3D-move?</label>
+      <textarea id="dr_nextmove" class="fi" rows="2" placeholder="Den \u00E9n ting der er klar som et breadcrumb foran dig"></textarea>
+    </div>
+
+    <button class="biz-btn" style="width:100%;padding:10px;background:rgba(212,163,64,.1);border-color:rgba(212,163,64,.3);color:var(--gold-light);font-weight:700;margin-top:6px" onclick="saveDirectionReview()">
+      \uD83E\uDDED Gem Direction Review
+    </button>
+  </div>`;
+
+  // Review history
+  if(S.directionReviews.length) {
+    h+=`<div class="sec-title" style="margin-top:18px">\uD83D\uDCDC Tidligere Reviews</div>`;
+    S.directionReviews.slice(-8).reverse().forEach((rev,idx)=>{
+      h+=`<div class="card" style="padding:12px 14px;margin-bottom:8px;border-left:3px solid var(--gold)">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div style="font-size:12px;font-weight:700;color:var(--gold-light)">\uD83E\uDDED Review ${rev.date}</div>
+          <button style="background:none;border:none;font-size:11px;color:var(--danger);cursor:pointer" onclick="S.directionReviews.splice(S.directionReviews.length-1-${idx},1);save();render()">\u2717</button>
+        </div>`;
+      if(rev.satisfaction) h+=`<div style="margin-bottom:6px"><span style="font-size:10px;color:var(--success);font-weight:600">\u2728 Tilfredshed:</span><div style="font-size:11px;color:var(--text);margin-top:2px">${esc(rev.satisfaction)}</div></div>`;
+      if(rev.pressure) h+=`<div style="margin-bottom:6px"><span style="font-size:10px;color:var(--danger);font-weight:600">\uD83D\uDD25 Pres:</span><div style="font-size:11px;color:var(--text);margin-top:2px">${esc(rev.pressure)}</div></div>`;
+      if(rev.alive) h+=`<div style="margin-bottom:6px"><span style="font-size:10px;color:var(--accent-light);font-weight:600">\u26A1 Levende:</span><div style="font-size:11px;color:var(--text);margin-top:2px">${esc(rev.alive)}</div></div>`;
+      if(rev.closure) h+=`<div style="margin-bottom:6px"><span style="font-size:10px;color:var(--text-dim);font-weight:600">\uD83D\uDD12 Closure:</span><div style="font-size:11px;color:var(--text);margin-top:2px">${esc(rev.closure)}</div></div>`;
+      if(rev.nextMove) h+=`<div style="margin-bottom:4px"><span style="font-size:10px;color:var(--gold-light);font-weight:600">\uD83C\uDFAF N\u00E6ste move:</span><div style="font-size:11px;color:var(--text-bright);margin-top:2px;font-weight:600">${esc(rev.nextMove)}</div></div>`;
+      h+=`</div>`;
+    });
+  }
+  return h;
+}
+
+function saveDirectionReview() {
+  const satisfaction=document.getElementById('dr_satisfaction').value.trim();
+  const pressure=document.getElementById('dr_pressure').value.trim();
+  const alive=document.getElementById('dr_alive').value.trim();
+  const closure=document.getElementById('dr_closure').value.trim();
+  const nextMove=document.getElementById('dr_nextmove').value.trim();
+
+  if(!satisfaction && !pressure && !alive && !closure && !nextMove) {
+    notify('Udfyld mindst \u00E9t felt!','event');
+    return;
+  }
+
+  if(!S.directionReviews) S.directionReviews=[];
+  S.directionReviews.push({
+    date: todayStr,
+    satisfaction, pressure, alive, closure, nextMove
+  });
+
+  // XP reward for doing review
+  const xpGain=50;
+  S.totalXp+=xpGain;
+  S.categoryXp.mind=(S.categoryXp.mind||0)+xpGain;
+
+  save();
+  spawnConfetti();
+  if(S.soundOn) AudioFX.play('allclear');
+  notify('\uD83E\uDDED Direction Review gemt! +'+xpGain+'XP','levelup');
+  render();
+}
+
+// ── Evening Review Log ──
+function renderEveningLog() {
+  if(!S.eveningReviews) S.eveningReviews={};
+  const dates=Object.keys(S.eveningReviews).sort().reverse();
+  let h=`<div class="sec-title">\uD83D\uDCD3 Aften-Review Dagbog</div>`;
+
+  if(!dates.length) {
+    h+=`<div style="text-align:center;padding:24px;font-size:12px;color:var(--text-dim)">Ingen aften-reviews endnu. De dukker op p\u00E5 forsiden efter kl. 19.</div>`;
+    return h;
+  }
+
+  h+=`<div style="font-size:11px;color:var(--text-dim);margin-bottom:14px">${dates.length} dage logget</div>`;
+
+  dates.forEach(date=>{
+    const rev=S.eveningReviews[date];
+    const _d=new Date(date);
+    const dayName=['S\u00F8n','Man','Tir','Ons','Tor','Fre','L\u00F8r'][_d.getDay()];
+    h+=`<div class="card" style="padding:12px 14px;margin-bottom:8px;border-left:3px solid var(--accent)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <div style="font-size:12px;font-weight:700;color:var(--accent-light)">\uD83C\uDF19 ${dayName} ${date}</div>
+        <span style="font-size:10px;color:${rev.identityScore==='yes'?'var(--success)':'var(--danger)'};font-weight:600">${rev.identityScore==='yes'?'\u2714 Identitet':rev.identityScore==='no'?'\u2718 Ikke helt':'\u2014'}</span>
+      </div>`;
+    if(rev.gratitude) h+=`<div style="margin-bottom:6px"><span style="font-size:10px;color:var(--success);font-weight:600">\u2728 Taknemlig for:</span><div style="font-size:11px;color:var(--text);margin-top:2px">${esc(rev.gratitude)}</div></div>`;
+    if(rev.landed) h+=`<div style="margin-bottom:4px"><span style="font-size:10px;color:var(--gold-light);font-weight:600">\uD83C\uDFC6 Skabt/gjort:</span><div style="font-size:11px;color:var(--text);margin-top:2px">${esc(rev.landed)}</div></div>`;
+    h+=`</div>`;
+  });
   return h;
 }
 
@@ -2345,6 +3339,9 @@ function renderStatsHub() {
     <div class="tab ${S.statsTab==='report'?'active':''}" onclick="S.statsTab='report';render()">📈 Rapport</div>
     <div class="tab ${S.statsTab==='business'?'active':''}" onclick="S.statsTab='business';render()">🏰 Business</div>
     <div class="tab ${S.statsTab==='journal'?'active':''}" onclick="S.statsTab='journal';render()">📓 Journal</div>
+    <div class="tab ${S.statsTab==='leadership'?'active':''}" onclick="S.statsTab='leadership';render()">🎯 Focus</div>
+    <div class="tab ${S.statsTab==='direction'?'active':''}" onclick="S.statsTab='direction';render()">🧭 Review</div>
+    <div class="tab ${S.statsTab==='eveninglog'?'active':''}" onclick="S.statsTab='eveninglog';render()">🌙 Dagbog</div>
   </div>`;
 
   if(S.statsTab==='weekly') h+=renderWeeklyMatrix();
@@ -2352,6 +3349,9 @@ function renderStatsHub() {
   else if(S.statsTab==='report') h+=renderHabitReport();
   else if(S.statsTab==='business') h+=renderBusiness();
   else if(S.statsTab==='journal') h+=renderJournal();
+  else if(S.statsTab==='leadership') h+=renderLeadershipSession();
+  else if(S.statsTab==='direction') h+=renderDirectionReview();
+  else if(S.statsTab==='eveninglog') h+=renderEveningLog();
 
   h+=`</div>`;
   return h;
@@ -2553,16 +3553,17 @@ function renderCalendar() {
 function renderManage() {
   let h=`<div style="padding:16px 0"><div class="manage-hdr"><div class="manage-title">\uD83D\uDCDC Alle Quests</div>
     <button class="btn-new" onclick="editQuest(null)">+ Ny Quest</button></div>`;
+
   S.quests.forEach(q=>{
     const cat=getCat(q.category);
     const qEmoji=q.emoji||cat.icon;
     const qColor=q.color||cat.color;
-    const pLbl=q.period==='morning'?'🌅':q.period==='midday'?'☀️':'🌙';
+    const pLbl=q.period==='morning'?'\uD83C\uDF05':q.period==='midday'?'\u2600\uFE0F':'\uD83C\uDF19';
     h+=`<div class="mi ${q.active?'':'off'}" style="border-left:3px solid ${qColor}">
       <div class="mi-tog" style="border-color:${qColor};${q.active?'background:'+qColor:''}" onclick="toggleQuestActive(${q.id})">
-        ${q.active?'<span style="color:#fff;font-size:11px">✓</span>':''}</div>
+        ${q.active?'<span style="color:#fff;font-size:11px">\u2713</span>':''}</div>
       <div class="mi-info"><div class="mi-nm">${qEmoji} ${q.title}</div>
-        <div class="mi-meta">${pLbl} ${q.days.map(d=>DAY_NAMES[d]).join(',')} · +${q.xp} XP</div></div>
+        <div class="mi-meta">${pLbl} ${q.days.map(d=>DAY_NAMES[d]).join(',')} \u00B7 +${q.xp} XP</div></div>
       <button class="qi-edit" onclick="editQuest(S.quests.find(x=>x.id===${q.id}))">Rediger</button></div>`;
   });
   h+=`</div>`;
@@ -2624,7 +3625,7 @@ function renderEditor() {
     <div class="btn-row">
       <button class="btn-save" onclick="saveEditedQuest()">${isNew?'Opret Quest':'Gem Ændringer'}</button>
       ${!isNew?`<button class="btn-del" onclick="deleteQuest(${q.id})">Slet</button>`:''}
-      <button class="btn-cancel" onclick="setView('quests')">Annuller</button></div></div>`;
+      <button class="btn-cancel" onclick="setView(S._editReturnTo||'quests');S._editReturnTo=null">Annuller</button></div></div>`;
   return h;
 }
 
