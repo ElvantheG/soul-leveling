@@ -826,6 +826,8 @@ let S = {
     {id:3,title:"Lead Generation",description:"Skriv 3 presell-posts eller DMs",period:"midday",category:"business",xp:40,habit:{time:"10:00",place:"Kontoret",trigger:"Når morgenmødet er slut",twoMin:"Åbn din DM-liste og skriv én besked",reward:"5 min fresh air break",why:"Jeg er en der rækker ud. Jeg forbinder med mennesker fra kærlighed."},days:[1,2,3,4,5],active:true},
     {id:4,title:"Sales Conversations",description:"Tag 2 T2-kvalificeringssamtaler",period:"midday",category:"business",xp:60,habit:{time:"11:00",place:"Kontoret",trigger:"Efter lead gen",twoMin:"Åbn CRM og vælg næste lead",reward:"Fejr med din favorit-snack",why:"Jeg er en trusted advisor. Jeg hjælper folk med at træffe gode beslutninger."},days:[1,2,3,4,5],active:true},
     {id:5,title:"Offer Creation",description:"Arbejd 30 min på dit tilbud / T3",period:"midday",category:"business",xp:45,habit:{time:"13:00",place:"Kontoret",trigger:"Efter frokost",twoMin:"Åbn dit offer-dokument",reward:"Kop kaffe og 5 min pause",why:"Jeg er en skaber. Jeg bygger ting der transformerer folks liv."},days:[1,3,5],active:true},
+    {id:9,title:"Bevidst Frokost",description:"Spis langsomt og nærværende — ingen skærm",period:"midday",category:"mind",xp:20,habit:{time:"12:00",place:"Køkkenet",trigger:"Når klokken er 12",twoMin:"Læg telefonen væk og tag første bid bevidst",reward:"5 min stille kaffe efter",why:"Jeg er nærværende i hvert øjeblik. Jeg ærer min krop med bevidst næring."},days:[1,2,3,4,5],active:true},
+    {id:10,title:"Middagsvandring",description:"15 min frisk luft — gå uden telefon",period:"midday",category:"activation",xp:25,habit:{time:"14:00",place:"Udendørs",trigger:"Efter frokost og kaffe",twoMin:"Rejs dig op og tag skoene på",reward:"Mærk energien i kroppen",why:"Jeg tanker op med bevægelse og luft. Naturen genoplader min sjæl."},days:[1,2,3,4,5,6,0],active:true},
     {id:6,title:"Split Activation Walk",description:"Gå en tur i naturen — aktiver dit split",period:"evening",category:"activation",xp:35,habit:{time:"17:00",place:"Udendørs",trigger:"Når arbejdsdagen slutter",twoMin:"Tag skoene på og gå ud ad døren",reward:"Stå stille og mærk energien",why:"Jeg lever i alignment med min energi. Jeg ærer mit design."},days:[1,2,3,4,5,6,0],active:true},
     {id:7,title:"Aftenrefleksion",description:"Journaling — hvad lærte du i dag?",period:"evening",category:"mind",xp:25,habit:{time:"21:00",place:"Soveværelset",trigger:"Når du lægger telefonen",twoMin:"Skriv én sætning om dagen",reward:"10 min stille læsning",why:"Jeg er en der reflekterer. Jeg vokser bevidst med hver dag."},days:[1,2,3,4,5,6,0],active:true},
     {id:8,title:"Aftenstræk",description:"10 min stretching / mobility",period:"evening",category:"fitness",xp:20,habit:{time:"21:30",place:"Stuen",trigger:"Efter journaling",twoMin:"Rul din yogamåtte ud",reward:"Varm te og afslapning",why:"Jeg passer på mit fartøj. Min krop fortjener omsorg."},days:[1,2,3,4,5,6,0],active:true},
@@ -1317,17 +1319,28 @@ function xpBar(cur,max,color='#d4a340',h=12){
   return `<div class="xpb" style="height:${h}px;border:1px solid ${color}33"><div class="xpb-bg"><div class="xpb-fill" style="width:${p}%;background:linear-gradient(90deg,${color}88,${color});box-shadow:0 0 8px ${color}55"></div></div></div>`;
 }
 
-let _notifTimer=null;
+// Direct DOM notification system (bypasses render cycle)
 function notify(text,type='xp') {
-  S.notifications.unshift({id:Date.now()+Math.random(),text,type,time:Date.now()});
-  if(S.notifications.length>3) S.notifications=S.notifications.slice(0,3);
-  render();
-  clearInterval(_notifTimer);
-  _notifTimer=setInterval(()=>{
-    S.notifications=S.notifications.filter(n=>Date.now()-n.time<2500);
-    if(S.notifications.length===0) clearInterval(_notifTimer);
-    render();
-  },500);
+  let wrap=document.getElementById('notif-host');
+  if(!wrap){
+    wrap=document.createElement('div');
+    wrap.id='notif-host';
+    wrap.className='notif-wrap';
+    document.body.appendChild(wrap);
+  }
+  const icons={levelup:'🏆 ',boss:'🐉 ',loot:'🎁 ',event:'🌟 ',xp:'⚡ '};
+  const el=document.createElement('div');
+  el.className=`notif ${type}`;
+  el.textContent=(icons[type]||'⚡ ')+text;
+  el.style.animation='fadeIn .3s ease';
+  wrap.appendChild(el);
+  // Keep max 3
+  while(wrap.children.length>3) wrap.removeChild(wrap.firstChild);
+  // Auto-remove after 2.5s
+  setTimeout(()=>{
+    el.style.animation='fadeOut .4s ease forwards';
+    setTimeout(()=>{if(el.parentNode)el.parentNode.removeChild(el);},400);
+  },2500);
 }
 
 function checkAchievements() {
@@ -1533,8 +1546,7 @@ function render() {
   const av=getAvatar(lv);
   let h='';
 
-  // Notifications
-  h+=`<div class="notif-wrap">${S.notifications.map(n=>`<div class="notif ${n.type}">${n.type==='levelup'?'\uD83C\uDFC6 ':n.type==='boss'?'\uD83D\uDC09 ':n.type==='loot'?'\uD83C\uDF81 ':n.type==='event'?'\uD83C\uDF1F ':'\u26A1 '}${n.text}</div>`).join('')}</div>`;
+  // Notifications handled by direct DOM (notif-host)
 
   // Level Up Modal
   if(S.showLevelUp){
@@ -1580,14 +1592,11 @@ function render() {
   else if(S.view==='character') h+=renderCharacter();
   else if(S.view==='quests') h+=renderManage();
   else if(S.view==='edit') h+=renderEditor();
-  else if(S.view==='world') h+=renderWorld();
-  else if(S.view==='system') h+=renderSystemView();
   else if(S.view==='stats') h+=renderStatsHub();
   else if(S.view==='settings') h+=renderSettings();
 
-  // Bottom Nav
-  const navs=[{id:'dashboard',icon:'⚔️',label:'Quests'},{id:'character',icon:'🧙',label:'Hero'},{id:'stats',icon:'📊',label:'Stats'},{id:'world',icon:'🌍',label:'World'},{id:'system',icon:'🖥️',label:'System'},{id:'settings',icon:'⚙️',label:'Settings'}];
-  // Keep manage/edit accessible from settings
+  // Bottom Nav (4 items — clean mobile layout)
+  const navs=[{id:'dashboard',icon:'⚔️',label:'Quests'},{id:'character',icon:'🧙',label:'Hero'},{id:'stats',icon:'📊',label:'Stats'},{id:'settings',icon:'⚙️',label:'Settings'}];
 
   h+=`<div class="bnav">${navs.map(n=>`<button class="bnav-item ${(S.view===n.id||(S.view==='edit'&&n.id==='settings')||(S.view==='quests'&&n.id==='settings'))?'active':''}" onclick="setView('${n.id}')"><div class="bnav-icon">${n.icon}</div><div class="bnav-lbl">${n.label}</div></button>`).join('')}</div>`;
 
@@ -1656,6 +1665,7 @@ function renderDashboard() {
     "Du er hele universet der oplever sig selv gennem denne karakter.",
     "Når presset stiger, smil. En uendelig sjæl der stresser over XP — det er lidt sjovt.",
     "Din sjæl har intet brug for at bevise. Den er allerede komplet.",
+    "Resistance is the audition to the next level.",
   ];
   const reminderIdx = Math.floor(Date.now() / 60000) % soulReminders.length; // changes every minute
   h+=`<div class="soul-reminder" onclick="S.systemPrompt=SYSTEM_MESSAGES.soul[Math.floor(Math.random()*SYSTEM_MESSAGES.soul.length)];S.showSystemModal=true;if(S.soundOn)AudioFX.play('event');render()">
@@ -1753,18 +1763,13 @@ function renderCharacter() {
   const xpIn=getXpIn(S.totalXp),xpNxt=getXpNext(S.totalXp);
   const ti=Math.min(Math.floor(lv/10),TITLES.length-1);
 
-  // Sub-tabs
+  // Sub-tabs (simplified: 5 tabs)
   let h=`<div class="tabs">
     <div class="tab ${S.subView==='soul'?'active':''}" onclick="setSubView('soul')">Soul</div>
-    <div class="tab ${S.subView==='hdsheet'?'active':''}" onclick="setSubView('hdsheet')">HD</div>
-    <div class="tab ${S.subView==='unblock'?'active':''}" onclick="setSubView('unblock')">Unblock</div>
+    <div class="tab ${S.subView==='hdsheet'||S.subView==='unblock'?'active':''}" onclick="setSubView('hdsheet')">HD</div>
     <div class="tab ${S.subView==='stats'||S.subView==='quests'?'active':''}" onclick="setSubView('stats')">Stats</div>
-    <div class="tab ${S.subView==='badges'?'active':''}" onclick="setSubView('badges')">Badges</div>
+    <div class="tab ${S.subView==='badges'||S.subView==='achievements'?'active':''}" onclick="setSubView('badges')">Badges</div>
     <div class="tab ${S.subView==='meditation'?'active':''}" onclick="setSubView('meditation')">Meditation</div>
-    <div class="tab ${S.subView==='charts'?'active':''}" onclick="setSubView('charts')">Charts</div>
-    <div class="tab ${S.subView==='skills'?'active':''}" onclick="setSubView('skills')">Skills</div>
-    <div class="tab ${S.subView==='achievements'?'active':''}" onclick="setSubView('achievements')">Achieve</div>
-    <div class="tab ${S.subView==='inventory'?'active':''}" onclick="setSubView('inventory')">Inventory</div>
   </div>`;
 
   // Hero Card — with Rank System
@@ -1809,12 +1814,8 @@ function renderCharacter() {
         <div class="char-stat-rank" style="color:${cat.color}">${catTitle}</div></div>`;
     });
   }
-  else if(S.subView==='badges') h+=renderBadges();
+  else if(S.subView==='badges'||S.subView==='achievements') h+=renderBadges();
   else if(S.subView==='meditation') h+=renderMeditation();
-  else if(S.subView==='charts') h+=renderXpChart();
-  else if(S.subView==='skills') h+=renderSkillTrees();
-  else if(S.subView==='achievements') h+=renderAchievements();
-  else if(S.subView==='inventory') h+=renderInventory();
 
   return h;
 }
@@ -1834,6 +1835,11 @@ function renderSoulPhilosophy() {
       <strong style="color:var(--text-bright);font-size:15px">Men du er ikke den karakter.</strong><br><br>
       Du er den der <em>observerer</em> karakteren.
     </div>
+  </div>`;
+
+  // Core Quote
+  h+=`<div class="soul-quote" style="text-align:center;font-size:14px;font-weight:600;border-left:3px solid var(--gold);padding:16px 20px;margin:0 0 14px;background:rgba(212,163,64,.06)">
+    "Resistance is the audition to the next level."
   </div>`;
 
   // The iPad Metaphor
@@ -2335,15 +2341,17 @@ function renderStatsHub() {
   let h=`<div style="padding:8px 0">`;
   h+=`<div class="tabs">
     <div class="tab ${S.statsTab==='weekly'?'active':''}" onclick="S.statsTab='weekly';render()">📊 Uge</div>
-    <div class="tab ${S.statsTab==='monthly'?'active':''}" onclick="S.statsTab='monthly';render()">📅 Måned</div>
     <div class="tab ${S.statsTab==='calendar'?'active':''}" onclick="S.statsTab='calendar';render()">🗓️ Kalender</div>
     <div class="tab ${S.statsTab==='report'?'active':''}" onclick="S.statsTab='report';render()">📈 Rapport</div>
+    <div class="tab ${S.statsTab==='business'?'active':''}" onclick="S.statsTab='business';render()">🏰 Business</div>
+    <div class="tab ${S.statsTab==='journal'?'active':''}" onclick="S.statsTab='journal';render()">📓 Journal</div>
   </div>`;
 
   if(S.statsTab==='weekly') h+=renderWeeklyMatrix();
-  else if(S.statsTab==='monthly') h+=renderMonthlyMatrix();
   else if(S.statsTab==='calendar') h+=renderCalendar();
   else if(S.statsTab==='report') h+=renderHabitReport();
+  else if(S.statsTab==='business') h+=renderBusiness();
+  else if(S.statsTab==='journal') h+=renderJournal();
 
   h+=`</div>`;
   return h;
@@ -2573,13 +2581,6 @@ function renderEditor() {
     <div class="fg"><label class="fl">Quest Navn</label><input class="fi" id="eq_t" value="${esc(q.title)}" placeholder="F.eks. Morgentræning"></div>
     <div class="fg"><label class="fl">Beskrivelse</label><input class="fi" id="eq_d" value="${esc(q.description)}" placeholder="Hvad indebærer det?"></div>
 
-    <div class="fg"><label class="fl">Icon</label>
-      <div class="emoji-pick">${QUEST_EMOJIS.map(e=>`<div class="emoji-opt ${(q.emoji||'')==e?'selected':''}" onclick="window.__eq.emoji='${e}';S.editingQuest=window.__eq;render()">${e}</div>`).join('')}</div>
-    </div>
-
-    <div class="fg"><label class="fl">Farve</label>
-      <div class="color-pick">${QUEST_COLORS.map(c=>`<div class="color-opt ${(q.color||'')==c?'selected':''}" style="background:${c}" onclick="window.__eq.color='${c}';S.editingQuest=window.__eq;render()"></div>`).join('')}</div>
-    </div>
     <div class="fg"><div class="fr">
       <div><label class="fl">Tidspunkt</label><select class="fi" id="eq_p">
         <option value="morning" ${q.period==='morning'?'selected':''}>🌅 Morgen</option>
@@ -3806,17 +3807,6 @@ function renderSettings() {
     <div style="font-size:10px;color:var(--text-dim);margin-top:6px;text-align:center">Del dit rank card på social media!</div>
   </div>`;
 
-  // Streak Insurance
-  h+=`<div class="sec-title" style="margin-top:16px">🛡️ Streak Insurance</div>`;
-  h+=`<div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-      <span style="font-size:13px;color:var(--text)">Aktive forsikringer: <strong style="color:var(--gold)">${S.streakInsurance||0}</strong></span>
-      <button class="biz-btn" onclick="buyStreakInsurance()">Køb (200 XP)</button>
-    </div>
-    <div style="font-size:10px;color:var(--text-dim);line-height:1.4">
-      Beskytter en streak mod ét miss. Bruges automatisk når en streak ellers ville bryde.
-    </div>
-  </div>`;
 
   // Quest Presets
   h+=`<div class="sec-title" style="margin-top:16px">📦 Quest Pakker</div>`;
@@ -3830,26 +3820,6 @@ function renderSettings() {
         <button class="biz-btn" onclick="installPreset('${key}')">Installer</button>
       </div></div>`;
   });
-
-  // Custom Categories
-  h+=`<div class="sec-title" style="margin-top:16px">🎨 Custom Kategorier</div>`;
-  h+=`<div class="card">
-    <button class="btn-new" style="width:100%" onclick="addCustomCategory()">+ Ny Kategori</button>`;
-  if(S.customCats && S.customCats.length>0){
-    S.customCats.forEach(c=>{
-      h+=`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)">
-        <span style="font-size:14px">${c.icon}</span>
-        <span style="font-size:12px;color:${c.color};font-weight:600">${c.name}</span>
-      </div>`;
-    });
-  }
-  h+=`</div>`;
-
-  // Onboarding
-  if(!S.onboardingDone){
-    h+=`<div class="sec-title" style="margin-top:16px">🎮 Tutorial</div>`;
-    h+=renderOnboarding();
-  }
 
   // Danger Zone
   h+=`<div class="sec-title" style="margin-top:16px;color:var(--danger)">⚠️ Danger Zone</div>`;
