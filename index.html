@@ -1317,11 +1317,17 @@ function xpBar(cur,max,color='#d4a340',h=12){
   return `<div class="xpb" style="height:${h}px;border:1px solid ${color}33"><div class="xpb-bg"><div class="xpb-fill" style="width:${p}%;background:linear-gradient(90deg,${color}88,${color});box-shadow:0 0 8px ${color}55"></div></div></div>`;
 }
 
+let _notifTimer=null;
 function notify(text,type='xp') {
   S.notifications.unshift({id:Date.now()+Math.random(),text,type,time:Date.now()});
   if(S.notifications.length>3) S.notifications=S.notifications.slice(0,3);
   render();
-  setTimeout(()=>{S.notifications=S.notifications.filter(n=>Date.now()-n.time<3000);render();},2800);
+  clearInterval(_notifTimer);
+  _notifTimer=setInterval(()=>{
+    S.notifications=S.notifications.filter(n=>Date.now()-n.time<2500);
+    if(S.notifications.length===0) clearInterval(_notifTimer);
+    render();
+  },500);
 }
 
 function checkAchievements() {
