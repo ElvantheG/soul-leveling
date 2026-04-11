@@ -19,6 +19,14 @@
   --success:#4ecdc4;--danger:#e85d4a;--border:#2a2a4a;
   --fitness:#e85d4a;--business:#d4a340;--mind:#7b68ee;--activation:#4ecdc4;
 }
+body.light-mode{
+  --bg:#f0ebe3;--bg2:#e8e0d4;--bg-card:#ffffff;--bg-input:#f5f0e8;
+  --gold:#b8860b;--gold-light:#8b6914;--accent:#5b4cd4;--accent-light:#7b68ee;
+  --text:#2c2c2c;--text-dim:#6b6b7b;--text-bright:#1a1a2e;
+  --success:#2a9d8f;--danger:#c0392b;--border:#d4cfc7;
+  --fitness:#c0392b;--business:#b8860b;--mind:#5b4cd4;--activation:#2a9d8f;
+}
+body.light-mode{background:linear-gradient(180deg,var(--bg),var(--bg2));}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:linear-gradient(180deg,var(--bg),var(--bg2));color:var(--text);min-height:100vh;overflow-x:hidden;}
 .app{max-width:540px;margin:0 auto;padding:0 16px 100px;position:relative;}
 button{font-family:inherit;cursor:pointer;}
@@ -225,9 +233,65 @@ input,select,textarea{font-family:inherit;}
 .bnav-icon{font-size:20px;}
 .bnav-lbl{font-size:10px;font-weight:600;margin-top:1px;}
 
+/* Weekly/Monthly Matrix */
+.matrix-wrap{overflow-x:auto;margin-bottom:14px;-webkit-overflow-scrolling:touch;}
+.matrix-table{border-collapse:collapse;width:100%;min-width:320px;}
+.matrix-table th,.matrix-table td{padding:6px 4px;text-align:center;font-size:10px;border:1px solid var(--border);}
+.matrix-table th{color:var(--text-dim);font-weight:600;background:rgba(0,0,0,.2);position:sticky;top:0;}
+.matrix-table td.done{background:rgba(78,205,196,.2);color:var(--success);}
+.matrix-table td.missed{background:rgba(232,93,74,.1);color:var(--danger);opacity:.5;}
+.matrix-table td.na{background:transparent;color:var(--border);}
+.matrix-table td.today-col{border-color:var(--gold)!important;}
+.matrix-quest{text-align:left!important;white-space:nowrap;max-width:120px;overflow:hidden;text-overflow:ellipsis;font-weight:500;color:var(--text);}
+
+/* Badge System */
+.badge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+.badge-card{background:var(--bg-card);border-radius:12px;padding:14px 10px;text-align:center;border:1px solid var(--border);transition:all .3s ease;}
+.badge-card.earned{border-color:rgba(212,163,64,.4);box-shadow:0 0 15px rgba(212,163,64,.12);animation:scaleIn .4s ease;}
+.badge-card.locked{opacity:.3;filter:grayscale(.9);}
+.badge-icon{font-size:32px;margin-bottom:4px;}
+.badge-name{font-size:10px;font-weight:700;color:var(--gold-light);}
+.badge-desc{font-size:8px;color:var(--text-dim);margin-top:2px;}
+.badge-date{font-size:8px;color:var(--success);margin-top:3px;}
+
+/* Rank Badge */
+.rank-badge{display:inline-block;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;}
+.rank-D{background:rgba(139,130,153,.15);border:1px solid rgba(139,130,153,.3);color:#8b8299;}
+.rank-C{background:rgba(78,205,196,.12);border:1px solid rgba(78,205,196,.25);color:#4ecdc4;}
+.rank-B{background:rgba(123,104,238,.12);border:1px solid rgba(123,104,238,.25);color:#7b68ee;}
+.rank-A{background:rgba(212,163,64,.12);border:1px solid rgba(212,163,64,.3);color:#d4a340;}
+.rank-S{background:rgba(232,93,74,.12);border:1px solid rgba(232,93,74,.3);color:#e85d4a;}
+.rank-SS{background:linear-gradient(135deg,rgba(232,93,74,.15),rgba(212,163,64,.15));border:1px solid rgba(255,100,0,.35);color:#ff6600;}
+.rank-SSS{background:linear-gradient(135deg,rgba(255,100,0,.18),rgba(240,215,140,.18));border:1px solid rgba(240,215,140,.4);color:#f0d78c;text-shadow:0 0 8px rgba(240,215,140,.5);animation:glow-pulse 2s infinite;}
+
+/* Emoji Picker */
+.emoji-pick{display:flex;flex-wrap:wrap;gap:4px;max-height:120px;overflow-y:auto;padding:6px;background:var(--bg-input);border:1px solid var(--border);border-radius:8px;margin-top:4px;}
+.emoji-opt{width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;border-radius:6px;border:2px solid transparent;transition:all .15s ease;}
+.emoji-opt:hover{background:rgba(255,255,255,.08);}
+.emoji-opt.selected{border-color:var(--gold);background:rgba(212,163,64,.1);}
+
+/* Color Picker */
+.color-pick{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;}
+.color-opt{width:28px;height:28px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all .15s ease;}
+.color-opt:hover{transform:scale(1.2);}
+.color-opt.selected{border-color:var(--text-bright);box-shadow:0 0 8px currentColor;}
+
+/* Meditation Tracker */
+.med-card{background:linear-gradient(135deg,var(--bg-card),rgba(123,104,238,.06));border-radius:14px;padding:16px;border:1px solid rgba(123,104,238,.2);margin-bottom:14px;}
+.med-stat{display:flex;justify-content:space-around;text-align:center;margin:12px 0;}
+.med-val{font-size:28px;font-weight:800;color:var(--accent-light);}
+.med-label{font-size:10px;color:var(--text-dim);margin-top:2px;}
+.jhana-bar{display:flex;gap:3px;margin-top:8px;}
+.jhana-level{flex:1;height:8px;border-radius:4px;background:rgba(255,255,255,.05);transition:all .3s ease;}
+.jhana-level.active{background:linear-gradient(90deg,var(--accent),var(--accent-light));box-shadow:0 0 6px rgba(123,104,238,.4);}
+
+/* Date Banner */
+.date-banner{text-align:center;padding:6px 0 2px;font-size:12px;color:var(--text-dim);}
+.date-banner strong{color:var(--gold-light);font-weight:700;}
+
 /* Notif */
-.notif-wrap{position:fixed;top:80px;left:50%;transform:translateX(-50%);width:90%;max-width:480px;z-index:900;pointer-events:none;}
-.notif{padding:9px 14px;border-radius:10px;margin-bottom:5px;font-size:12px;font-weight:500;animation:fadeIn .3s ease;pointer-events:auto;}
+.notif-wrap{position:fixed;top:80px;left:50%;transform:translateX(-50%);width:90%;max-width:480px;z-index:900;pointer-events:none;display:flex;flex-direction:column;gap:8px;}
+.notif{padding:10px 16px;border-radius:10px;font-size:12px;font-weight:500;animation:fadeIn .3s ease;pointer-events:auto;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 4px 12px rgba(0,0,0,.3);text-align:center;}
 .notif.xp{background:rgba(78,205,196,.12);border:1px solid rgba(78,205,196,.25);color:var(--success);}
 .notif.levelup{background:linear-gradient(135deg,rgba(212,163,64,.18),rgba(123,104,238,.18));border:1px solid rgba(212,163,64,.35);color:var(--gold-light);font-weight:700;font-size:14px;}
 .notif.event{background:rgba(123,104,238,.12);border:1px solid rgba(123,104,238,.25);color:var(--accent-light);}
@@ -546,7 +610,59 @@ const CATS = [
   {id:"activation",name:"Split Activation",icon:"\u2728",color:"#4ecdc4",titles:["Dormant","Stirring","Awakening","Resonant","Aligned","Harmonized","Radiant","Luminous","Unified","Sovereign"]},
 ];
 const DAY_NAMES = ["S\u00F8n","Man","Tir","Ons","Tor","Fre","L\u00F8r"];
-const TITLES = ["Nyankommen Sj\u00E6l","V\u00E6kket Sj\u00E6l","L\u00E6rling","S\u00F8ger","Kriger","Ildsj\u00E6l","Mester","Vismand","\u00C6rkekriger","Legende"];
+const TITLES = ["Nyankommen Sjæl","Vækket Sjæl","Lærling","Søger","Kriger","Ildsjæl","Mester","Vismand","Ærkekriger","Legende"];
+
+// ── Rank System (D → SSS like Solo Leveling) ──
+const RANKS = [
+  {id:'D',  name:'D-Rank',  minLv:1,  color:'#8b8299', label:'Hunter Initiate'},
+  {id:'C',  name:'C-Rank',  minLv:10, color:'#4ecdc4', label:'Awakened Hunter'},
+  {id:'B',  name:'B-Rank',  minLv:20, color:'#7b68ee', label:'Elite Hunter'},
+  {id:'A',  name:'A-Rank',  minLv:35, color:'#d4a340', label:'Commander'},
+  {id:'S',  name:'S-Rank',  minLv:50, color:'#e85d4a', label:'National Level'},
+  {id:'SS', name:'SS-Rank', minLv:70, color:'#ff6600', label:'Monarch'},
+  {id:'SSS',name:'SSS-Rank',minLv:90, color:'#f0d78c', label:'Sovereign'},
+];
+function getRank(lv) { let r=RANKS[0]; for(const rk of RANKS){if(lv>=rk.minLv)r=rk;} return r; }
+
+// ── Badge Milestones ──
+const BADGES = [
+  {id:'streak_2', name:'Gnist', icon:'✨', desc:'2-dages streak', check:s=>Object.values(s.questStreaks||{}).some(v=>v>=2)},
+  {id:'streak_5', name:'Flamme', icon:'🔥', desc:'5-dages streak', check:s=>Object.values(s.questStreaks||{}).some(v=>v>=5)},
+  {id:'streak_7', name:'Inferno', icon:'🌋', desc:'7-dages streak', check:s=>Object.values(s.questStreaks||{}).some(v=>v>=7)},
+  {id:'streak_14',name:'Ubrydelig',icon:'⛓️', desc:'14-dages streak', check:s=>Object.values(s.questStreaks||{}).some(v=>v>=14)},
+  {id:'streak_30',name:'Udødelig',icon:'💀', desc:'30-dages streak', check:s=>Object.values(s.questStreaks||{}).some(v=>v>=30)},
+  {id:'streak_60',name:'Titan',icon:'🗿', desc:'60-dages streak', check:s=>Object.values(s.questStreaks||{}).some(v=>v>=60)},
+  {id:'streak_90',name:'Legende',icon:'👑', desc:'90-dages streak', check:s=>Object.values(s.questStreaks||{}).some(v=>v>=90)},
+  {id:'streak_180',name:'Mytisk',icon:'🐉', desc:'180-dages streak', check:s=>Object.values(s.questStreaks||{}).some(v=>v>=180)},
+  {id:'streak_365',name:'Transcendent',icon:'🌌', desc:'365-dages streak', check:s=>Object.values(s.questStreaks||{}).some(v=>v>=365)},
+  {id:'perfect_3',name:'Hat Trick',icon:'🎩', desc:'3 perfect days', check:s=>(s.perfectDays||0)>=3},
+  {id:'perfect_7',name:'Perfektionist',icon:'💎', desc:'7 perfect days', check:s=>(s.perfectDays||0)>=7},
+  {id:'perfect_30',name:'Disciplin-Mester',icon:'🏛️', desc:'30 perfect days', check:s=>(s.perfectDays||0)>=30},
+  {id:'xp_1000',name:'XP Jæger',icon:'⚡', desc:'1.000 total XP', check:s=>s.totalXp>=1000},
+  {id:'xp_5000',name:'XP Kriger',icon:'🗡️', desc:'5.000 total XP', check:s=>s.totalXp>=5000},
+  {id:'xp_10000',name:'XP Mester',icon:'🔮', desc:'10.000 total XP', check:s=>s.totalXp>=10000},
+  {id:'xp_50000',name:'XP Gud',icon:'🌟', desc:'50.000 total XP', check:s=>s.totalXp>=50000},
+  {id:'med_10',name:'Stille Sind',icon:'🧘', desc:'10 timer meditation', check:s=>(s.meditationHours||0)>=10},
+  {id:'med_50',name:'Indre Fred',icon:'☮️', desc:'50 timer meditation', check:s=>(s.meditationHours||0)>=50},
+  {id:'med_100',name:'Vipassana Mester',icon:'🕉️', desc:'100 timer meditation', check:s=>(s.meditationHours||0)>=100},
+  {id:'med_500',name:'Siddharta',icon:'☸️', desc:'500 timer meditation', check:s=>(s.meditationHours||0)>=500},
+  {id:'jhana_1',name:'First Jhana',icon:'🌊', desc:'Nå 1. Jhana', check:s=>(s.jhanaLevel||0)>=1},
+  {id:'jhana_4',name:'Fourth Jhana',icon:'💫', desc:'Nå 4. Jhana', check:s=>(s.jhanaLevel||0)>=4},
+  {id:'jhana_8',name:'Formløs Mester',icon:'🕳️', desc:'Nå 8. Jhana', check:s=>(s.jhanaLevel||0)>=8},
+  {id:'rank_S',name:'S-Rank Hunter',icon:'🏆', desc:'Nå S-Rank', check:s=>getLevel(s.totalXp)>=50},
+  {id:'rank_SSS',name:'Sovereign',icon:'👁️', desc:'Nå SSS-Rank', check:s=>getLevel(s.totalXp)>=90},
+];
+
+// ── Emoji & Color options for quests ──
+const QUEST_EMOJIS = ['⚔️','🏋️','🧘','📚','💼','🎯','🔥','💪','🧠','🌅','🏃','📝','💰','🎨','🎵','🌿','☀️','🌙','⭐','💎','🗡️','🛡️','🔮','🏰','🐉','👑','🦁','🦅','🐺','🌊','❤️','🙏'];
+const QUEST_COLORS = ['#e85d4a','#d4a340','#7b68ee','#4ecdc4','#ff6600','#ff4488','#00c8ff','#88ff44','#ffaa00','#cc66ff','#ff6666','#44ddaa'];
+
+// ── Jhana Levels ──
+const JHANA_NAMES = [
+  'Ingen','1. Jhana (Pīti)','2. Jhana (Sukha)','3. Jhana (Equanimity)',
+  '4. Jhana (Stillhed)','5. Uendelig Rum','6. Uendelig Bevidsthed',
+  '7. Intethed','8. Hverken Perception/Ikke-Perception'
+];
 
 // ── Avatar progression (SVG Warriors) ──
 const AVATARS = [
@@ -742,20 +858,70 @@ let S = {
   systemDismissedToday: [],
   showSystemModal: false,
   showDiagnostics: false,
+  badges: [],
+  meditationHours: 0,
+  meditationLog: [],
+  jhanaLevel: 0,
+  reminders: {},
 };
 
-// ── Persistence (localStorage) ──
+// ── Persistence (localStorage + Supabase Cloud Sync) ──
+const SUPA_URL = 'https://cpdqibpxsktulubmdxre.supabase.co';
+const SUPA_KEY = 'sb_publishable_Rd-6wYtne6rulWLNrTHhRg_vz3vtBkV';
+
+// Unique sync ID — generated once, stored forever
+function getSyncId() {
+  let id = localStorage.getItem('soulLevelingSyncId');
+  if(!id) {
+    id = 'sl_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2,8);
+    localStorage.setItem('soulLevelingSyncId', id);
+  }
+  return id;
+}
+const SYNC_ID = getSyncId();
+
+// Save to localStorage + cloud
+let _syncTimer = null;
 function save() {
   try { localStorage.setItem('soulLevelingState', JSON.stringify(S)); } catch(e) {}
+  // Debounce cloud sync (save to cloud max every 3 seconds)
+  clearTimeout(_syncTimer);
+  _syncTimer = setTimeout(syncToCloud, 3000);
 }
+
+function syncToCloud() {
+  try {
+    const payload = { id: SYNC_ID, state: JSON.parse(JSON.stringify(S)), updated_at: new Date().toISOString() };
+    fetch(SUPA_URL + '/rest/v1/game_state', {
+      method: 'POST',
+      headers: {
+        'apikey': SUPA_KEY,
+        'Authorization': 'Bearer ' + SUPA_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates'
+      },
+      body: JSON.stringify(payload)
+    }).then(r => {
+      if(r.ok) { S._lastCloudSync = new Date().toISOString(); }
+    }).catch(()=>{});
+  } catch(e) {}
+}
+
+function loadFromCloud(syncId) {
+  return fetch(SUPA_URL + '/rest/v1/game_state?id=eq.' + syncId + '&select=state', {
+    headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
+  }).then(r => r.json()).then(rows => {
+    if(rows && rows.length > 0 && rows[0].state) return rows[0].state;
+    return null;
+  }).catch(() => null);
+}
+
 function load() {
   try {
     const raw = localStorage.getItem('soulLevelingState');
     if(raw) {
       const saved = JSON.parse(raw);
-      // Merge saved state but keep new default quests if none saved
       Object.assign(S, saved);
-      // Reset completedToday if it's a new day
       if(saved._lastDay && saved._lastDay !== todayStr) {
         S.completedToday = {};
         S.systemDismissedToday = [];
@@ -763,7 +929,24 @@ function load() {
     }
   } catch(e) {}
   S._lastDay = todayStr;
+  S._syncId = SYNC_ID;
   save();
+  // Also try to load from cloud (async — merges if cloud is newer)
+  loadFromCloud(SYNC_ID).then(cloudState => {
+    if(cloudState && cloudState.totalXp !== undefined) {
+      // Use cloud state if it has more XP (= more progress)
+      if(cloudState.totalXp > S.totalXp) {
+        Object.assign(S, cloudState);
+        S._lastDay = todayStr;
+        if(cloudState._lastDay && cloudState._lastDay !== todayStr) {
+          S.completedToday = {};
+          S.systemDismissedToday = [];
+        }
+        localStorage.setItem('soulLevelingState', JSON.stringify(S));
+        render();
+      }
+    }
+  });
 }
 load();
 
@@ -1136,17 +1319,29 @@ function xpBar(cur,max,color='#d4a340',h=12){
 
 function notify(text,type='xp') {
   S.notifications.unshift({id:Date.now()+Math.random(),text,type,time:Date.now()});
-  if(S.notifications.length>6) S.notifications.pop();
-  setTimeout(()=>{S.notifications=S.notifications.filter(n=>Date.now()-n.time<3500);render();},3300);
+  if(S.notifications.length>3) S.notifications=S.notifications.slice(0,3);
+  render();
+  setTimeout(()=>{S.notifications=S.notifications.filter(n=>Date.now()-n.time<3000);render();},2800);
 }
 
 function checkAchievements() {
   ACHIEVEMENTS.forEach(a => {
     if (!S.achievements.includes(a.id) && a.check(S)) {
       S.achievements.push(a.id);
-      notify(`\uD83C\uDFC5 Achievement Unlocked: ${a.name}!`, 'loot');
+      notify(`🏅 Achievement Unlocked: ${a.name}!`, 'loot');
       AudioFX.play('loot');
       maybeDropLoot();
+    }
+  });
+  checkBadges();
+}
+
+function checkBadges() {
+  if(!S.badges) S.badges=[];
+  BADGES.forEach(b => {
+    if(!S.badges.find(x=>x.id===b.id) && b.check(S)) {
+      S.badges.push({id:b.id,date:todayStr});
+      notify(`🎖️ Badge: ${b.icon} ${b.name}!`, 'loot');
     }
   });
 }
@@ -1231,10 +1426,15 @@ function completeQuest(id) {
     if (newLv > oldLv) {
       S.showLevelUp = true;
       S.levelUpValue = newLv;
-      notify(`\uD83C\uDFC6 LEVEL UP! Du er nu Level ${newLv}!`, 'levelup');
+      notify(`🏆 LEVEL UP! Du er nu Level ${newLv}!`, 'levelup');
       if (S.soundOn) setTimeout(()=>AudioFX.play('levelup'), 300);
       spawnConfetti();
       maybeDropLoot();
+      // Check rank up
+      const oldRank=getRank(oldLv), newRank=getRank(newLv);
+      if(newRank.id!==oldRank.id) {
+        setTimeout(()=>showRankUpCeremony(oldRank,newRank), 800);
+      }
     }
 
     // Check all daily complete
@@ -1306,6 +1506,12 @@ function saveEditedQuest() {
   q.habit.twoMin=document.getElementById('eq_h2').value;
   q.habit.reward=document.getElementById('eq_hr').value;
   q.habit.why=document.getElementById('eq_hwhy').value;
+  // Reminder
+  const remTime=document.getElementById('eq_reminder');
+  if(remTime&&remTime.value) {
+    if(!S.reminders) S.reminders={};
+    S.reminders[q.id]=remTime.value;
+  }
   q.active=true;
   saveQuest(q);
 }
@@ -1337,15 +1543,23 @@ function render() {
     </div></div>`;
   }
 
-  // Header
+  // Date Banner
+  const _now=new Date();
+  const _dayNames=['Søndag','Mandag','Tirsdag','Onsdag','Torsdag','Fredag','Lørdag'];
+  const _monthNames=['Januar','Februar','Marts','April','Maj','Juni','Juli','August','September','Oktober','November','December'];
+  h+=`<div class="date-banner">${_dayNames[_now.getDay()]} <strong>${_now.getDate()}. ${_monthNames[_now.getMonth()]} ${_now.getFullYear()}</strong></div>`;
+
+  // Header with Rank
+  const rank=getRank(lv);
   h+=`<div class="header">
     <div style="display:flex;justify-content:space-between;align-items:center">
       <div></div>
       <div style="text-align:center;flex:1">
         <div class="header-sub">Soul Leveling</div>
         <div class="header-title">${av.emoji} Lv.${lv} ${TITLES[Math.min(Math.floor(lv/10),TITLES.length-1)]}</div>
+        <div style="margin-top:4px"><span class="rank-badge rank-${rank.id}">${rank.name}</span></div>
       </div>
-      <button onclick="toggleSound()" style="background:none;border:none;font-size:18px;cursor:pointer;opacity:.6">${S.soundOn?'\uD83D\uDD0A':'\uD83D\uDD07'}</button>
+      <button onclick="toggleSound()" style="background:none;border:none;font-size:18px;cursor:pointer;opacity:.6">${S.soundOn?'🔊':'🔇'}</button>
     </div>
     <div class="header-xp">${xpBar(xpIn,xpNxt)}<div class="xp-text">${xpIn} / ${xpNxt} XP til Level ${lv+1}</div></div>
   </div>`;
@@ -1362,10 +1576,11 @@ function render() {
   else if(S.view==='edit') h+=renderEditor();
   else if(S.view==='world') h+=renderWorld();
   else if(S.view==='system') h+=renderSystemView();
+  else if(S.view==='stats') h+=renderStatsHub();
   else if(S.view==='settings') h+=renderSettings();
 
   // Bottom Nav
-  const navs=[{id:'dashboard',icon:'\u2694\uFE0F',label:'Quests'},{id:'character',icon:'\uD83E\uDDD9',label:'Hero'},{id:'world',icon:'\uD83C\uDF0D',label:'World'},{id:'system',icon:'\uD83D\uDDA5\uFE0F',label:'System'},{id:'settings',icon:'\u2699\uFE0F',label:'Settings'}];
+  const navs=[{id:'dashboard',icon:'⚔️',label:'Quests'},{id:'character',icon:'🧙',label:'Hero'},{id:'stats',icon:'📊',label:'Stats'},{id:'world',icon:'🌍',label:'World'},{id:'system',icon:'🖥️',label:'System'},{id:'settings',icon:'⚙️',label:'Settings'}];
   // Keep manage/edit accessible from settings
 
   h+=`<div class="bnav">${navs.map(n=>`<button class="bnav-item ${(S.view===n.id||(S.view==='edit'&&n.id==='settings')||(S.view==='quests'&&n.id==='settings'))?'active':''}" onclick="setView('${n.id}')"><div class="bnav-icon">${n.icon}</div><div class="bnav-lbl">${n.label}</div></button>`).join('')}</div>`;
@@ -1438,9 +1653,24 @@ function renderDashboard() {
   ];
   const reminderIdx = Math.floor(Date.now() / 60000) % soulReminders.length; // changes every minute
   h+=`<div class="soul-reminder" onclick="S.systemPrompt=SYSTEM_MESSAGES.soul[Math.floor(Math.random()*SYSTEM_MESSAGES.soul.length)];S.showSystemModal=true;if(S.soundOn)AudioFX.play('event');render()">
-    <div class="soul-orb">\uD83D\uDD2E</div>
+    <div class="soul-orb">🔮</div>
     <div class="soul-text"><strong>Soul Reminder</strong><br>${soulReminders[reminderIdx]}</div>
   </div>`;
+
+  // Moon Phase mini-display
+  const moon=getMoonPhase();
+  h+=`<div style="text-align:center;padding:8px;font-size:11px;color:var(--text-dim)">
+    ${moon.emoji} ${moon.name} — <em>${moon.meaning}</em>
+  </div>`;
+
+  // Pomodoro mini if active
+  if(S.pomodoroActive){
+    h+=`<div class="card" style="text-align:center;border-color:rgba(232,93,74,.3);animation:glow-pulse 2s infinite">
+      <span style="font-size:11px;color:var(--danger);font-weight:600">🍅 Pomodoro aktiv</span>
+      <span id="pomo-display" style="font-size:18px;font-weight:800;color:var(--danger);margin-left:8px;font-family:monospace">--:--</span>
+      <button class="biz-btn" style="margin-left:8px" onclick="stopPomodoro()">Stop</button>
+    </div>`;
+  }
 
   return h;
 }
@@ -1458,14 +1688,16 @@ function renderPeriod(label,icon,period) {
     h+=`<div class="period-quests">`;
     qs.forEach(q=>{
       const cat=getCat(q.category), isDone=!!S.completedToday[q.id];
+      const qColor=q.color||cat.color;
+      const qEmoji=q.emoji||cat.icon;
       const streak=S.questStreaks[q.id]||0;
       const mult=streakMultiplier(streak);
       const earnXp=Math.floor(q.xp*mult);
-      h+=`<div class="qi ${isDone?'done':''}" style="border-color:${isDone?cat.color+'44':'var(--border)'}${isDone?';background:'+cat.color+'0d':''}">
-        <div class="qi-check ${isDone?'done':''}" style="${isDone?'background:'+cat.color+';border-color:'+cat.color:''}" onclick="completeQuest(${q.id})">
-          ${isDone?'<span style="color:#fff;font-size:14px;font-weight:bold">\u2713</span>':''}</div>
+      h+=`<div class="qi ${isDone?'done':''}" style="border-color:${isDone?qColor+'44':'var(--border)'}${isDone?';background:'+qColor+'0d':''};border-left:3px solid ${qColor}">
+        <div class="qi-check ${isDone?'done':''}" style="${isDone?'background:'+qColor+';border-color:'+qColor:''}" onclick="completeQuest(${q.id})">
+          ${isDone?'<span style="color:#fff;font-size:14px;font-weight:bold">✓</span>':''}</div>
         <div class="qi-body">
-          <div class="qi-title ${isDone?'done':''}">${q.title}</div>
+          <div class="qi-title ${isDone?'done':''}">${qEmoji} ${q.title}</div>
           <div class="qi-desc">${q.description}</div>
           ${q.habit&&!isDone?`<div class="qi-habit" style="padding:8px 10px">
             <div style="display:flex;gap:12px;margin-bottom:5px;flex-wrap:wrap">
@@ -1518,23 +1750,36 @@ function renderCharacter() {
   // Sub-tabs
   let h=`<div class="tabs">
     <div class="tab ${S.subView==='soul'?'active':''}" onclick="setSubView('soul')">Soul</div>
-    <div class="tab ${S.subView==='hdsheet'?'active':''}" onclick="setSubView('hdsheet')">HD Attributes</div>
+    <div class="tab ${S.subView==='hdsheet'?'active':''}" onclick="setSubView('hdsheet')">HD</div>
     <div class="tab ${S.subView==='unblock'?'active':''}" onclick="setSubView('unblock')">Unblock</div>
     <div class="tab ${S.subView==='stats'||S.subView==='quests'?'active':''}" onclick="setSubView('stats')">Stats</div>
-    <div class="tab ${S.subView==='skills'?'active':''}" onclick="setSubView('skills')">Skill Tree</div>
-    <div class="tab ${S.subView==='achievements'?'active':''}" onclick="setSubView('achievements')">Achievements</div>
+    <div class="tab ${S.subView==='badges'?'active':''}" onclick="setSubView('badges')">Badges</div>
+    <div class="tab ${S.subView==='meditation'?'active':''}" onclick="setSubView('meditation')">Meditation</div>
+    <div class="tab ${S.subView==='charts'?'active':''}" onclick="setSubView('charts')">Charts</div>
+    <div class="tab ${S.subView==='skills'?'active':''}" onclick="setSubView('skills')">Skills</div>
+    <div class="tab ${S.subView==='achievements'?'active':''}" onclick="setSubView('achievements')">Achieve</div>
     <div class="tab ${S.subView==='inventory'?'active':''}" onclick="setSubView('inventory')">Inventory</div>
   </div>`;
 
-  // Hero Card — reframed as character sheet
+  // Hero Card — with Rank System
+  const rank=getRank(lv);
+  const nextRank=RANKS.find(r=>r.minLv>lv);
+  const badgeCount=(S.badges||[]).length;
   h+=`<div class="char-hero anim-fadein">
     <div style="margin:0 auto 14px">${renderAvatarHTML(lv, 100)}</div>
     <div style="font-size:9px;color:rgba(123,104,238,.6);letter-spacing:2px;text-transform:uppercase">Character Sheet · 3D Meatsuit</div>
+    <div style="margin:8px 0"><span class="rank-badge rank-${rank.id}" style="font-size:14px;padding:5px 16px">${rank.name}</span></div>
     <div class="char-rank">${TITLES[ti]} · ${av.label}</div>
     <div class="char-lv">Level ${lv}</div>
-    <div class="char-total">Total XP: ${S.totalXp.toLocaleString()} · Perfect Days: ${S.perfectDays||0} · Bosses: ${S.bossesDefeated||0}</div>
+    <div style="display:flex;justify-content:center;gap:16px;margin:8px 0">
+      <div style="text-align:center"><div style="font-size:18px;font-weight:800;color:var(--gold)">${S.totalXp.toLocaleString()}</div><div style="font-size:9px;color:var(--text-dim)">Total XP</div></div>
+      <div style="text-align:center"><div style="font-size:18px;font-weight:800;color:var(--success)">${S.perfectDays||0}</div><div style="font-size:9px;color:var(--text-dim)">Perfect Days</div></div>
+      <div style="text-align:center"><div style="font-size:18px;font-weight:800;color:var(--danger)">${S.bossesDefeated||0}</div><div style="font-size:9px;color:var(--text-dim)">Bosses</div></div>
+      <div style="text-align:center"><div style="font-size:18px;font-weight:800;color:var(--accent-light)">${badgeCount}</div><div style="font-size:9px;color:var(--text-dim)">Badges</div></div>
+    </div>
     ${xpBar(xpIn,xpNxt,'#d4a340',14)}
     <div class="xp-text" style="margin-top:5px">${xpIn} / ${xpNxt} XP til Level ${lv+1}</div>
+    ${nextRank?`<div style="font-size:10px;color:var(--text-dim);margin-top:6px">Næste rang: <span style="color:${nextRank.color};font-weight:700">${nextRank.name}</span> ved Level ${nextRank.minLv}</div>`:'<div style="font-size:10px;color:var(--gold-light);margin-top:6px;font-weight:700">🌟 MAXIMUM RANK ACHIEVED 🌟</div>'}
   </div>`;
 
   if(S.subView==='soul') {
@@ -1558,6 +1803,9 @@ function renderCharacter() {
         <div class="char-stat-rank" style="color:${cat.color}">${catTitle}</div></div>`;
     });
   }
+  else if(S.subView==='badges') h+=renderBadges();
+  else if(S.subView==='meditation') h+=renderMeditation();
+  else if(S.subView==='charts') h+=renderXpChart();
   else if(S.subView==='skills') h+=renderSkillTrees();
   else if(S.subView==='achievements') h+=renderAchievements();
   else if(S.subView==='inventory') h+=renderInventory();
@@ -2075,6 +2323,94 @@ function renderBusiness() {
   return h;
 }
 
+// ── Stats Hub (Weekly + Monthly + Calendar combined) ──
+function renderStatsHub() {
+  if(!S.statsTab) S.statsTab='weekly';
+  let h=`<div style="padding:8px 0">`;
+  h+=`<div class="tabs">
+    <div class="tab ${S.statsTab==='weekly'?'active':''}" onclick="S.statsTab='weekly';render()">📊 Uge</div>
+    <div class="tab ${S.statsTab==='monthly'?'active':''}" onclick="S.statsTab='monthly';render()">📅 Måned</div>
+    <div class="tab ${S.statsTab==='calendar'?'active':''}" onclick="S.statsTab='calendar';render()">🗓️ Kalender</div>
+    <div class="tab ${S.statsTab==='report'?'active':''}" onclick="S.statsTab='report';render()">📈 Rapport</div>
+  </div>`;
+
+  if(S.statsTab==='weekly') h+=renderWeeklyMatrix();
+  else if(S.statsTab==='monthly') h+=renderMonthlyMatrix();
+  else if(S.statsTab==='calendar') h+=renderCalendar();
+  else if(S.statsTab==='report') h+=renderHabitReport();
+
+  h+=`</div>`;
+  return h;
+}
+
+// ── Habit Report ──
+function renderHabitReport() {
+  const now=new Date();
+  let h=`<div class="sec-title">📈 Habit Rapport</div>`;
+
+  // Overall stats
+  let total7=0,done7=0,total30=0,done30=0;
+  for(let i=0;i<30;i++){
+    const d=new Date(now);d.setDate(d.getDate()-i);
+    const ds=d.toISOString().slice(0,10);
+    const doneList=S.completedDates[ds]||[];
+    const possible=S.quests.filter(q=>q.days.includes(d.getDay())&&q.active).length;
+    if(i<7){total7+=possible;done7+=doneList.length;}
+    total30+=possible;done30+=doneList.length;
+  }
+  const pct7=total7?Math.round(done7/total7*100):0;
+  const pct30=total30?Math.round(done30/total30*100):0;
+
+  h+=`<div class="card">
+    <div style="display:flex;justify-content:space-around;text-align:center">
+      <div><div style="font-size:28px;font-weight:800;color:${pct7>=80?'var(--success)':pct7>=50?'var(--gold)':'var(--danger)'}">${pct7}%</div><div style="font-size:10px;color:var(--text-dim)">Sidste 7 dage</div></div>
+      <div><div style="font-size:28px;font-weight:800;color:${pct30>=80?'var(--success)':pct30>=50?'var(--gold)':'var(--danger)'}">${pct30}%</div><div style="font-size:10px;color:var(--text-dim)">Sidste 30 dage</div></div>
+    </div></div>`;
+
+  // Best and worst quests
+  const questStats=S.quests.filter(q=>q.active).map(q=>{
+    let done=0,possible=0;
+    for(let i=0;i<30;i++){
+      const d=new Date(now);d.setDate(d.getDate()-i);
+      if(!q.days.includes(d.getDay())) continue;
+      possible++;
+      const ds=d.toISOString().slice(0,10);
+      if((S.completedDates[ds]||[]).includes(q.id)) done++;
+    }
+    return {quest:q,done,possible,pct:possible?Math.round(done/possible*100):0,streak:S.questStreaks[q.id]||0};
+  }).sort((a,b)=>b.pct-a.pct);
+
+  h+=`<div class="sec-title" style="margin-top:14px">🏆 Quest Ranking (30d)</div>`;
+  questStats.forEach((qs,i)=>{
+    const cat=getCat(qs.quest.category);
+    const qEmoji=qs.quest.emoji||cat.icon;
+    const qColor=qs.quest.color||cat.color;
+    const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+    h+=`<div class="card" style="padding:10px 14px;margin-bottom:6px;border-left:3px solid ${qColor}">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:12px;color:var(--text)">${medal} ${qEmoji} ${qs.quest.title}</span>
+        <span style="font-size:14px;font-weight:800;color:${qs.pct>=80?'var(--success)':qs.pct>=50?'var(--gold)':'var(--danger)'}">${qs.pct}%</span>
+      </div>
+      <div style="font-size:10px;color:var(--text-dim);margin-top:2px">${qs.done}/${qs.possible} dage · 🔥 ${qs.streak}d streak</div>
+    </div>`;
+  });
+
+  // Suggestions
+  const worst=questStats.filter(q=>q.pct<50);
+  if(worst.length>0){
+    h+=`<div class="sec-title" style="margin-top:14px">💡 Forslag</div><div class="card">`;
+    worst.forEach(qs=>{
+      h+=`<div style="padding:6px 0;border-bottom:1px solid var(--border);font-size:11px;color:var(--text-dim);line-height:1.5">
+        <strong style="color:var(--danger)">${qs.quest.title}</strong> har kun ${qs.pct}% completion.
+        ${qs.pct<25?'Overvej at gøre den lettere (2-min version) eller fjerne den midlertidigt.':'Prøv at tilføje en stærkere trigger eller belønning.'}
+      </div>`;
+    });
+    h+=`</div>`;
+  }
+
+  return h;
+}
+
 function renderCalendar() {
   if(!S.calRange) S.calRange = 7;
   const range = S.calRange;
@@ -2205,11 +2541,13 @@ function renderManage() {
     <button class="btn-new" onclick="editQuest(null)">+ Ny Quest</button></div>`;
   S.quests.forEach(q=>{
     const cat=getCat(q.category);
-    const pLbl=q.period==='morning'?'\uD83C\uDF05':q.period==='midday'?'\u2600\uFE0F':'\uD83C\uDF19';
-    h+=`<div class="mi ${q.active?'':'off'}">
-      <div class="mi-tog" style="border-color:${cat.color};${q.active?'background:'+cat.color:''}" onclick="toggleQuestActive(${q.id})">
-        ${q.active?'<span style="color:#fff;font-size:11px">\u2713</span>':''}</div>
-      <div class="mi-info"><div class="mi-nm">${cat.icon} ${q.title}</div>
+    const qEmoji=q.emoji||cat.icon;
+    const qColor=q.color||cat.color;
+    const pLbl=q.period==='morning'?'🌅':q.period==='midday'?'☀️':'🌙';
+    h+=`<div class="mi ${q.active?'':'off'}" style="border-left:3px solid ${qColor}">
+      <div class="mi-tog" style="border-color:${qColor};${q.active?'background:'+qColor:''}" onclick="toggleQuestActive(${q.id})">
+        ${q.active?'<span style="color:#fff;font-size:11px">✓</span>':''}</div>
+      <div class="mi-info"><div class="mi-nm">${qEmoji} ${q.title}</div>
         <div class="mi-meta">${pLbl} ${q.days.map(d=>DAY_NAMES[d]).join(',')} · +${q.xp} XP</div></div>
       <button class="qi-edit" onclick="editQuest(S.quests.find(x=>x.id===${q.id}))">Rediger</button></div>`;
   });
@@ -2220,13 +2558,22 @@ function renderManage() {
 // ── Editor ──
 function renderEditor() {
   const q=S.editingQuest||{id:0,title:'',description:'',period:'morning',category:'fitness',xp:30,
-    habit:{time:'08:00',place:'',trigger:'',twoMin:'',reward:''},days:[1,2,3,4,5],active:true};
+    habit:{time:'08:00',place:'',trigger:'',twoMin:'',reward:''},days:[1,2,3,4,5],active:true,emoji:'',color:''};
   window.__eq=JSON.parse(JSON.stringify(q));
   const isNew=!S.editingQuest;
+  const cat=getCat(q.category);
   let h=`<div style="padding:16px 0">
-    <div class="editor-title">${isNew?'\u2728 Ny Quest':'\u2692\uFE0F Rediger Quest'}</div>
+    <div class="editor-title">${isNew?'✨ Ny Quest':'🛠️ Rediger Quest'}</div>
     <div class="fg"><label class="fl">Quest Navn</label><input class="fi" id="eq_t" value="${esc(q.title)}" placeholder="F.eks. Morgentræning"></div>
     <div class="fg"><label class="fl">Beskrivelse</label><input class="fi" id="eq_d" value="${esc(q.description)}" placeholder="Hvad indebærer det?"></div>
+
+    <div class="fg"><label class="fl">Icon</label>
+      <div class="emoji-pick">${QUEST_EMOJIS.map(e=>`<div class="emoji-opt ${(q.emoji||'')==e?'selected':''}" onclick="window.__eq.emoji='${e}';S.editingQuest=window.__eq;render()">${e}</div>`).join('')}</div>
+    </div>
+
+    <div class="fg"><label class="fl">Farve</label>
+      <div class="color-pick">${QUEST_COLORS.map(c=>`<div class="color-opt ${(q.color||'')==c?'selected':''}" style="background:${c}" onclick="window.__eq.color='${c}';S.editingQuest=window.__eq;render()"></div>`).join('')}</div>
+    </div>
     <div class="fg"><div class="fr">
       <div><label class="fl">Tidspunkt</label><select class="fi" id="eq_p">
         <option value="morning" ${q.period==='morning'?'selected':''}>🌅 Morgen</option>
@@ -2255,6 +2602,18 @@ function renderEditor() {
         </div>
       </div>
     </div>
+
+    <div class="card" style="margin-top:12px;border-color:rgba(78,205,196,.2)">
+      <div style="font-size:12px;font-weight:600;color:var(--success);margin-bottom:6px">⏰ Påmindelse</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <input class="fi" id="eq_reminder" type="time" value="${(S.reminders||{})[q.id]||''}" style="flex:1">
+        <span style="font-size:10px;color:var(--text-dim)">Daglig påmindelse</span>
+      </div>
+      <div style="font-size:9px;color:var(--text-dim);margin-top:4px;line-height:1.4">
+        Sæt en tid for at få en browser-notifikation som påmindelse. Kræver at du tillader notifikationer.
+      </div>
+    </div>
+
     <div class="btn-row">
       <button class="btn-save" onclick="saveEditedQuest()">${isNew?'Opret Quest':'Gem Ændringer'}</button>
       ${!isNew?`<button class="btn-del" onclick="deleteQuest(${q.id})">Slet</button>`:''}
@@ -2300,11 +2659,17 @@ function renderSystemModal(msg) {
 function renderSystemView() {
   let h=`<div class="tabs">
     <div class="tab ${S.subView==='diagnostics'||S.subView==='quests'?'active':''}" onclick="setSubView('diagnostics')">Diagnostics</div>
-    <div class="tab ${S.subView==='theory'?'active':''}" onclick="setSubView('theory')">Habit Theory</div>
+    <div class="tab ${S.subView==='journal'?'active':''}" onclick="setSubView('journal')">📓 Dagbog</div>
+    <div class="tab ${S.subView==='pomodoro'?'active':''}" onclick="setSubView('pomodoro')">🍅 Pomodoro</div>
+    <div class="tab ${S.subView==='habitstack'?'active':''}" onclick="setSubView('habitstack')">🔗 Stacking</div>
+    <div class="tab ${S.subView==='theory'?'active':''}" onclick="setSubView('theory')">Theory</div>
     <div class="tab ${S.subView==='scorecard'?'active':''}" onclick="setSubView('scorecard')">Scorecard</div>
   </div>`;
 
   if(S.subView==='diagnostics'||S.subView==='quests') h+=renderDiagnostics();
+  else if(S.subView==='journal') h+=renderJournal();
+  else if(S.subView==='pomodoro') h+=renderPomodoro();
+  else if(S.subView==='habitstack') h+=renderHabitStack();
   else if(S.subView==='theory') h+=renderHabitTheory();
   else if(S.subView==='scorecard') h+=renderScorecard();
   return h;
@@ -2466,6 +2831,830 @@ function renderScorecard() {
   return h;
 }
 
+// ── Badges ──
+function renderBadges() {
+  if(!S.badges) S.badges=[];
+  checkBadges();
+  let h=`<div class="sec-title">🎖️ Badge Collection</div>`;
+  h+=`<div style="text-align:center;margin-bottom:14px">
+    <span style="font-size:28px;font-weight:800;color:var(--gold)">${S.badges.length}</span>
+    <span style="font-size:12px;color:var(--text-dim)"> / ${BADGES.length} badges earned</span></div>`;
+
+  // Group badges
+  const groups = [
+    {label:'🔥 Streak Milestones', badges:BADGES.filter(b=>b.id.startsWith('streak_'))},
+    {label:'💎 Perfect Days', badges:BADGES.filter(b=>b.id.startsWith('perfect_'))},
+    {label:'⚡ XP Milestones', badges:BADGES.filter(b=>b.id.startsWith('xp_'))},
+    {label:'🧘 Meditation', badges:BADGES.filter(b=>b.id.startsWith('med_')||b.id.startsWith('jhana_'))},
+    {label:'🏆 Rank', badges:BADGES.filter(b=>b.id.startsWith('rank_'))},
+  ];
+  groups.forEach(g=>{
+    h+=`<div style="font-size:12px;font-weight:600;color:var(--text-dim);margin:12px 0 8px">${g.label}</div>`;
+    h+=`<div class="badge-grid">`;
+    g.badges.forEach(b=>{
+      const earned=S.badges.find(x=>x.id===b.id);
+      h+=`<div class="badge-card ${earned?'earned':'locked'}">
+        <div class="badge-icon">${b.icon}</div>
+        <div class="badge-name">${b.name}</div>
+        <div class="badge-desc">${b.desc}</div>
+        ${earned?`<div class="badge-date">✓ ${earned.date}</div>`:''}
+      </div>`;
+    });
+    h+=`</div>`;
+  });
+  return h;
+}
+
+// ── Meditation Tracker ──
+function renderMeditation() {
+  if(!S.meditationLog) S.meditationLog=[];
+  if(!S.meditationHours) S.meditationHours=0;
+  if(!S.jhanaLevel) S.jhanaLevel=0;
+
+  let h=`<div class="sec-title">🧘 Meditation & Jhana Tracker</div>`;
+
+  // Stats overview
+  h+=`<div class="med-card">
+    <div style="text-align:center;font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">Vipassana Progress</div>
+    <div class="med-stat">
+      <div><div class="med-val">${S.meditationHours}</div><div class="med-label">Timer Total</div></div>
+      <div><div class="med-val">${S.meditationLog.length}</div><div class="med-label">Sessioner</div></div>
+      <div><div class="med-val">${S.jhanaLevel}</div><div class="med-label">Jhana Level</div></div>
+    </div>
+
+    <div style="font-size:11px;color:var(--text-dim);margin:10px 0 4px">Jhana Progression</div>
+    <div class="jhana-bar">
+      ${[1,2,3,4,5,6,7,8].map(j=>`<div class="jhana-level ${j<=S.jhanaLevel?'active':''}" title="${JHANA_NAMES[j]}"></div>`).join('')}
+    </div>
+    <div style="font-size:10px;color:var(--accent-light);margin-top:6px;text-align:center;font-weight:600">${JHANA_NAMES[S.jhanaLevel]}</div>
+  </div>`;
+
+  // Log new session
+  h+=`<div class="card">
+    <div style="font-size:12px;font-weight:600;color:var(--gold-light);margin-bottom:10px">📝 Log Meditation Session</div>
+    <div style="display:flex;gap:8px;margin-bottom:8px">
+      <div style="flex:1"><label class="fl">Minutter</label><input id="med_min" class="fi" type="number" min="1" max="480" value="15" placeholder="Min..."></div>
+      <div style="flex:1"><label class="fl">Type</label><select id="med_type" class="fi">
+        <option value="vipassana">Vipassana</option>
+        <option value="anapana">Ānāpāna</option>
+        <option value="metta">Mettā</option>
+        <option value="body_scan">Body Scan</option>
+        <option value="open_awareness">Open Awareness</option>
+        <option value="other">Andet</option>
+      </select></div>
+    </div>
+    <div style="margin-bottom:8px"><label class="fl">Noter (valgfrit)</label><input id="med_notes" class="fi" placeholder="Oplevelser, indsigter..."></div>
+    <button class="btn-save" style="width:100%;font-size:12px;padding:9px" onclick="logMeditation()">🧘 Log Session</button>
+  </div>`;
+
+  // Jhana level setter
+  h+=`<div class="card">
+    <div style="font-size:12px;font-weight:600;color:var(--accent-light);margin-bottom:8px">🌊 Jhana Level</div>
+    <div style="font-size:10px;color:var(--text-dim);margin-bottom:8px;line-height:1.5">
+      Opdater dit nuværende jhana-niveau baseret på din meditationspraksis. Vær ærlig — dette er for dig selv.
+    </div>
+    <select id="jhana_sel" class="fi" onchange="S.jhanaLevel=parseInt(this.value);save();render()">
+      ${JHANA_NAMES.map((n,i)=>`<option value="${i}" ${S.jhanaLevel===i?'selected':''}>${i}. ${n}</option>`).join('')}
+    </select>
+  </div>`;
+
+  // Recent sessions
+  if(S.meditationLog.length>0){
+    h+=`<div class="sec-title" style="margin-top:14px">📅 Seneste Sessioner</div>`;
+    S.meditationLog.slice(-10).reverse().forEach(m=>{
+      h+=`<div class="card" style="padding:10px 14px;margin-bottom:6px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <span style="font-size:12px;font-weight:600;color:var(--text)">${m.minutes} min ${m.type||'meditation'}</span>
+            ${m.notes?`<div style="font-size:10px;color:var(--text-dim);margin-top:2px">${esc(m.notes)}</div>`:''}
+          </div>
+          <span style="font-size:10px;color:var(--text-dim)">${m.date}</span>
+        </div></div>`;
+    });
+  }
+
+  // Milestones
+  h+=`<div class="sec-title" style="margin-top:14px">🎯 Meditation Milestones</div><div class="card">`;
+  const medMilestones=[10,50,100,200,500,1000];
+  medMilestones.forEach(m=>{
+    const done=S.meditationHours>=m;
+    const pct=Math.min((S.meditationHours/m)*100,100);
+    h+=`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)">
+      <span style="font-size:14px">${done?'✅':'⬜'}</span>
+      <span style="flex:1;font-size:11px;color:${done?'var(--success)':'var(--text-dim)'}">${m} timer</span>
+      <div style="width:60px;height:5px;background:rgba(0,0,0,.3);border-radius:3px;overflow:hidden">
+        <div style="width:${pct}%;height:100%;background:var(--accent);border-radius:3px"></div></div>
+      <span style="font-size:10px;color:var(--text-dim);min-width:35px;text-align:right">${Math.round(pct)}%</span>
+    </div>`;
+  });
+  h+=`</div>`;
+
+  return h;
+}
+
+function logMeditation() {
+  const min=parseInt(document.getElementById('med_min').value)||0;
+  if(min<1){notify('⚠ Indtast antal minutter','boss');return;}
+  const type=document.getElementById('med_type').value;
+  const notes=document.getElementById('med_notes').value.trim();
+  if(!S.meditationLog) S.meditationLog=[];
+  S.meditationLog.push({date:todayStr,minutes:min,type,notes,hours:Math.round(min/60*100)/100});
+  S.meditationHours=(S.meditationHours||0)+Math.round(min/60*100)/100;
+  save();
+  notify(`🧘 ${min} min ${type} logget! Total: ${Math.round(S.meditationHours)}t`,'xp');
+  checkBadges();
+  render();
+}
+
+// ── Weekly Matrix View ──
+function renderWeeklyMatrix() {
+  const now=new Date();
+  let h=`<div class="sec-title">📊 Ugeoversigt (Habit Matrix)</div>`;
+
+  // Generate 7 days
+  const days=[];
+  for(let i=6;i>=0;i--){
+    const d=new Date(now);d.setDate(d.getDate()-i);
+    days.push(d);
+  }
+
+  h+=`<div class="matrix-wrap"><table class="matrix-table">
+    <tr><th style="text-align:left;min-width:100px">Quest</th>`;
+  days.forEach((d,i)=>{
+    const isToday=i===6;
+    h+=`<th class="${isToday?'today-col':''}" style="${isToday?'color:var(--gold)':''}">${DAY_NAMES[d.getDay()]}<br>${d.getDate()}</th>`;
+  });
+  h+=`</tr>`;
+
+  S.quests.filter(q=>q.active).forEach(q=>{
+    const cat=getCat(q.category);
+    const qEmoji=q.emoji||cat.icon;
+    const qColor=q.color||cat.color;
+    h+=`<tr><td class="matrix-quest"><span style="color:${qColor}">${qEmoji}</span> ${q.title}</td>`;
+    days.forEach((d,i)=>{
+      const ds=d.toISOString().slice(0,10);
+      const doneList=S.completedDates[ds]||[];
+      const isScheduled=q.days.includes(d.getDay());
+      const isDone=doneList.includes(q.id);
+      const isToday=i===6;
+      if(!isScheduled) h+=`<td class="na ${isToday?'today-col':''}">·</td>`;
+      else if(isDone) h+=`<td class="done ${isToday?'today-col':''}">✓</td>`;
+      else h+=`<td class="missed ${isToday?'today-col':''}">✗</td>`;
+    });
+    h+=`</tr>`;
+  });
+  h+=`</table></div>`;
+  return h;
+}
+
+// ── Monthly Matrix View ──
+function renderMonthlyMatrix() {
+  const now=new Date();
+  const year=now.getFullYear(),month=now.getMonth();
+  const daysInMonth=new Date(year,month+1,0).getDate();
+  const _mNames=['Januar','Februar','Marts','April','Maj','Juni','Juli','August','September','Oktober','November','December'];
+
+  let h=`<div class="sec-title">📅 Månedsoversigt — ${_mNames[month]} ${year}</div>`;
+
+  // Summary bar
+  let totalDone=0,totalPossible=0;
+  for(let d=1;d<=Math.min(now.getDate(),daysInMonth);d++){
+    const dt=new Date(year,month,d);
+    const ds=dt.toISOString().slice(0,10);
+    const doneList=S.completedDates[ds]||[];
+    const possible=S.quests.filter(q=>q.days.includes(dt.getDay())&&q.active).length;
+    totalDone+=doneList.length;totalPossible+=possible;
+  }
+  const monthPct=totalPossible?Math.round(totalDone/totalPossible*100):0;
+
+  h+=`<div class="card" style="text-align:center;margin-bottom:14px">
+    <div style="font-size:32px;font-weight:800;color:${monthPct>=80?'var(--success)':monthPct>=50?'var(--gold)':'var(--danger)'}">${monthPct}%</div>
+    <div style="font-size:10px;color:var(--text-dim)">Completion denne måned (${totalDone}/${totalPossible})</div>
+  </div>`;
+
+  // Calendar grid with heatmap
+  h+=`<div class="heatmap" style="grid-template-columns:repeat(7,1fr);gap:4px">`;
+  DAY_NAMES.forEach(d=>h+=`<div class="hm-label">${d}</div>`);
+
+  // Pad start
+  const firstDow=new Date(year,month,1).getDay();
+  for(let i=0;i<firstDow;i++) h+=`<div></div>`;
+
+  for(let d=1;d<=daysInMonth;d++){
+    const dt=new Date(year,month,d);
+    const ds=dt.toISOString().slice(0,10);
+    const doneList=S.completedDates[ds]||[];
+    const possible=S.quests.filter(q=>q.days.includes(dt.getDay())&&q.active).length;
+    const ratio=possible?doneList.length/possible:0;
+    const isToday=d===now.getDate();
+    const isFuture=d>now.getDate();
+    const cls=isFuture?'hm-future':ratio===0?'hm-empty':ratio<.33?'hm-low':ratio<.66?'hm-mid':ratio<1?'hm-high':'hm-full';
+    h+=`<div class="hm-cell ${cls}" style="${isToday?'border:2px solid var(--gold);font-weight:700':''}" title="${ds}: ${doneList.length}/${possible}">${d}</div>`;
+  }
+  h+=`</div>`;
+
+  // Per-quest monthly stats
+  h+=`<div class="sec-title" style="margin-top:14px">📈 Quest Rapport — Denne Måned</div>`;
+  S.quests.filter(q=>q.active).forEach(q=>{
+    const cat=getCat(q.category);
+    const qEmoji=q.emoji||cat.icon;
+    const qColor=q.color||cat.color;
+    let done=0,possible=0;
+    for(let d=1;d<=Math.min(now.getDate(),daysInMonth);d++){
+      const dt=new Date(year,month,d);
+      if(!q.days.includes(dt.getDay())) continue;
+      possible++;
+      const ds=dt.toISOString().slice(0,10);
+      if((S.completedDates[ds]||[]).includes(q.id)) done++;
+    }
+    const pct=possible?Math.round(done/possible*100):0;
+    const streak=S.questStreaks[q.id]||0;
+    const best=S.questBestStreaks[q.id]||0;
+    h+=`<div class="card" style="padding:10px 14px;margin-bottom:8px;border-left:3px solid ${qColor}">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <span style="font-size:12px;font-weight:600;color:var(--text)">${qEmoji} ${q.title}</span>
+        <span style="font-size:14px;font-weight:800;color:${pct>=80?'var(--success)':pct>=50?'var(--gold)':'var(--danger)'}">${pct}%</span>
+      </div>
+      <div style="display:flex;gap:12px;font-size:10px;color:var(--text-dim)">
+        <span>${done}/${possible} dage</span>
+        <span>🔥 Streak: ${streak}d</span>
+        <span>Best: ${best}d</span>
+      </div>
+      ${xpBar(done,possible||1,qColor,5)}
+    </div>`;
+  });
+
+  return h;
+}
+
+// ═══ FEATURE PACK: #2-#20 ═══
+
+// ── #2: Habit Stacking Visualizer ──
+function renderHabitStack() {
+  const periods=['morning','midday','evening'];
+  const pLabels={morning:'🌅 Morgen',midday:'☀️ Middag',evening:'🌙 Aften'};
+  let h=`<div class="sec-title">🔗 Habit Stack (Kæde)</div>
+    <div style="font-size:11px;color:var(--text-dim);margin-bottom:12px">Dine vaner kædet sammen via triggers. Hver vane trigger den næste.</div>`;
+  periods.forEach(p=>{
+    const qs=S.quests.filter(q=>q.period===p&&q.active).sort((a,b)=>(a.habit?.time||'').localeCompare(b.habit?.time||''));
+    if(!qs.length) return;
+    h+=`<div style="margin-bottom:16px">
+      <div style="font-size:12px;font-weight:700;color:var(--gold-light);margin-bottom:8px">${pLabels[p]}</div>`;
+    qs.forEach((q,i)=>{
+      const cat=getCat(q.category);
+      const qEmoji=q.emoji||cat.icon;
+      const qColor=q.color||cat.color;
+      h+=`<div style="display:flex;align-items:stretch;gap:10px">
+        <div style="display:flex;flex-direction:column;align-items:center;width:24px">
+          <div style="width:12px;height:12px;border-radius:50%;background:${qColor};border:2px solid ${qColor}88;flex-shrink:0"></div>
+          ${i<qs.length-1?`<div style="flex:1;width:2px;background:linear-gradient(to bottom,${qColor}66,${getCat(qs[i+1].category).color}66);min-height:30px"></div>`:''}
+        </div>
+        <div class="card" style="flex:1;padding:10px 12px;margin-bottom:${i<qs.length-1?'0':'10'}px;border-left:3px solid ${qColor}">
+          <div style="font-size:12px;font-weight:600;color:var(--text)">${qEmoji} ${q.title}</div>
+          <div style="font-size:10px;color:var(--text-dim);margin-top:2px">⏰ ${q.habit?.time||'—'} · 📍 ${q.habit?.place||'—'}</div>
+          ${q.habit?.trigger?`<div style="font-size:10px;color:${qColor};margin-top:3px">👁️ Trigger: ${q.habit.trigger}</div>`:''}
+          ${q.habit?.twoMin?`<div style="font-size:10px;color:var(--success);margin-top:2px">✅ 2-min: ${q.habit.twoMin}</div>`:''}
+        </div>
+      </div>`;
+    });
+    h+=`</div>`;
+  });
+  return h;
+}
+
+// ── #3: Share Rank Card as Image ──
+function shareRankCard() {
+  const lv=getLevel(S.totalXp), rank=getRank(lv), av=getAvatar(lv);
+  const ti=TITLES[Math.min(Math.floor(lv/10),TITLES.length-1)];
+  const c=document.createElement('canvas');
+  c.width=600;c.height=340;
+  const ctx=c.getContext('2d');
+  // Background gradient
+  const grad=ctx.createLinearGradient(0,0,600,340);
+  grad.addColorStop(0,'#1a1a2e');grad.addColorStop(1,'#0f0f23');
+  ctx.fillStyle=grad;ctx.fillRect(0,0,600,340);
+  // Border glow
+  ctx.strokeStyle=rank.color+'88';ctx.lineWidth=3;ctx.strokeRect(10,10,580,320);
+  ctx.strokeStyle=rank.color+'33';ctx.lineWidth=1;ctx.strokeRect(15,15,570,310);
+  // Title
+  ctx.fillStyle='#d4a340';ctx.font='bold 11px sans-serif';ctx.textAlign='center';
+  ctx.fillText('S O U L   L E V E L I N G',300,45);
+  // Avatar emoji
+  ctx.font='48px sans-serif';ctx.fillText(av.emoji,300,110);
+  // Name
+  ctx.fillStyle='#fff8ef';ctx.font='bold 22px sans-serif';
+  ctx.fillText(S.playerName||'Warrior',300,150);
+  // Title
+  ctx.fillStyle=rank.color;ctx.font='bold 14px sans-serif';
+  ctx.fillText(rank.name+' · '+ti,300,175);
+  // Level
+  ctx.fillStyle='#f0d78c';ctx.font='bold 36px sans-serif';
+  ctx.fillText('Level '+lv,300,220);
+  // Stats line
+  ctx.fillStyle='#8b8299';ctx.font='12px sans-serif';
+  ctx.fillText(`XP: ${S.totalXp.toLocaleString()} · Perfect Days: ${S.perfectDays||0} · Bosses: ${S.bossesDefeated||0} · Badges: ${(S.badges||[]).length}`,300,250);
+  // XP bar
+  const xpIn=getXpIn(S.totalXp),xpNxt=getXpNext(S.totalXp);
+  const barW=400,barH=12,barX=100,barY=268;
+  ctx.fillStyle='rgba(0,0,0,.4)';ctx.beginPath();ctx.roundRect(barX,barY,barW,barH,6);ctx.fill();
+  const fillW=Math.min(xpIn/Math.max(xpNxt,1),1)*barW;
+  ctx.fillStyle=rank.color;ctx.beginPath();ctx.roundRect(barX,barY,fillW,barH,6);ctx.fill();
+  ctx.fillStyle='#8b8299';ctx.font='10px sans-serif';
+  ctx.fillText(`${xpIn} / ${xpNxt} XP`,300,298);
+  // Footer
+  ctx.fillStyle='#4a4a6a';ctx.font='10px sans-serif';
+  ctx.fillText('soul-leveling.netlify.app',300,325);
+  // Download
+  c.toBlob(blob=>{
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;a.download='soul-leveling-rank-card.png';a.click();
+    URL.revokeObjectURL(url);
+    notify('📸 Rank card downloaded!','xp');
+  });
+}
+
+// ── #4: Weekly Review System Message ──
+function checkWeeklyReview() {
+  const now=new Date();
+  if(now.getDay()===0 && now.getHours()>=18 && !S._weeklyReviewShown) {
+    // Sunday evening
+    const tq=S.quests.filter(q=>q.active);
+    let done7=0,total7=0;
+    for(let i=0;i<7;i++){
+      const d=new Date(now);d.setDate(d.getDate()-i);
+      const ds=d.toISOString().slice(0,10);
+      total7+=tq.filter(q=>q.days.includes(d.getDay())).length;
+      done7+=(S.completedDates[ds]||[]).length;
+    }
+    const pct=total7?Math.round(done7/total7*100):0;
+    const bestQuest=tq.reduce((best,q)=>{
+      const s=S.questStreaks[q.id]||0;return s>(best.s||0)?{q,s}:best;
+    },{}).q;
+    S.systemPrompt={
+      id:'weekly_review',
+      title:'📊 Ugentlig Review',
+      body:`<strong>Ugen der gik — din rapport:</strong><br><br>
+        Completion: <strong style="color:${pct>=80?'var(--success)':'var(--gold)'}">${pct}%</strong> (${done7}/${total7} quests)<br>
+        ${bestQuest?`Bedste streak: <strong>${bestQuest.title}</strong> (🔥${S.questStreaks[bestQuest.id]}d)`:''}<br><br>
+        <em>Spørgsmål til næste uge:</em><br>
+        1. Hvilken quest gav dig mest energi?<br>
+        2. Hvilken quest kæmper du mest med?<br>
+        3. Er der noget der skal justeres?`,
+      law:{title:'Ugentlig Kalibrering',text:'James Clear: "Review and reflect on your habits at least once a week." Brug 5 minutter nu til at journale over ugen.',example:''}
+    };
+    S.showSystemModal=true;
+    S._weeklyReviewShown=todayStr;
+    save();
+  }
+}
+
+// ── #5: Habit Difficulty Scaling ──
+function getScaledXp(quest) {
+  const streak=S.questStreaks[quest.id]||0;
+  const mult=streakMultiplier(streak);
+  // Permanent scaling: after 30-day best streak, quest gives 1.2x base XP
+  const best=S.questBestStreaks[quest.id]||0;
+  let permMult=1;
+  if(best>=90) permMult=1.5;
+  else if(best>=60) permMult=1.4;
+  else if(best>=30) permMult=1.3;
+  else if(best>=14) permMult=1.2;
+  else if(best>=7) permMult=1.1;
+  return Math.floor(quest.xp * mult * permMult);
+}
+
+// ── #6: Custom Quest Categories ──
+function addCustomCategory() {
+  const name=prompt('Kategori navn:');
+  if(!name) return;
+  const icon=prompt('Emoji icon (f.eks. 🎨):') || '⭐';
+  const color=prompt('Farve hex (f.eks. #ff6600):') || '#ff6600';
+  const id='custom_'+Date.now();
+  if(!S.customCats) S.customCats=[];
+  S.customCats.push({id,name,icon,color,titles:['Begynder','Lærling','Svend','Mester','Grandmaster']});
+  save();
+  notify(`✨ Ny kategori: ${icon} ${name}`,'xp');
+  render();
+}
+function getAllCats() {
+  return [...CATS, ...(S.customCats||[])];
+}
+
+// ── #7: SVG Data Visualization ──
+function renderXpChart() {
+  const now=new Date();
+  const days=30;
+  const data=[];
+  let cumXp=0;
+  // Build cumulative XP per day (approximate from completedDates)
+  for(let i=days-1;i>=0;i--){
+    const d=new Date(now);d.setDate(d.getDate()-i);
+    const ds=d.toISOString().slice(0,10);
+    const dayDone=(S.completedDates[ds]||[]).length;
+    cumXp+=dayDone*35; // approximate XP per quest
+    data.push({day:d.getDate(),xp:cumXp,done:dayDone});
+  }
+  const maxXp=Math.max(...data.map(d=>d.xp),1);
+  const w=480,h=180,pad=30;
+  const points=data.map((d,i)=>{
+    const x=pad+i*((w-pad*2)/(days-1));
+    const y=h-pad-(d.xp/maxXp)*(h-pad*2);
+    return `${x},${y}`;
+  }).join(' ');
+
+  let svg=`<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:auto;display:block">
+    <defs><linearGradient id="xpGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="var(--gold)" stop-opacity=".3"/>
+      <stop offset="100%" stop-color="var(--gold)" stop-opacity="0"/>
+    </linearGradient></defs>
+    <polygon points="${pad},${h-pad} ${points} ${w-pad},${h-pad}" fill="url(#xpGrad)"/>
+    <polyline points="${points}" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linejoin="round"/>`;
+  // Axis labels
+  for(let i=0;i<days;i+=7){
+    const x=pad+i*((w-pad*2)/(days-1));
+    svg+=`<text x="${x}" y="${h-8}" fill="var(--text-dim)" font-size="8" text-anchor="middle">${data[i].day}</text>`;
+  }
+  svg+=`<text x="${pad-5}" y="${pad}" fill="var(--text-dim)" font-size="8" text-anchor="end">${maxXp}</text>`;
+  svg+=`<text x="${pad-5}" y="${h-pad}" fill="var(--text-dim)" font-size="8" text-anchor="end">0</text>`;
+  svg+=`</svg>`;
+
+  let out=`<div class="sec-title">📈 XP Trend (30 dage)</div><div class="card">${svg}</div>`;
+
+  // Category balance radar (simplified as bar chart)
+  out+=`<div class="sec-title" style="margin-top:14px">⚖️ Kategori Balance</div><div class="card">`;
+  const allCats=getAllCats();
+  const maxCatXp=Math.max(...allCats.map(c=>S.categoryXp[c.id]||0),1);
+  allCats.forEach(cat=>{
+    const xp=S.categoryXp[cat.id]||0;
+    const pct=Math.round(xp/maxCatXp*100);
+    out+=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+      <span style="font-size:14px;min-width:20px">${cat.icon}</span>
+      <span style="font-size:11px;color:var(--text);min-width:80px">${cat.name}</span>
+      <div style="flex:1;height:10px;background:rgba(0,0,0,.3);border-radius:5px;overflow:hidden">
+        <div style="width:${pct}%;height:100%;background:${cat.color};border-radius:5px;transition:width .5s"></div></div>
+      <span style="font-size:10px;color:${cat.color};font-weight:700;min-width:50px;text-align:right">${xp.toLocaleString()}</span>
+    </div>`;
+  });
+  out+=`</div>`;
+  return out;
+}
+
+// ── #8: Pomodoro Timer ──
+let _pomoInterval=null;
+let _pomoSeconds=0;
+let _pomoTotal=25*60;
+let _pomoQuest=null;
+
+function startPomodoro(questId,minutes) {
+  _pomoQuest=questId;
+  _pomoTotal=(minutes||25)*60;
+  _pomoSeconds=_pomoTotal;
+  S.pomodoroActive=true;
+  clearInterval(_pomoInterval);
+  _pomoInterval=setInterval(()=>{
+    _pomoSeconds--;
+    if(_pomoSeconds<=0){
+      clearInterval(_pomoInterval);
+      S.pomodoroActive=false;
+      notify('🍅 Pomodoro done! Tid til pause.','levelup');
+      if(S.soundOn) AudioFX.play('loot');
+      if(_pomoQuest && !S.completedToday[_pomoQuest]){
+        // Auto-complete quest
+        completeQuest(_pomoQuest);
+      }
+      render();
+    }
+    // Update timer display
+    const el=document.getElementById('pomo-display');
+    if(el){
+      const m=Math.floor(_pomoSeconds/60), s=_pomoSeconds%60;
+      el.textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+      const prog=document.getElementById('pomo-progress');
+      if(prog) prog.style.width=(1-_pomoSeconds/_pomoTotal)*100+'%';
+    }
+  },1000);
+  render();
+}
+
+function stopPomodoro() {
+  clearInterval(_pomoInterval);
+  S.pomodoroActive=false;
+  _pomoSeconds=0;
+  render();
+}
+
+function renderPomodoro() {
+  const m=Math.floor(_pomoSeconds/60), s=_pomoSeconds%60;
+  let h=`<div class="sec-title">🍅 Pomodoro Timer</div>`;
+  if(S.pomodoroActive){
+    const pct=(1-_pomoSeconds/_pomoTotal)*100;
+    h+=`<div class="card" style="text-align:center;border-color:rgba(232,93,74,.3)">
+      <div id="pomo-display" style="font-size:48px;font-weight:800;color:var(--danger);font-family:monospace;letter-spacing:2px">${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}</div>
+      <div style="width:100%;height:6px;background:rgba(0,0,0,.3);border-radius:3px;overflow:hidden;margin:12px 0">
+        <div id="pomo-progress" style="width:${pct}%;height:100%;background:var(--danger);border-radius:3px;transition:width 1s linear"></div></div>
+      <button class="btn-del" style="width:100%" onclick="stopPomodoro()">⏹️ Stop</button>
+    </div>`;
+  } else {
+    h+=`<div class="card">
+      <div style="font-size:11px;color:var(--text-dim);margin-bottom:10px">Vælg en quest og start en fokus-session.</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
+        ${[15,25,45,60].map(m=>`<button class="biz-btn" onclick="startPomodoro(null,${m})">${m} min</button>`).join('')}
+      </div>
+      <div style="font-size:10px;color:var(--text-dim)">Eller start fra en quest — tryk på ⏱️ ikonet.</div>
+    </div>`;
+  }
+  return h;
+}
+
+// ── #9: Habit Templates / Presets ──
+const QUEST_PRESETS = {
+  'morning_warrior': {
+    name:'🌅 Morning Warrior Pack',
+    desc:'Morgenrutine for krop og sind',
+    quests:[
+      {title:'Cold Shower',description:'2 min kold bruser',period:'morning',category:'fitness',xp:40,emoji:'🧊',
+        habit:{time:'06:15',place:'Badeværelset',trigger:'Når alarmen ringer',twoMin:'Tænd for koldt vand og stå under i 10 sek',reward:'Varm kaffe bagefter',why:'Jeg er en kriger der omfavner ubehag.'}},
+      {title:'Breathwork',description:'5 min Wim Hof eller pranayama',period:'morning',category:'mind',xp:30,emoji:'🌬️',
+        habit:{time:'06:20',place:'Soveværelset',trigger:'Efter kold bruser',twoMin:'Tag 3 dybe åndedrag',reward:'Ro og klarhed',why:'Jeg er mester over mit åndedræt.'}},
+      {title:'Journaling',description:'Skriv 3 ting du er taknemlig for',period:'morning',category:'mind',xp:25,emoji:'📓',
+        habit:{time:'06:30',place:'Køkkenet',trigger:'Med morgenkaffe',twoMin:'Åbn notesbog og skriv én ting',reward:'Fred i sindet',why:'Jeg er bevidst og taknemlig.'}},
+    ]
+  },
+  'sales_machine': {
+    name:'💰 Sales Machine Pack',
+    desc:'Daglig salgsrutine for iværksættere',
+    quests:[
+      {title:'5 DMs',description:'Send 5 outreach beskeder',period:'midday',category:'business',xp:50,emoji:'💬',
+        habit:{time:'09:00',place:'Kontoret',trigger:'Når du åbner laptop',twoMin:'Åbn DM-listen og skriv én besked',reward:'Favorit-snack',why:'Jeg er en connector. Jeg rækker ud fra kærlighed.'}},
+      {title:'Content Post',description:'Skriv et presell-post til social media',period:'midday',category:'business',xp:35,emoji:'📱',
+        habit:{time:'10:00',place:'Kontoret',trigger:'Efter DMs',twoMin:'Åbn et tomt dokument og skriv en overskrift',reward:'5 min walk',why:'Jeg er en thought leader der deler værdi.'}},
+      {title:'Follow-up',description:'Følg op med 3 leads',period:'evening',category:'business',xp:45,emoji:'🔄',
+        habit:{time:'16:00',place:'Kontoret',trigger:'Før fyraftid',twoMin:'Åbn CRM og vælg én lead',reward:'Fyraftensøl',why:'Jeg er persistent og professionel.'}},
+    ]
+  },
+  'zen_master': {
+    name:'🧘 Zen Master Pack',
+    desc:'Dybdegående spirituel praksis',
+    quests:[
+      {title:'Vipassana Sit',description:'30 min vipassana meditation',period:'morning',category:'mind',xp:60,emoji:'🕉️',
+        habit:{time:'05:30',place:'Meditationsplads',trigger:'Alarmen ringer',twoMin:'Sæt dig ned og luk øjnene',reward:'Te i stilhed',why:'Jeg er en observerer af virkeligheden som den er.'}},
+      {title:'Mettā Practice',description:'10 min loving-kindness',period:'evening',category:'mind',xp:30,emoji:'💝',
+        habit:{time:'21:00',place:'Soveværelset',trigger:'Før sengetid',twoMin:'Tænk på én person du elsker',reward:'Ro og kærlighed',why:'Jeg sender kærlighed til alle væsener.'}},
+      {title:'Mindful Walk',description:'20 min walking meditation',period:'midday',category:'activation',xp:35,emoji:'🚶',
+        habit:{time:'12:00',place:'Udendørs',trigger:'Frokostpause',twoMin:'Tag skoene på og mærk jorden',reward:'Frisk luft',why:'Hvert skridt er en meditation.'}},
+    ]
+  },
+  'athlete': {
+    name:'💪 Athlete Pack',
+    desc:'Fysisk transformation og disciplin',
+    quests:[
+      {title:'Strength Training',description:'45 min styrketræning',period:'morning',category:'fitness',xp:60,emoji:'🏋️',
+        habit:{time:'07:00',place:'Gym',trigger:'Træningstøj klar fra aften',twoMin:'Tag tøjet på og lav 5 squats',reward:'Proteinshake',why:'Jeg er en atlet. Min krop er mit tempel.'}},
+      {title:'10K Steps',description:'Gå mindst 10.000 skridt',period:'midday',category:'fitness',xp:35,emoji:'👟',
+        habit:{time:'Hele dagen',place:'Overalt',trigger:'Step tracker på',twoMin:'Tag trappen i stedet for elevator',reward:'Se aftenens streak',why:'Jeg bevæger mig konstant.'}},
+      {title:'Stretching',description:'15 min mobility og stretching',period:'evening',category:'fitness',xp:25,emoji:'🧘‍♂️',
+        habit:{time:'21:00',place:'Stuen',trigger:'Før sengetid',twoMin:'Rul yogamåtten ud',reward:'Varm te',why:'Jeg passer på mit meatsuit med omsorg.'}},
+    ]
+  }
+};
+
+function installPreset(key) {
+  const preset=QUEST_PRESETS[key];
+  if(!preset) return;
+  if(!confirm(`Installer ${preset.name}? (${preset.quests.length} nye quests)`)) return;
+  preset.quests.forEach(q=>{
+    const newQ={...q,id:Date.now()+Math.random(),days:[1,2,3,4,5,6,0],active:true,habit:q.habit||{}};
+    S.quests.push(newQ);
+  });
+  save();
+  notify(`✨ ${preset.name} installeret!`,'levelup');
+  render();
+}
+
+// ── #10: Daily Journal ──
+function renderJournal() {
+  if(!S.journal) S.journal={};
+  const today=todayStr;
+  const existing=S.journal[today]||'';
+
+  let h=`<div class="sec-title">📓 Dagbog</div>`;
+  h+=`<div class="card">
+    <div style="font-size:11px;color:var(--text-dim);margin-bottom:8px">Skriv dine tanker, indsigter og refleksioner for i dag.</div>
+    <textarea id="journal_text" class="fi" style="height:120px;resize:vertical;line-height:1.6" placeholder="Hvad fylder i dag? Hvad lærte du? Hvad er du taknemlig for?">${esc(existing)}</textarea>
+    <button class="btn-save" style="width:100%;margin-top:8px;font-size:12px;padding:9px" onclick="saveJournal()">💾 Gem Dagbog</button>
+  </div>`;
+
+  // Past entries
+  const dates=Object.keys(S.journal).sort().reverse().filter(d=>d!==today);
+  if(dates.length>0){
+    h+=`<div class="sec-title" style="margin-top:14px">📅 Tidligere Indlæg</div>`;
+    dates.slice(0,14).forEach(d=>{
+      const text=S.journal[d];
+      if(!text) return;
+      h+=`<div class="card" style="padding:10px 14px;margin-bottom:6px">
+        <div style="font-size:10px;color:var(--gold);font-weight:600;margin-bottom:4px">${d}</div>
+        <div style="font-size:11px;color:var(--text);line-height:1.5;white-space:pre-wrap">${esc(text).slice(0,300)}${text.length>300?'...':''}</div>
+      </div>`;
+    });
+  }
+  return h;
+}
+
+function saveJournal() {
+  if(!S.journal) S.journal={};
+  S.journal[todayStr]=document.getElementById('journal_text').value;
+  save();
+  notify('📓 Dagbog gemt!','xp');
+}
+
+// ── #12: Animated Rank-Up Ceremony ──
+function showRankUpCeremony(oldRank,newRank) {
+  const overlay=document.createElement('div');
+  overlay.id='rankup-overlay';
+  overlay.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;animation:fadeIn .5s ease';
+  overlay.innerHTML=`
+    <div style="text-align:center;animation:scaleIn .6s ease">
+      <div style="font-size:14px;color:var(--text-dim);text-transform:uppercase;letter-spacing:3px;margin-bottom:12px">Rank Up</div>
+      <div style="font-size:48px;margin-bottom:8px;animation:glow-pulse 1.5s infinite">⬆️</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin:16px 0">
+        <span class="rank-badge rank-${oldRank.id}" style="font-size:16px;padding:8px 20px;opacity:.5">${oldRank.name}</span>
+        <span style="font-size:24px;color:var(--gold);animation:glow-pulse 1s infinite">→</span>
+        <span class="rank-badge rank-${newRank.id}" style="font-size:18px;padding:10px 24px;animation:glow-pulse 1.5s infinite">${newRank.name}</span>
+      </div>
+      <div style="font-size:14px;color:${newRank.color};font-weight:700;margin-top:8px">${newRank.label}</div>
+      <div style="font-size:11px;color:var(--text-dim);margin-top:16px">Tryk for at fortsætte</div>
+    </div>`;
+  overlay.onclick=()=>{overlay.style.animation='fadeOut .3s ease forwards';setTimeout(()=>overlay.remove(),300);};
+  document.body.appendChild(overlay);
+  if(S.soundOn) AudioFX.play('boss');
+  spawnConfetti();
+}
+
+// ── #13: Quest Dependencies / Chains ──
+function isQuestUnlocked(quest) {
+  if(!S.questPrereqs) return true;
+  const prereqId=S.questPrereqs[quest.id];
+  if(!prereqId) return true;
+  // Prerequisite: the other quest must have a 7-day best streak
+  return (S.questBestStreaks[prereqId]||0) >= 7;
+}
+
+// ── #14: Moon Phase ──
+function getMoonPhase() {
+  const now=new Date();
+  const year=now.getFullYear(),month=now.getMonth()+1,day=now.getDate();
+  // Simplified moon phase calculation
+  let c=0,e=0,jd=0,b=0;
+  if(month<3){c=year-1;e=month+12;}else{c=year;e=month;}
+  jd=Math.floor(365.25*(c+4716))+Math.floor(30.6001*(e+1))+day-1524.5;
+  b=(jd-2451550.1)/29.530588853;
+  b=b-Math.floor(b);
+  const phase=Math.round(b*8)%8;
+  const phases=['🌑 Nymåne','🌒 Tiltagende','🌓 Første Kvarter','🌔 Tiltagende Gibbøs',
+    '🌕 Fuldmåne','🌖 Aftagende Gibbøs','🌗 Sidste Kvarter','🌘 Aftagende'];
+  const meanings=['Ny begyndelse. Sæt intentioner.','Momentum bygger. Hold kursen.',
+    'Handling. Overvind modstand.','Forfin og justér.','Høst. Fejr. Reflektér.',
+    'Giv tilbage. Del din visdom.','Slip. Lad gå af det der ikke tjener dig.',
+    'Hvil. Forbered det nye.'];
+  return {emoji:phases[phase].split(' ')[0],name:phases[phase],meaning:meanings[phase],phase};
+}
+
+// ── #15: Human Design Daily Strategy Reminder ──
+function getHDReminder() {
+  const hdType=(S.hdType||'').toLowerCase();
+  const reminders={
+    'generator':{strategy:'Vent på at reagere',reminder:'Mærk dit sakrale respons i dag. Svar ikke med hovedet — svar med kroppen. Uuh-huh eller unh-unh.'},
+    'manifesting generator':{strategy:'Vent, reagér, informér',reminder:'Du er multi-passionat. Vent på det sakrale svar, så informér dem omkring dig før du handler.'},
+    'projector':{strategy:'Vent på invitationen',reminder:'Din energi er dyrebar. Vent på anerkendelse og invitation. Guides, ikke gør.'},
+    'manifestor':{strategy:'Informér før du handler',reminder:'Din aura er lukket og frastødende. Informér folk om hvad du gør — det reducerer modstand.'},
+    'reflector':{strategy:'Vent en månecyklus',reminder:'Du spejler verden. Giv dig selv tid. Store beslutninger kræver 28 dage.'},
+  };
+  return reminders[hdType]||null;
+}
+
+// ── #17: Gamified Onboarding ──
+function renderOnboarding() {
+  const steps=[
+    {id:'name',title:'Navngiv din Warrior',desc:'Hvem er du i dette spil?',done:!!S.playerName,action:'Gå til Settings'},
+    {id:'quest',title:'Opret din første quest',desc:'Start med én vane. Bare én.',done:S.quests.length>8,action:'Opret Quest'},
+    {id:'complete',title:'Gennemfør en quest',desc:'Tryk ✓ på en quest i dag.',done:Object.keys(S.completedToday).length>0,action:'Gå til Quests'},
+    {id:'habit',title:'Design din habit',desc:'Udfyld tid, sted, trigger og 2-min version.',done:S.quests.some(q=>q.habit?.time&&q.habit?.place&&q.habit?.trigger&&q.habit?.twoMin),action:'Rediger en Quest'},
+    {id:'streak',title:'Byg en 3-dages streak',desc:'Gennemfør samme quest 3 dage i træk.',done:Object.values(S.questStreaks||{}).some(v=>v>=3),action:'Fortsæt i morgen'},
+    {id:'character',title:'Udforsk din karakter',desc:'Se din Hero page og skill tree.',done:S.subView==='skills'||S.achievements.length>0,action:'Gå til Hero'},
+  ];
+  const done=steps.filter(s=>s.done).length;
+  if(done>=steps.length) { S.onboardingDone=true; save(); }
+
+  let h=`<div class="sec-title">🎮 Tutorial Quest Chain</div>`;
+  h+=`<div class="card" style="text-align:center;margin-bottom:14px">
+    <div style="font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px">Onboarding Progress</div>
+    <div style="font-size:28px;font-weight:800;color:${done>=steps.length?'var(--success)':'var(--gold)'}">${done}/${steps.length}</div>
+    ${xpBar(done,steps.length,done>=steps.length?'#4ecdc4':'#d4a340',8)}
+  </div>`;
+
+  steps.forEach((s,i)=>{
+    h+=`<div class="card" style="padding:10px 14px;margin-bottom:6px;border-left:3px solid ${s.done?'var(--success)':'var(--border)'}">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:16px">${s.done?'✅':'⬜'}</span>
+        <div style="flex:1">
+          <div style="font-size:12px;font-weight:600;color:${s.done?'var(--success)':'var(--text)'}">${i+1}. ${s.title}</div>
+          <div style="font-size:10px;color:var(--text-dim)">${s.desc}</div>
+        </div>
+        ${!s.done?`<span style="font-size:9px;color:var(--gold);font-weight:600">${s.action}</span>`:''}
+      </div></div>`;
+  });
+  return h;
+}
+
+// ── #18: Voice Notes (MediaRecorder API) ──
+let _mediaRecorder=null;
+let _audioChunks=[];
+
+function startVoiceNote(questId) {
+  if(!navigator.mediaDevices){notify('⚠ Mikrofon ikke tilgængelig','boss');return;}
+  navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
+    _mediaRecorder=new MediaRecorder(stream);
+    _audioChunks=[];
+    _mediaRecorder.ondataavailable=e=>_audioChunks.push(e.data);
+    _mediaRecorder.onstop=()=>{
+      const blob=new Blob(_audioChunks,{type:'audio/webm'});
+      const url=URL.createObjectURL(blob);
+      if(!S.voiceNotes) S.voiceNotes={};
+      if(!S.voiceNotes[todayStr]) S.voiceNotes[todayStr]=[];
+      S.voiceNotes[todayStr].push({questId,url,time:new Date().toLocaleTimeString('da-DK')});
+      notify('🎙️ Voice note gemt!','xp');
+      stream.getTracks().forEach(t=>t.stop());
+      render();
+    };
+    _mediaRecorder.start();
+    notify('🎙️ Optager... Tryk stop når du er færdig','event');
+    render();
+  }).catch(()=>notify('⚠ Kunne ikke starte mikrofon','boss'));
+}
+
+function stopVoiceNote() {
+  if(_mediaRecorder && _mediaRecorder.state==='recording'){
+    _mediaRecorder.stop();
+  }
+}
+
+// ── #19: Streak Insurance ──
+function buyStreakInsurance() {
+  const cost=200;
+  if(S.totalXp<cost){notify(`⚠ Ikke nok XP! Kræver ${cost} XP`,'boss');return;}
+  if(!confirm(`Køb Streak Insurance for ${cost} XP? Beskytter én streak mod ét miss.`)) return;
+  S.totalXp-=cost;
+  S.streakInsurance=(S.streakInsurance||0)+1;
+  save();
+  notify(`🛡️ Streak Insurance købt! (${S.streakInsurance} aktive)`,'loot');
+  render();
+}
+
+function useStreakInsurance(questId) {
+  if((S.streakInsurance||0)<=0) return false;
+  S.streakInsurance--;
+  notify('🛡️ Streak Insurance brugt! Streak reddet!','event');
+  return true;
+}
+
+// ── #20: Multi-language Support ──
+const LANG={
+  da:{
+    quests:'Quests',hero:'Hero',stats:'Stats',world:'World',system:'System',settings:'Settings',
+    todayProgress:'Dagens Fremskridt',dailyQuests:'Daglige Quests',
+    morning:'Morgen',midday:'Middag',evening:'Aften',
+    save:'Gem',cancel:'Annuller',delete:'Slet',
+    streakInsurance:'Streak Insurance',buy:'Køb',
+    journal:'Dagbog',writeThoughts:'Skriv dine tanker...',
+    pomodoro:'Pomodoro Timer',startFocus:'Start Fokus',stop:'Stop',
+    badges:'Badges',meditation:'Meditation',
+    weeklyView:'Ugeoversigt',monthlyView:'Månedsoversigt',
+    habitReport:'Habit Rapport',calendar:'Kalender',
+    shareCard:'Del Rank Card',rankUp:'Rang Op!',
+    voiceNote:'Voice Note',recording:'Optager...',
+    onboarding:'Tutorial',presets:'Quest Pakker',
+    lightMode:'Lys',darkMode:'Mørk',soundOn:'TIL',soundOff:'FRA',
+  },
+  en:{
+    quests:'Quests',hero:'Hero',stats:'Stats',world:'World',system:'System',settings:'Settings',
+    todayProgress:"Today's Progress",dailyQuests:'Daily Quests',
+    morning:'Morning',midday:'Midday',evening:'Evening',
+    save:'Save',cancel:'Cancel',delete:'Delete',
+    streakInsurance:'Streak Insurance',buy:'Buy',
+    journal:'Journal',writeThoughts:'Write your thoughts...',
+    pomodoro:'Pomodoro Timer',startFocus:'Start Focus',stop:'Stop',
+    badges:'Badges',meditation:'Meditation',
+    weeklyView:'Weekly View',monthlyView:'Monthly View',
+    habitReport:'Habit Report',calendar:'Calendar',
+    shareCard:'Share Rank Card',rankUp:'Rank Up!',
+    voiceNote:'Voice Note',recording:'Recording...',
+    onboarding:'Tutorial',presets:'Quest Packs',
+    lightMode:'Light',darkMode:'Dark',soundOn:'ON',soundOff:'OFF',
+  }
+};
+function t(key){return (LANG[S.lang||'da']||LANG.da)[key]||key;}
+
 // ── Settings ──
 function renderSettings() {
   let h=`<div style="padding:16px 0">
@@ -2498,6 +3687,12 @@ function renderSettings() {
   h+=`<button class="btn-save" style="width:100%;margin-top:8px;font-size:12px;padding:8px" onclick="saveAvatarUrls()">Gem Avatar URLs</button>
   </div>`;
 
+  // Theme toggle
+  h+=`<div class="card" style="display:flex;justify-content:space-between;align-items:center">
+    <span style="font-size:13px;color:var(--text)">🌗 Tema</span>
+    <button class="biz-btn" style="${S.lightMode?'background:rgba(212,163,64,.15);border-color:rgba(212,163,64,.3);color:var(--gold)':''}" onclick="S.lightMode=!S.lightMode;document.body.classList.toggle('light-mode',S.lightMode);save();render()">${S.lightMode?'☀️ Lys':'🌙 Mørk'}</button>
+  </div>`;
+
   // Sound toggle
   h+=`<div class="card" style="display:flex;justify-content:space-between;align-items:center">
     <span style="font-size:13px;color:var(--text)">🔊 Lydeffekter</span>
@@ -2513,11 +3708,31 @@ function renderSettings() {
     <div style="font-size:11px;color:var(--text-dim);margin-top:4px">Tilføj, rediger eller deaktiver quests</div>
   </div>`;
 
+  // Cloud Sync ID
+  h+=`<div class="sec-title" style="margin-top:16px">☁️ Cloud Sync</div>`;
+  h+=`<div class="card">
+    <div style="font-size:12px;color:var(--text-dim);margin-bottom:10px;line-height:1.5">
+      Dit Sync ID forbinder din data til skyen. Gem det et sikkert sted — du kan bruge det til at gendanne din progress på en ny enhed.
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px">
+      <input id="sync_id_display" class="fi" style="font-size:11px;font-family:monospace" value="${SYNC_ID}" readonly>
+      <button class="biz-btn" onclick="navigator.clipboard.writeText(SYNC_ID).then(()=>notify('Sync ID kopieret!','xp')).catch(()=>{const el=document.getElementById('sync_id_display');el.select();document.execCommand('copy');notify('Sync ID kopieret!','xp')})">Kopier</button>
+    </div>
+    <div style="font-size:11px;color:var(--text-dim);margin-bottom:8px">Sidste cloud sync: <strong style="color:var(--success)">${S._lastCloudSync ? new Date(S._lastCloudSync).toLocaleString('da-DK') : 'Endnu ikke synket'}</strong></div>
+    <div style="border-top:1px solid var(--border);padding-top:10px;margin-top:6px">
+      <div style="font-size:12px;color:var(--gold);margin-bottom:8px">🔄 Gendan fra anden enhed</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <input id="restore_sync_id" class="fi" style="font-size:11px;font-family:monospace" placeholder="Indsæt Sync ID fra anden enhed...">
+        <button class="biz-btn" onclick="restoreFromCloud()">Gendan</button>
+      </div>
+    </div>
+  </div>`;
+
   // Export / Import
   h+=`<div class="sec-title" style="margin-top:16px">💾 Data</div>`;
   h+=`<div class="card">
     <div style="font-size:12px;color:var(--text-dim);margin-bottom:10px;line-height:1.5">
-      Alt din data ligger i browserens localStorage. Eksporter for at lave backup — importer for at gendanne.
+      Alt din data ligger i browserens localStorage OG synkes automatisk til skyen. Eksporter for at lave backup — importer for at gendanne.
     </div>
     <div style="display:flex;gap:8px">
       <button class="btn-save" style="flex:1;font-size:12px;padding:9px" onclick="exportData()">📤 Eksporter JSON</button>
@@ -2547,6 +3762,88 @@ function renderSettings() {
     });
   }
   h+=`</div>`;
+
+  // Language Toggle
+  h+=`<div class="sec-title" style="margin-top:16px">🌐 Sprog / Language</div>`;
+  h+=`<div class="card" style="display:flex;gap:8px">
+    <button class="biz-btn" style="${S.lang==='da'?'background:rgba(78,205,196,.15);border-color:rgba(78,205,196,.3);color:var(--success)':''}" onclick="S.lang='da';save();render()">🇩🇰 Dansk</button>
+    <button class="biz-btn" style="${S.lang==='en'?'background:rgba(78,205,196,.15);border-color:rgba(78,205,196,.3);color:var(--success)':''}" onclick="S.lang='en';save();render()">🇬🇧 English</button>
+  </div>`;
+
+  // Moon Phase
+  const moon=getMoonPhase();
+  h+=`<div class="sec-title" style="margin-top:16px">🌙 Månefase</div>`;
+  h+=`<div class="card">
+    <div style="display:flex;align-items:center;gap:12px">
+      <span style="font-size:36px">${moon.emoji}</span>
+      <div>
+        <div style="font-size:13px;font-weight:600;color:var(--text)">${moon.name}</div>
+        <div style="font-size:11px;color:var(--text-dim);margin-top:2px;line-height:1.4">${moon.meaning}</div>
+      </div>
+    </div>
+  </div>`;
+
+  // HD Strategy Reminder
+  const hdRem=getHDReminder();
+  if(hdRem) {
+    h+=`<div class="sec-title" style="margin-top:16px">🔮 Human Design Strategi</div>`;
+    h+=`<div class="card" style="border-color:rgba(123,104,238,.2)">
+      <div style="font-size:12px;font-weight:600;color:var(--accent-light);margin-bottom:4px">${hdRem.strategy}</div>
+      <div style="font-size:11px;color:var(--text-dim);line-height:1.5">${hdRem.reminder}</div>
+    </div>`;
+  }
+
+  // Share Rank Card
+  h+=`<div class="sec-title" style="margin-top:16px">📸 Del</div>`;
+  h+=`<div class="card">
+    <button class="btn-save" style="width:100%;font-size:12px;padding:9px" onclick="shareRankCard()">📸 Download Rank Card (PNG)</button>
+    <div style="font-size:10px;color:var(--text-dim);margin-top:6px;text-align:center">Del dit rank card på social media!</div>
+  </div>`;
+
+  // Streak Insurance
+  h+=`<div class="sec-title" style="margin-top:16px">🛡️ Streak Insurance</div>`;
+  h+=`<div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <span style="font-size:13px;color:var(--text)">Aktive forsikringer: <strong style="color:var(--gold)">${S.streakInsurance||0}</strong></span>
+      <button class="biz-btn" onclick="buyStreakInsurance()">Køb (200 XP)</button>
+    </div>
+    <div style="font-size:10px;color:var(--text-dim);line-height:1.4">
+      Beskytter en streak mod ét miss. Bruges automatisk når en streak ellers ville bryde.
+    </div>
+  </div>`;
+
+  // Quest Presets
+  h+=`<div class="sec-title" style="margin-top:16px">📦 Quest Pakker</div>`;
+  Object.entries(QUEST_PRESETS).forEach(([key,preset])=>{
+    h+=`<div class="card" style="padding:10px 14px;margin-bottom:6px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-size:12px;font-weight:600;color:var(--text)">${preset.name}</div>
+          <div style="font-size:10px;color:var(--text-dim)">${preset.desc} · ${preset.quests.length} quests</div>
+        </div>
+        <button class="biz-btn" onclick="installPreset('${key}')">Installer</button>
+      </div></div>`;
+  });
+
+  // Custom Categories
+  h+=`<div class="sec-title" style="margin-top:16px">🎨 Custom Kategorier</div>`;
+  h+=`<div class="card">
+    <button class="btn-new" style="width:100%" onclick="addCustomCategory()">+ Ny Kategori</button>`;
+  if(S.customCats && S.customCats.length>0){
+    S.customCats.forEach(c=>{
+      h+=`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)">
+        <span style="font-size:14px">${c.icon}</span>
+        <span style="font-size:12px;color:${c.color};font-weight:600">${c.name}</span>
+      </div>`;
+    });
+  }
+  h+=`</div>`;
+
+  // Onboarding
+  if(!S.onboardingDone){
+    h+=`<div class="sec-title" style="margin-top:16px">🎮 Tutorial</div>`;
+    h+=renderOnboarding();
+  }
 
   // Danger Zone
   h+=`<div class="sec-title" style="margin-top:16px;color:var(--danger)">⚠️ Danger Zone</div>`;
@@ -2591,6 +3888,24 @@ function importData(event) {
   reader.readAsText(file);
 }
 
+function restoreFromCloud() {
+  const rid = document.getElementById('restore_sync_id').value.trim();
+  if(!rid) { notify('⚠ Indsæt et Sync ID først', 'boss'); return; }
+  if(!confirm('Dette vil overskrive al din nuværende data med data fra den anden enhed. Fortsæt?')) return;
+  notify('☁️ Henter data fra skyen...', 'xp');
+  loadFromCloud(rid).then(state => {
+    if(state && state.totalXp !== undefined) {
+      Object.assign(S, state);
+      localStorage.setItem('soulLevelingSyncId', rid);
+      save();
+      notify('✅ Data gendannet! Genindlæser...', 'levelup');
+      setTimeout(()=>location.reload(), 1500);
+    } else {
+      notify('⚠ Ingen data fundet for det Sync ID', 'boss');
+    }
+  });
+}
+
 function resetBizMonth() {
   if(!confirm('Nulstil business stats for denne måned? Nuværende tal gemmes i historik.')) return;
   if(!S.bizHistory) S.bizHistory = [];
@@ -2618,8 +3933,58 @@ function resetBizMonth() {
   if(!S._bizMonth) { S._bizMonth = currentMonth; save(); }
 })();
 
+// ── Reminder System ──
+function initReminders() {
+  if(!('Notification' in window)) return;
+  if(Notification.permission==='default'){
+    // Request on first interaction
+    document.addEventListener('click',function reqPerm(){
+      Notification.requestPermission();
+      document.removeEventListener('click',reqPerm);
+    },{once:true});
+  }
+  // Check reminders every minute
+  setInterval(checkReminders, 60000);
+}
+
+function checkReminders() {
+  if(!S.reminders || Notification.permission!=='granted') return;
+  const now=new Date();
+  const hm=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+  Object.entries(S.reminders).forEach(([qId,time])=>{
+    if(time===hm && !S.completedToday[qId]){
+      const q=S.quests.find(x=>x.id==+qId);
+      if(q&&q.active&&q.days.includes(now.getDay())){
+        const qEmoji=q.emoji||getCat(q.category).icon;
+        new Notification('Soul Leveling ⚔️',{
+          body:`${qEmoji} Tid til: ${q.title}\n${q.habit?.twoMin||q.description}`,
+          icon:'icon-192.png',
+          tag:'sl-'+qId
+        });
+      }
+    }
+  });
+}
+initReminders();
+
 // ── Init ──
 S.subView = S.subView || 'quests';
+if(!S.badges) S.badges=[];
+if(!S.meditationLog) S.meditationLog=[];
+if(!S.meditationHours) S.meditationHours=0;
+if(!S.jhanaLevel) S.jhanaLevel=0;
+if(!S.reminders) S.reminders={};
+if(!S.journal) S.journal={};
+if(!S.streakInsurance) S.streakInsurance=0;
+if(!S.lang) S.lang='da';
+if(!S.customCats) S.customCats=[];
+if(!S.questPrereqs) S.questPrereqs={};
+if(!S.onboardingDone) S.onboardingDone=false;
+if(!S.pomodoroActive) S.pomodoroActive=false;
+// Apply saved theme
+if(S.lightMode) document.body.classList.add('light-mode');
+// Check weekly review (Sunday evenings)
+setTimeout(checkWeeklyReview, 3000);
 render();
 
 // PWA Service Worker
