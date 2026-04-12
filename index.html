@@ -20,15 +20,15 @@
   --fitness:#e85d4a;--business:#d4a340;--mind:#7b68ee;--activation:#4ecdc4;
 }
 body.light-mode{
-  --bg:#f0ebe3;--bg2:#e8e0d4;--bg-card:#ffffff;--bg-input:#f5f0e8;
-  --gold:#b8860b;--gold-light:#8b6914;--accent:#5b4cd4;--accent-light:#7b68ee;
-  --text:#2c2c2c;--text-dim:#6b6b7b;--text-bright:#1a1a2e;
-  --success:#2a9d8f;--danger:#c0392b;--border:#d4cfc7;
-  --fitness:#c0392b;--business:#b8860b;--mind:#5b4cd4;--activation:#2a9d8f;
+  --bg:#fafafa;--bg2:#f0ebe3;--bg-card:#ffffff;--bg-input:#f5f0e8;
+  --gold:#8b6914;--gold-light:#b8860b;--accent:#5b4cd4;--accent-light:#6b5ce7;
+  --text:#1a1a2e;--text-dim:#666666;--text-bright:#333333;
+  --success:#2a7a73;--danger:#c0392b;--border:#e0e0e0;
+  --fitness:#c0392b;--business:#8b6914;--mind:#5b4cd4;--activation:#2a7a73;
 }
 body.light-mode{background:linear-gradient(180deg,var(--bg),var(--bg2));}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:linear-gradient(180deg,var(--bg),var(--bg2));color:var(--text);min-height:100vh;overflow-x:hidden;}
-.app{max-width:540px;margin:0 auto;padding:0 16px 100px;position:relative;}
+.app{max-width:640px;margin:0 auto;padding:0 12px 100px;position:relative;width:100%;box-sizing:border-box;}
 button{font-family:inherit;cursor:pointer;}
 input,select,textarea{font-family:inherit;}
 ::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
@@ -227,7 +227,7 @@ input,select,textarea{font-family:inherit;}
 .mi-meta{color:var(--text-dim);font-size:11px;}
 
 /* Bottom Nav */
-.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:540px;background:rgba(22,33,62,.96);backdrop-filter:blur(12px);border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:6px 0 10px;z-index:800;}
+.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:640px;background:rgba(22,33,62,.96);backdrop-filter:blur(12px);border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:6px 0 10px;z-index:800;}
 .bnav-item{text-align:center;cursor:pointer;padding:3px 10px;color:var(--text-dim);transition:color .2s ease;border:none;background:none;}
 .bnav-item.active{color:var(--gold);}
 .bnav-icon{font-size:20px;}
@@ -243,6 +243,13 @@ input,select,textarea{font-family:inherit;}
 .matrix-table td.na{background:transparent;color:var(--border);}
 .matrix-table td.today-col{border-color:var(--gold)!important;}
 .matrix-quest{text-align:left!important;white-space:nowrap;max-width:120px;overflow:hidden;text-overflow:ellipsis;font-weight:500;color:var(--text);}
+
+/* Light mode matrix table overrides */
+body.light-mode .matrix-table th{background:#f5f0e8;color:#333;}
+body.light-mode .matrix-table td.done{background:rgba(42,122,115,.15)!important;color:#2a7a73;}
+body.light-mode .matrix-table td.missed{background:rgba(192,57,43,.12)!important;color:#c0392b;opacity:1;}
+body.light-mode .card{border-color:#e0e0e0;}
+body.light-mode .qi{border-color:#e0e0e0;}
 
 /* Badge System */
 .badge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
@@ -678,19 +685,19 @@ const AVATARS = [
 ];
 function getAvatar(lv) { let a=AVATARS[0]; for(const av of AVATARS){if(lv>=av.min)a=av;} return a; }
 
-// Avatar images — replace URLs with your own anime screenshots!
-// Tip: Right-click any anime image online → Copy Image Address → paste here
+// Avatar images — DiceBear Adventurer style (free, CC0 license)
+// Each rank gets a unique warrior avatar that feels progressively more powerful
 const AVATAR_IMAGES = [
-  {min:1,  url:''},  // Lv 1-4: Rejsende
-  {min:5,  url:''},  // Lv 5-9: Lærling
-  {min:10, url:''},  // Lv 10-19: Eventyrer
-  {min:20, url:''},  // Lv 20-29: Kriger
-  {min:30, url:''},  // Lv 30-39: Magiker
-  {min:40, url:''},  // Lv 40-49: Helt
-  {min:50, url:''},  // Lv 50-59: Konge
-  {min:60, url:''},  // Lv 60-74: Himmelsk
-  {min:75, url:''},  // Lv 75-89: Stjernesjæl
-  {min:90, url:''},  // Lv 90-99: Legende
+  {min:1,  url:'https://api.dicebear.com/7.x/adventurer/svg?seed=wanderer_nomad&backgroundColor=transparent&skinColor=ecad80'},  // Lv 1-4: Rejsende
+  {min:5,  url:'https://api.dicebear.com/7.x/adventurer/svg?seed=apprentice_blade&backgroundColor=transparent&skinColor=ecad80'},  // Lv 5-9: Lærling
+  {min:10, url:'https://api.dicebear.com/7.x/adventurer/svg?seed=bold_adventurer&backgroundColor=transparent&skinColor=ecad80'},  // Lv 10-19: Eventyrer
+  {min:20, url:'https://api.dicebear.com/7.x/adventurer/svg?seed=iron_knight&backgroundColor=transparent&skinColor=ecad80'},  // Lv 20-29: Kriger
+  {min:30, url:'https://api.dicebear.com/7.x/adventurer/svg?seed=arcane_mage&backgroundColor=transparent&skinColor=ecad80'},  // Lv 30-39: Magiker
+  {min:40, url:'https://api.dicebear.com/7.x/adventurer/svg?seed=risen_hero&backgroundColor=transparent&skinColor=ecad80'},  // Lv 40-49: Helt
+  {min:50, url:'https://api.dicebear.com/7.x/adventurer/svg?seed=golden_king&backgroundColor=transparent&skinColor=ecad80'},  // Lv 50-59: Konge
+  {min:60, url:'https://api.dicebear.com/7.x/adventurer/svg?seed=celestial_angel&backgroundColor=transparent&skinColor=ecad80'},  // Lv 60-74: Himmelsk
+  {min:75, url:'https://api.dicebear.com/7.x/adventurer/svg?seed=star_soul_warrior&backgroundColor=transparent&skinColor=ecad80'},  // Lv 75-89: Stjernesjæl
+  {min:90, url:'https://api.dicebear.com/7.x/adventurer/svg?seed=eternal_legend&backgroundColor=transparent&skinColor=ecad80'},  // Lv 90-99: Legende
 ];
 function getAvatarImage(lv) {
   // Check saved URLs first (from settings), then fallback to AVATAR_IMAGES defaults
@@ -865,6 +872,9 @@ let S = {
     {id:7,title:"Aftenrefleksion",description:"Journaling — hvad lærte du i dag?",period:"evening",category:"mind",xp:25,habit:{time:"21:00",place:"Soveværelset",trigger:"Når du lægger telefonen",twoMin:"Skriv én sætning om dagen",reward:"10 min stille læsning",why:"Jeg er en der reflekterer. Jeg vokser bevidst med hver dag."},days:[1,2,3,4,5,6,0],active:true},
     {id:8,title:"Aftenstræk",description:"10 min stretching / mobility",period:"evening",category:"fitness",xp:20,habit:{time:"21:30",place:"Stuen",trigger:"Efter journaling",twoMin:"Rul din yogamåtte ud",reward:"Varm te og afslapning",why:"Jeg passer på mit fartøj. Min krop fortjener omsorg."},days:[1,2,3,4,5,6,0],active:true},
     {id:11,title:"Fotografér Måltider",description:"Tag billede af hvert måltid — vær bevidst om hvad du spiser",period:"midday",category:"fitness",xp:20,habit:{time:"12:00",place:"Køkkenet / hvor du spiser",trigger:"Før du tager første bid",twoMin:"Åbn kameraet og tag ét billede af tallerkenen",reward:"Spis med fuld tilstedeværelse",why:"Jeg ærer min krop med bevidst næring. Jeg observerer hvad jeg giver mit meatsuit."},days:[1,2,3,4,5,6,0],active:true},
+    {id:12,title:"Skriv i Dagbog",description:"Skriv i din fysiske dagbog — taknemlighed + observation",period:"evening",category:"mind",xp:30,habit:{time:"21:00",place:"Soveværelset / dit stille sted",trigger:"Når du sætter dig ned for aftenen",twoMin:"Åbn dagbogen og skriv én sætning",reward:"Ro i sindet. Forbindelse til universet.",why:"Jeg er en bevidst observerer. Når jeg skriver, lytter universet."},days:[1,2,3,4,5,6,0],active:true},
+    {id:13,title:"Arbejde I Forretningen",description:"2 timers fokuseret arbejde med kunder og leverancer",period:"midday",category:"business",xp:40,habit:{time:"10:00",place:"Kontoret / arbejdsplads",trigger:"Efter morgenrutinen er færdig",twoMin:"Åbn din opgaveliste og vælg den vigtigste klient-opgave",reward:"Du leverer værdi. Klienter mærker din energi.",why:"Jeg er en mester i mit håndværk. Når jeg arbejder I forretningen, skaber jeg transformation for andre."},days:[1,2,3,4,5],active:true},
+    {id:14,title:"Arbejde PÅ Forretningen",description:"2 timers strategisk arbejde — systemer, marketing, vækst",period:"midday",category:"business",xp:40,habit:{time:"13:00",place:"Kontoret / dit strategiske rum",trigger:"Efter frokost og en kort pause",twoMin:"Åbn dit strategidokument og vælg ét vækst-fokus",reward:"Du bygger noget større end dig selv.",why:"Jeg er arkitekten bag min forretning. Når jeg arbejder PÅ forretningen, bygger jeg mit imperium."},days:[1,2,3,4,5],active:true},
   ],
   completedToday: {},
   completedDates: {},
@@ -918,8 +928,8 @@ let S = {
   // Evening Review
   eveningReviews: {},
   // Goals
-  monthlyGoals: ['','',''],
-  weeklyGoals: ['','',''],
+  monthlyGoals: [],
+  weeklyGoals: [],
 };
 
 // ── Persistence (localStorage + Supabase Cloud Sync) ──
@@ -996,6 +1006,15 @@ function load() {
   }
   if(!S.quests.find(q=>q.id===11)){
     S.quests.push({id:11,title:"Fotograf\u00E9r M\u00E5ltider",description:"Tag billede af hvert m\u00E5ltid \u2014 v\u00E6r bevidst om hvad du spiser",period:"midday",category:"fitness",xp:20,habit:{time:"12:00",place:"K\u00F8kkenet / hvor du spiser",trigger:"F\u00F8r du tager f\u00F8rste bid",twoMin:"\u00C5bn kameraet og tag \u00E9t billede af tallerkenen",reward:"Spis med fuld tilstedev\u00E6relse",why:"Jeg \u00E6rer min krop med bevidst n\u00E6ring. Jeg observerer hvad jeg giver mit meatsuit."},days:[1,2,3,4,5,6,0],active:true});
+  }
+  if(!S.quests.find(q=>q.id===12)){
+    S.quests.push({id:12,title:"Skriv i Dagbog",description:"Skriv i din fysiske dagbog \u2014 taknemlighed + observation",period:"evening",category:"mind",xp:30,habit:{time:"21:00",place:"Soveværelset / dit stille sted",trigger:"Når du sætter dig ned for aftenen",twoMin:"Åbn dagbogen og skriv én sætning",reward:"Ro i sindet. Forbindelse til universet.",why:"Jeg er en bevidst observerer. Når jeg skriver, lytter universet."},days:[1,2,3,4,5,6,0],active:true});
+  }
+  if(!S.quests.find(q=>q.id===13)){
+    S.quests.push({id:13,title:"Arbejde I Forretningen",description:"2 timers fokuseret arbejde med kunder og leverancer",period:"midday",category:"business",xp:40,habit:{time:"10:00",place:"Kontoret / arbejdsplads",trigger:"Efter morgenrutinen er f\u00E6rdig",twoMin:"\u00C5bn din opgaveliste og v\u00E6lg den vigtigste klient-opgave",reward:"Du leverer v\u00E6rdi. Klienter m\u00E6rker din energi.",why:"Jeg er en mester i mit h\u00E5ndv\u00E6rk. N\u00E5r jeg arbejder I forretningen, skaber jeg transformation for andre."},days:[1,2,3,4,5],active:true});
+  }
+  if(!S.quests.find(q=>q.id===14)){
+    S.quests.push({id:14,title:"Arbejde P\u00C5 Forretningen",description:"2 timers strategisk arbejde \u2014 systemer, marketing, v\u00E6kst",period:"midday",category:"business",xp:40,habit:{time:"13:00",place:"Kontoret / dit strategiske rum",trigger:"Efter frokost og en kort pause",twoMin:"\u00C5bn dit strategidokument og v\u00E6lg \u00E9t v\u00E6kst-fokus",reward:"Du bygger noget st\u00F8rre end dig selv.",why:"Jeg er arkitekten bag min forretning. N\u00E5r jeg arbejder P\u00C5 forretningen, bygger jeg mit imperium."},days:[1,2,3,4,5],active:true});
   }
   save();
   // Also try to load from cloud (async — merges if cloud is newer)
@@ -1783,42 +1802,98 @@ function saveEveningReview() {
   notify('\uD83C\uDF19 Aften-review gemt! +'+xpGain+'XP','xp');
   render();
 }
+function migrateGoals() {
+  // Migrate old string-based goals to {text,progress} objects
+  if(S.monthlyGoals && S.monthlyGoals.length>0 && typeof S.monthlyGoals[0]==='string'){
+    S.monthlyGoals=S.monthlyGoals.filter(function(g){return g!==''}).map(function(g){return {text:g,progress:0}});
+  }
+  if(S.weeklyGoals && S.weeklyGoals.length>0 && typeof S.weeklyGoals[0]==='string'){
+    S.weeklyGoals=S.weeklyGoals.filter(function(g){return g!==''}).map(function(g){return {text:g,progress:0}});
+  }
+  if(!S.monthlyGoals) S.monthlyGoals=[];
+  if(!S.weeklyGoals) S.weeklyGoals=[];
+}
+function addGoal(type) {
+  migrateGoals();
+  if(type==='monthly'){ if(S.monthlyGoals.length>=5) return; S.monthlyGoals.push({text:'',progress:0}); }
+  else { if(S.weeklyGoals.length>=5) return; S.weeklyGoals.push({text:'',progress:0}); }
+  save(); render();
+}
+function removeGoal(type,idx) {
+  migrateGoals();
+  if(type==='monthly') S.monthlyGoals.splice(idx,1);
+  else S.weeklyGoals.splice(idx,1);
+  save(); render();
+}
+function adjustGoalProgress(type,idx,delta) {
+  migrateGoals();
+  var goals = type==='monthly' ? S.monthlyGoals : S.weeklyGoals;
+  if(!goals[idx]) return;
+  goals[idx].progress = Math.max(0, Math.min(100, (goals[idx].progress||0) + delta));
+  save(); render();
+}
+function saveGoalText(type,idx,val) {
+  migrateGoals();
+  var goals = type==='monthly' ? S.monthlyGoals : S.weeklyGoals;
+  if(goals[idx]) goals[idx].text = val;
+  save();
+}
+function renderGoalItem(goal, idx, type, accentColor, accentBg) {
+  var pct = goal.progress || 0;
+  var barColor = pct >= 100 ? 'var(--success)' : accentColor;
+  var h = '';
+  h += '<div style="margin-bottom:10px;padding:8px 10px;background:' + accentBg + ';border-radius:8px">';
+  // Row 1: number + input + remove
+  h += '<div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">';
+  h += '<span style="font-size:11px;font-weight:800;color:' + accentColor + ';width:16px;text-align:center">' + (idx+1) + '</span>';
+  h += '<input class="fi" style="flex:1;font-size:12px;padding:5px 8px;border-color:' + accentColor + '22" value="' + esc(goal.text) + '" placeholder="Skriv m\u00E5l..." onchange="saveGoalText(\'' + type + '\',' + idx + ',this.value)">';
+  h += '<button onclick="removeGoal(\'' + type + '\',' + idx + ')" style="background:none;border:none;color:var(--danger);font-size:13px;cursor:pointer;padding:2px 4px;opacity:.5">\u2715</button>';
+  h += '</div>';
+  // Row 2: minus button + progress bar + plus button + percentage
+  h += '<div style="display:flex;align-items:center;gap:6px">';
+  h += '<button onclick="adjustGoalProgress(\'' + type + '\',' + idx + ',-10)" style="width:28px;height:28px;border-radius:6px;border:1px solid ' + accentColor + '33;background:' + accentColor + '11;color:' + accentColor + ';font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0">\u2212</button>';
+  h += '<div style="flex:1;height:8px;background:rgba(0,0,0,.3);border-radius:4px;overflow:hidden;position:relative">';
+  h += '<div style="width:' + pct + '%;height:100%;background:' + barColor + ';border-radius:4px;transition:width .3s ease"></div>';
+  h += '</div>';
+  h += '<button onclick="adjustGoalProgress(\'' + type + '\',' + idx + ',10)" style="width:28px;height:28px;border-radius:6px;border:1px solid ' + accentColor + '33;background:' + accentColor + '11;color:' + accentColor + ';font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0">+</button>';
+  h += '<span style="font-size:11px;font-weight:700;color:' + barColor + ';min-width:32px;text-align:right">' + pct + '%</span>';
+  h += '</div>';
+  h += '</div>';
+  return h;
+}
 function renderGoalsSection() {
-  if(!S.monthlyGoals) S.monthlyGoals=['','',''];
-  if(!S.weeklyGoals) S.weeklyGoals=['','',''];
-  let h='';
+  migrateGoals();
+  var h='';
 
   // Monthly Goals
-  h+=`<div class="card" style="border-color:rgba(212,163,64,.2);margin-top:8px">
-    <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px">
-      <span style="font-size:14px">\uD83C\uDFAF</span>
-      <span style="font-size:12px;font-weight:800;color:var(--gold-light);letter-spacing:0.5px">M\u00C5NEDSM\u00C5L</span>
-      <span style="font-size:9px;color:var(--text-dim);margin-left:auto">Hvad bygger jeg denne m\u00E5ned?</span>
-    </div>`;
-  for(let i=0;i<3;i++){
-    const val=S.monthlyGoals[i]||'';
-    h+=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-      <span style="font-size:11px;font-weight:800;color:var(--gold);width:18px;text-align:center">${i+1}</span>
-      <input class="fi" style="flex:1;font-size:12px;padding:6px 10px;border-color:rgba(212,163,64,.15)" value="${esc(val)}" placeholder="${['Prim\u00E6rt m\u00E5l...','Sekund\u00E6rt m\u00E5l...','Tredje m\u00E5l...'][i]}" onchange="S.monthlyGoals[${i}]=this.value;save()">
-    </div>`;
+  h+='<div class="card" style="border-color:rgba(212,163,64,.2);margin-top:8px">';
+  h+='<div style="display:flex;align-items:center;gap:6px;margin-bottom:10px">';
+  h+='<span style="font-size:14px">\uD83C\uDFAF</span>';
+  h+='<span style="font-size:12px;font-weight:800;color:var(--gold-light);letter-spacing:0.5px">M\u00C5NEDSM\u00C5L <span style="font-weight:400;font-size:10px;opacity:.7">(Output Goals)</span></span>';
+  h+='<span style="font-size:9px;color:var(--text-dim);margin-left:auto">' + S.monthlyGoals.length + '/5</span>';
+  h+='</div>';
+  S.monthlyGoals.forEach(function(goal,i){
+    h+=renderGoalItem(goal, i, 'monthly', 'var(--gold)', 'rgba(212,163,64,.05)');
+  });
+  if(S.monthlyGoals.length<5){
+    h+='<button onclick="addGoal(\'monthly\')" style="background:rgba(212,163,64,.06);border:1px dashed rgba(212,163,64,.2);border-radius:8px;padding:6px 12px;color:var(--gold-light);font-size:11px;cursor:pointer;width:100%;margin-top:4px">+ Tilf\u00F8j m\u00E5l</button>';
   }
-  h+=`</div>`;
+  h+='</div>';
 
   // Weekly Goals
-  h+=`<div class="card" style="border-color:rgba(123,104,238,.2)">
-    <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px">
-      <span style="font-size:14px">\u26A1</span>
-      <span style="font-size:12px;font-weight:800;color:var(--accent-light);letter-spacing:0.5px">UGEM\u00C5L</span>
-      <span style="font-size:9px;color:var(--text-dim);margin-left:auto">Denne uges konkrete output</span>
-    </div>`;
-  for(let i=0;i<3;i++){
-    const val=S.weeklyGoals[i]||'';
-    h+=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
-      <span style="font-size:11px;font-weight:800;color:var(--accent-light);width:18px;text-align:center">${i+1}</span>
-      <input class="fi" style="flex:1;font-size:12px;padding:6px 10px;border-color:rgba(123,104,238,.15)" value="${esc(val)}" placeholder="${['Vigtigste output...','N\u00E6ste output...','Tredje output...'][i]}" onchange="S.weeklyGoals[${i}]=this.value;save()">
-    </div>`;
+  h+='<div class="card" style="border-color:rgba(123,104,238,.2)">';
+  h+='<div style="display:flex;align-items:center;gap:6px;margin-bottom:10px">';
+  h+='<span style="font-size:14px">\u26A1</span>';
+  h+='<span style="font-size:12px;font-weight:800;color:var(--accent-light);letter-spacing:0.5px">UGEM\u00C5L <span style="font-weight:400;font-size:10px;opacity:.7">(Output Goals)</span></span>';
+  h+='<span style="font-size:9px;color:var(--text-dim);margin-left:auto">' + S.weeklyGoals.length + '/5</span>';
+  h+='</div>';
+  S.weeklyGoals.forEach(function(goal,i){
+    h+=renderGoalItem(goal, i, 'weekly', 'var(--accent-light)', 'rgba(123,104,238,.05)');
+  });
+  if(S.weeklyGoals.length<5){
+    h+='<button onclick="addGoal(\'weekly\')" style="background:rgba(123,104,238,.06);border:1px dashed rgba(123,104,238,.2);border-radius:8px;padding:6px 12px;color:var(--accent-light);font-size:11px;cursor:pointer;width:100%;margin-top:4px">+ Tilf\u00F8j m\u00E5l</button>';
   }
-  h+=`</div>`;
+  h+='</div>';
   return h;
 }
 function deleteQuest(id) { S.quests=S.quests.filter(q=>q.id!==id); S.view="quests"; save(); render(); }
@@ -1865,7 +1940,9 @@ function saveEditedQuest() {
 
 // ═══ RENDER ═══
 // Periods fold state — persisted in S
-if(!S.periodsOpen) S.periodsOpen = {morning:true, midday:false, evening:false};
+if(!S.periodsOpen) S.periodsOpen = {morning:true, midday:true, evening:true};
+// Migration: open all periods for users who had old defaults
+if(S.periodsOpen.midday===false && S.periodsOpen.evening===false) { S.periodsOpen.midday=true; S.periodsOpen.evening=true; }
 let __periods = S.periodsOpen;
 
 function render() {
@@ -1899,7 +1976,6 @@ function render() {
         <div class="header-title">${av.emoji} Lv.${lv} ${TITLES[Math.min(Math.floor(lv/10),TITLES.length-1)]}</div>
         <div style="margin-top:4px"><span class="rank-badge rank-${rank.id}">${rank.name}</span></div>
       </div>
-      <button onclick="toggleSound()" style="background:none;border:none;font-size:18px;cursor:pointer;opacity:.6">${S.soundOn?'🔊':'🔇'}</button>
     </div>
     <div class="header-xp">${xpBar(xpIn,xpNxt)}<div class="xp-text">${xpIn} / ${xpNxt} XP til Level ${lv+1}</div></div>
   </div>`;
@@ -1915,11 +1991,11 @@ function render() {
   else if(S.view==='quests') h+=renderManage();
   else if(S.view==='edit') h+=renderEditor();
   else if(S.view==='bonus') h+=renderBonusEvent();
-  else if(S.view==='stats') h+=renderStatsHub();
+  // Stats page removed — data lives on quest page (uge/måned views)
   else if(S.view==='settings') h+=renderSettings();
 
   // Bottom Nav (4 items — clean mobile layout)
-  const navs=[{id:'dashboard',icon:'⚔️',label:'Quests'},{id:'character',icon:'🧙',label:'Hero'},{id:'stats',icon:'📊',label:'Stats'},{id:'settings',icon:'⚙️',label:'Settings'}];
+  const navs=[{id:'dashboard',icon:'⚔️',label:'Quests'},{id:'character',icon:'🧙',label:'Character Sheet'},{id:'settings',icon:'⚙️',label:'Settings'}];
 
   h+=`<div class="bnav">${navs.map(n=>`<button class="bnav-item ${(S.view===n.id||(S.view==='edit'&&n.id==='settings')||(S.view==='quests'&&n.id==='settings'))?'active':''}" onclick="setView('${n.id}')"><div class="bnav-icon">${n.icon}</div><div class="bnav-lbl">${n.label}</div></button>`).join('')}</div>`;
 
@@ -1958,19 +2034,12 @@ function renderDashboard() {
         <div class="sys-banner-text">Tryk for at l\u00E6se systembesked...</div></div></div>`;
   }
 
-  // Bonus Event Banner
-  if(S.eventActive && S.currentEvent) {
-    const e=S.currentEvent;
-    if(!S.eventTasksDone) S.eventTasksDone=[];
-    const eDone=S.eventTasksDone.length;
-    const eTotal=(e.tasks||[]).length||1;
-    h+=`<div class="event-banner" onclick="S.view='bonus';render()">
-      <div class="event-icon">${e.icon}</div>
-      <div class="event-body"><div class="event-title">\u2B50 BONUS: ${e.title}</div><div class="event-desc">${eDone}/${eTotal} tasks \u2014 tryk for at \u00E5bne</div></div>
-      <div class="event-xp">+${e.xp} XP</div></div>`;
-  }
+  // Goals (Monthly + Weekly) — shown at top for direction
+  if(!S.monthlyGoals) S.monthlyGoals=[];
+  if(!S.weeklyGoals) S.weeklyGoals=[];
+  h+=renderGoalsSection();
 
-  // View mode toggle + day navigator grouped together
+  // View mode toggle + day navigator — after goals, before progress
   h+=`<div style="background:var(--bg-card);border-radius:12px;padding:8px;border:1px solid var(--border);margin-bottom:12px">`;
   h+=`<div style="display:flex;gap:4px;margin-bottom:${S.dashViewMode==='day'?'8px':'0'}">
     <button style="flex:1;padding:7px;border-radius:8px;border:none;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;${S.dashViewMode==='day'?'background:rgba(212,163,64,.2);color:var(--gold-light)':'background:transparent;color:var(--text-dim)'}" onclick="S.dashViewMode='day';S.dashOffset=0;render()">Dag</button>
@@ -2019,7 +2088,11 @@ function renderDashboard() {
 
     // Quest list by period
     if(isToday) {
+      var totalActive=S.quests.filter(function(q){return q.active}).length;
       h+=`<div class="sec-title">\uD83D\uDCCB Daglige Quests (Input Goals)</div>`;
+      if(tq.length<totalActive){
+        h+=`<div style="font-size:10px;color:var(--text-dim);margin:-6px 0 10px 2px">${tq.length} af ${totalActive} quests planlagt til ${_dnFull[viewDate.getDay()].toLowerCase()}</div>`;
+      }
       h+=renderPeriod('Morgen','\uD83C\uDF05','morning');
       h+=renderPeriod('Middag','\u2600\uFE0F','midday');
       h+=renderPeriod('Aften','\uD83C\uDF19','evening');
@@ -2172,11 +2245,6 @@ function renderDashboard() {
     </button>
   </div>`;
 
-  // Goals (Monthly + Weekly)
-  if(!S.monthlyGoals) S.monthlyGoals=['','',''];
-  if(!S.weeklyGoals) S.weeklyGoals=['','',''];
-  h+=renderGoalsSection();
-
   // Only show soul reminder and extras in day view
   if(S.dashViewMode==='day' && isToday) {
 
@@ -2202,8 +2270,11 @@ function renderDashboard() {
 
   // Moon Phase mini-display
   const moon=getMoonPhase();
+  const moonNext=moon.daysToNew<=moon.daysToFull
+    ? '\uD83C\uDF11 N\u00E6ste nym\u00E5ne: '+moon.nextNew
+    : '\uD83C\uDF15 N\u00E6ste fuldm\u00E5ne: '+moon.nextFull;
   h+=`<div style="text-align:center;padding:8px;font-size:11px;color:var(--text-dim)">
-    ${moon.emoji} ${moon.name} — <em>${moon.meaning}</em>
+    ${moon.emoji} ${moon.name} \u2014 <em>${moon.meaning}</em> \u00B7 ${moonNext}
   </div>`;
 
   // Pomodoro mini if active
@@ -2216,6 +2287,18 @@ function renderDashboard() {
   }
 
   } // end if(day view && isToday)
+
+  // Bonus Event Banner — at bottom
+  if(S.eventActive && S.currentEvent) {
+    const e=S.currentEvent;
+    if(!S.eventTasksDone) S.eventTasksDone=[];
+    const eDone=S.eventTasksDone.length;
+    const eTotal=(e.tasks||[]).length||1;
+    h+=`<div class="event-banner" onclick="S.view='bonus';render()" style="margin-top:12px">
+      <div class="event-icon">${e.icon}</div>
+      <div class="event-body"><div class="event-title">\u2B50 BONUS: ${e.title}</div><div class="event-desc">${eDone}/${eTotal} tasks \u2014 tryk for at \u00E5bne</div></div>
+      <div class="event-xp">+${e.xp} XP</div></div>`;
+  }
 
   // ═══ EVENING REVIEW — always last, visible after 19:00 ═══
   if(new Date().getHours()>=19 && !S.eveningReviews[todayStr]) {
@@ -2333,14 +2416,7 @@ function renderCharacter() {
   const xpIn=getXpIn(S.totalXp),xpNxt=getXpNext(S.totalXp);
   const ti=Math.min(Math.floor(lv/10),TITLES.length-1);
 
-  // Sub-tabs (simplified: 5 tabs)
-  let h=`<div class="tabs">
-    <div class="tab ${S.subView==='soul'?'active':''}" onclick="setSubView('soul')">Soul</div>
-    <div class="tab ${S.subView==='hdsheet'||S.subView==='unblock'?'active':''}" onclick="setSubView('hdsheet')">HD</div>
-    <div class="tab ${S.subView==='stats'||S.subView==='quests'?'active':''}" onclick="setSubView('stats')">Stats</div>
-    <div class="tab ${S.subView==='badges'||S.subView==='achievements'?'active':''}" onclick="setSubView('badges')">Badges</div>
-    <div class="tab ${S.subView==='meditation'?'active':''}" onclick="setSubView('meditation')">Meditation</div>
-  </div>`;
+  let h='';
 
   // Hero Card — with Rank System
   const rank=getRank(lv);
@@ -2348,7 +2424,7 @@ function renderCharacter() {
   const badgeCount=(S.badges||[]).length;
   h+=`<div class="char-hero anim-fadein">
     <div style="margin:0 auto 14px">${renderAvatarHTML(lv, 100)}</div>
-    <div style="font-size:9px;color:rgba(123,104,238,.6);letter-spacing:2px;text-transform:uppercase">Character Sheet · 3D Meatsuit</div>
+    <div style="font-size:9px;color:rgba(123,104,238,.6);letter-spacing:2px;text-transform:uppercase">Character</div>
     <div style="margin:8px 0"><span class="rank-badge rank-${rank.id}" style="font-size:14px;padding:5px 16px">${rank.name}</span></div>
     <div class="char-rank">${TITLES[ti]} · ${av.label}</div>
     <div class="char-lv">Level ${lv}</div>
@@ -2363,29 +2439,11 @@ function renderCharacter() {
     ${nextRank?`<div style="font-size:10px;color:var(--text-dim);margin-top:6px">Næste rang: <span style="color:${nextRank.color};font-weight:700">${nextRank.name}</span> ved Level ${nextRank.minLv}</div>`:'<div style="font-size:10px;color:var(--gold-light);margin-top:6px;font-weight:700">🌟 MAXIMUM RANK ACHIEVED 🌟</div>'}
   </div>`;
 
-  if(S.subView==='soul') {
-    h+=renderSoulPhilosophy();
-  }
-  else if(S.subView==='hdsheet') {
-    h+=renderHDCharacterSheet();
-  }
-  else if(S.subView==='unblock') {
-    h+=renderUnblockGuide();
-  }
-  else if(S.subView==='stats'||S.subView==='quests') {
-    h+=`<div class="sec-title">Stat Fordeling</div>`;
-    CATS.forEach(cat=>{
-      const xp=S.categoryXp[cat.id]||0,clv=getLevel(xp),cur=getXpIn(xp),nxt=getXpNext(xp);
-      const catTitle=cat.titles[Math.min(Math.floor(clv/10),cat.titles.length-1)];
-      h+=`<div class="char-stat" style="border:1px solid ${cat.color}33">
-        <div class="char-stat-hdr"><span class="char-stat-nm" style="color:${cat.color}">${cat.icon} ${cat.name}</span><span class="char-stat-lv" style="color:${cat.color}">Lv.${clv}</span></div>
-        ${xpBar(cur,nxt,cat.color,10)}
-        <div class="char-stat-foot"><span>Total: ${xp.toLocaleString()} XP</span><span>${cur}/${nxt} XP</span></div>
-        <div class="char-stat-rank" style="color:${cat.color}">${catTitle}</div></div>`;
-    });
-  }
-  else if(S.subView==='badges'||S.subView==='achievements') h+=renderBadges();
-  else if(S.subView==='meditation') h+=renderMeditation();
+  // HD info inline (no tabs)
+  h+=renderHDCharacterSheet();
+
+  // Soul philosophy dropdowns
+  h+=renderSoulPhilosophy();
 
   return h;
 }
@@ -2393,181 +2451,159 @@ function renderCharacter() {
 function renderSoulPhilosophy() {
   let h='';
 
-  // ═══ IDENTITY & VISION ═══
-  if(!S.identityStatements) S.identityStatements=[];
-  h+=`<div class="soul-card" style="border-color:rgba(212,163,64,.25)">
-    <div class="soul-card-title" style="color:var(--gold-light)">\uD83D\uDD25 Identitet — Hvem Er Jeg Ved At Blive?</div>
-    <div style="font-size:11px;color:var(--text-dim);margin-bottom:12px;line-height:1.5">
-      Dine habits er input goals. De former din karakter.<br>Skriv de identiteter du lever ind i — ikke m\u00E5l, men <strong style="color:var(--accent-light)">hvem du ER</strong>.
-    </div>`;
-  S.identityStatements.forEach((stmt,i)=>{
-    h+=`<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(212,163,64,.06);border:1px solid rgba(212,163,64,.12);border-radius:10px;margin-bottom:6px">
-      <span style="font-size:16px">\uD83D\uDD2E</span>
-      <span style="flex:1;font-size:13px;color:var(--text-bright);font-style:italic">"${esc(stmt)}"</span>
-      <button style="background:none;border:none;font-size:12px;color:var(--danger);cursor:pointer;padding:4px" onclick="S.identityStatements.splice(${i},1);save();render()">\u2717</button>
-    </div>`;
-  });
-  h+=`<div style="display:flex;gap:6px;margin-top:8px">
-    <input id="new_identity" class="fi" style="flex:1;font-size:12px" placeholder="Jeg er en...">
-    <button class="biz-btn" onclick="const v=document.getElementById('new_identity').value.trim();if(v){S.identityStatements.push(v);save();notify('\uD83D\uDD2E Ny identitet tilf\u00F8jet!','xp');render()}">+</button>
-  </div>
-  </div>`;
+  // Initialize dropdown state
+  if(!S._soulDropdowns) S._soulDropdowns={};
 
-  // ═══ VISION / OUTPUT GOAL ═══
-  h+=`<div class="soul-card" style="border-color:rgba(78,205,196,.2)">
-    <div class="soul-card-title" style="color:var(--success)">\uD83C\uDF1F Vision — Impact & Retning</div>
-    <div style="font-size:11px;color:var(--text-dim);margin-bottom:10px;line-height:1.5">
-      Ikke fordi du skal bevise noget. Men fordi din sj\u00E6l br\u00E6nder for det.<br>
-      <em style="color:var(--accent-light)">Detach fra outcome. Attach til processen.</em>
-    </div>
-    <div class="fg"><label class="fl" style="color:var(--success)">Min vision / output goal</label>
-      <input id="vision_goal" class="fi" value="${esc(S.visionGoal||'')}" placeholder="F.eks. Hj\u00E6lpe 100 mennesker med at transformere deres liv"
-        onchange="S.visionGoal=this.value;save()">
-    </div>
-    <div class="fg"><label class="fl" style="color:var(--accent-light)">Hvorfor? (den dybere mening)</label>
-      <input id="vision_why" class="fi" value="${esc(S.visionWhy||'')}" placeholder="Fordi..."
-        onchange="S.visionWhy=this.value;save()">
-    </div>
-  </div>`;
+  // The Core Truth (Dropdown)
+  const isOpen1 = S._soulDropdowns['core_truth'];
+  h+='<div class="soul-card" style="cursor:pointer" onclick="S._soulDropdowns[\'core_truth\']=!S._soulDropdowns[\'core_truth\'];render()">';
+  h+='<div style="display:flex;align-items:center;justify-content:space-between">';
+  h+='<div class="soul-card-title" style="justify-content:center;font-size:16px;margin:0">🔮 Du Er Ikke Din Karakter</div>';
+  h+='<span style="font-size:12px;color:var(--text-dim)">'+(isOpen1?'▲':'▼')+'</span>';
+  h+='</div>';
+  if(isOpen1) {
+    h+='<div class="soul-divider"></div>';
+    h+='<div class="soul-card-body" style="text-align:center;font-size:13px">';
+    h+='Du er <em>consciousness</em>. Awareness. Universets opmærksomhed.<br><br>';
+    h+='Du render rundt i et meatsuit — et kødhus — som du kalder din krop.<br>';
+    h+='Du spiller en karakter med et navn, en historie, traumer og drømme.<br><br>';
+    h+='<strong style="color:var(--text-bright);font-size:15px">Men du er ikke den karakter.</strong><br><br>';
+    h+='Du er den der <em>observerer</em> karakteren.<br><br>';
+    h+='<div class="soul-quote" style="text-align:center;font-size:13px;font-weight:600;border-left:3px solid var(--gold);padding:12px 16px;margin:12px 0 0;background:rgba(212,163,64,.06)">';
+    h+='"Resistance is the audition to the next level."';
+    h+='</div>';
+    h+='</div>';
+  }
+  h+='</div>';
 
-  // ═══ IDENTITY STANDARDS ═══
-  if(!S.identityStandards) S.identityStandards=[];
-  h+=`<div class="soul-card" style="border-color:rgba(123,104,238,.2)">
-    <div class="soul-card-title" style="color:var(--accent-light)">\u2694\uFE0F Standards \u2014 Hvad G\u00F8r Den Identitet?</div>
-    <div style="font-size:11px;color:var(--text-dim);margin-bottom:10px;line-height:1.5">
-      Reglerne din karakter lever efter. Ikke m\u00E5l \u2014 men <strong style="color:var(--gold-light)">principper</strong>.<br>
-      <em>"Jeg bygger som owner, ikke som worker."</em>
-    </div>`;
-  S.identityStandards.forEach((std,i)=>{
-    h+=`<div style="display:flex;align-items:center;gap:8px;padding:7px 12px;background:rgba(123,104,238,.06);border:1px solid rgba(123,104,238,.12);border-radius:8px;margin-bottom:5px">
-      <span style="font-size:14px">\u2694\uFE0F</span>
-      <span style="flex:1;font-size:12px;color:var(--text-bright)">${esc(std)}</span>
-      <button style="background:none;border:none;font-size:12px;color:var(--danger);cursor:pointer;padding:4px" onclick="S.identityStandards.splice(${i},1);save();render()">\u2717</button>
-    </div>`;
-  });
-  h+=`<div style="display:flex;gap:6px;margin-top:8px">
-    <input id="new_standard" class="fi" style="flex:1;font-size:12px" placeholder="Jeg g\u00F8r altid... / Jeg g\u00F8r aldrig...">
-    <button class="biz-btn" onclick="const v=document.getElementById('new_standard').value.trim();if(v){if(!S.identityStandards)S.identityStandards=[];S.identityStandards.push(v);save();notify('\u2694\uFE0F Standard tilf\u00F8jet!','xp');render()}">+</button>
-  </div>
-  </div>`;
+  // The iPad Metaphor (Dropdown)
+  const isOpen2 = S._soulDropdowns['ipad'];
+  h+='<div class="soul-card" style="cursor:pointer" onclick="S._soulDropdowns[\'ipad\']=!S._soulDropdowns[\'ipad\'];render()">';
+  h+='<div style="display:flex;align-items:center;justify-content:space-between">';
+  h+='<div class="soul-card-title" style="justify-content:center;font-size:16px;margin:0">📱 iPaden Foran Næsen</div>';
+  h+='<span style="font-size:12px;color:var(--text-dim)">'+(isOpen2?'▲':'▼')+'</span>';
+  h+='</div>';
+  if(isOpen2) {
+    h+='<div class="soul-divider"></div>';
+    h+='<div class="soul-card-body">';
+    h+='Din tænkning er som en iPad holdt helt op foran dit ansigt.<br><br>';
+    h+='Når skærmen er <em>så tæt</em>, tror du alt hvad du ser ER virkeligheden. Tanker bliver til sandheder. Bekymringer bliver til identitet. Drama bliver til dig.<br><br>';
+    h+='<strong>Meditation er at trække iPaden væk.</strong><br><br>';
+    h+='Bare et par centimeter. Nok til at du kan <em>se</em> at det er en skærm. Nok til at observere tankerne uden at drukne i dem.<br><br>';
+    h+='I det rum — mellem dig og iPaden — bor friheden.';
+    h+='</div>';
+  }
+  h+='</div>';
 
-  h+=`<div class="soul-divider"></div>`;
+  // The Base & Love (Dropdown)
+  const isOpen3 = S._soulDropdowns['base_love'];
+  h+='<div class="soul-card" style="cursor:pointer" onclick="S._soulDropdowns[\'base_love\']=!S._soulDropdowns[\'base_love\'];render()">';
+  h+='<div style="display:flex;align-items:center;justify-content:space-between">';
+  h+='<div class="soul-card-title" style="justify-content:center;font-size:16px;margin:0">🏠 Basen & Kærligheden</div>';
+  h+='<span style="font-size:12px;color:var(--text-dim)">'+(isOpen3?'▲':'▼')+'</span>';
+  h+='</div>';
+  if(isOpen3) {
+    h+='<div class="soul-divider"></div>';
+    h+='<div class="soul-card-body">';
+    h+='Din karakter har behov. Det er reglerne i spillet:<br><br>';
+    h+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0">';
+    h+='<div style="padding:8px;background:rgba(232,93,74,.08);border-radius:8px;text-align:center;border:1px solid rgba(232,93,74,.15)">';
+    h+='<div style="font-size:16px">⚔️</div><div style="font-size:11px;color:var(--text)">Krop</div>';
+    h+='<div style="font-size:9px;color:var(--text-dim)">Søvn, bevægelse, mad</div></div>';
+    h+='<div style="padding:8px;background:rgba(212,163,64,.08);border-radius:8px;text-align:center;border:1px solid rgba(212,163,64,.15)">';
+    h+='<div style="font-size:16px">🏰</div><div style="font-size:11px;color:var(--text)">Penge</div>';
+    h+='<div style="font-size:9px;color:var(--text-dim)">Sikkerhed, hjem, frihed</div></div>';
+    h+='<div style="padding:8px;background:rgba(123,104,238,.08);border-radius:8px;text-align:center;border:1px solid rgba(123,104,238,.15)">';
+    h+='<div style="font-size:16px">🔮</div><div style="font-size:11px;color:var(--text)">Sind</div>';
+    h+='<div style="font-size:9px;color:var(--text-dim)">Ro, klarhed, visdom</div></div>';
+    h+='<div style="padding:8px;background:rgba(78,205,196,.08);border-radius:8px;text-align:center;border:1px solid rgba(78,205,196,.15)">';
+    h+='<div style="font-size:16px">✨</div><div style="font-size:11px;color:var(--text)">Alignment</div>';
+    h+='<div style="font-size:9px;color:var(--text-dim)">Design, energi, flow</div></div>';
+    h+='</div>';
+    h+='Når basen er dækket — hvad er der så tilbage?<br><br>';
+    h+='<strong style="color:var(--accent-light);font-size:14px">Kærlighed.</strong><br><br>';
+    h+='At leve fra den kærlighed der strømmer igennem sjælen. At bruge dit unikke design. Ikke hvad verden siger du "bør" — men hvad din sjæl <em>brænder</em> for.';
+    h+='</div>';
+  }
+  h+='</div>';
 
-  // The Core Truth
-  h+=`<div class="soul-card" style="text-align:center">
-    <div style="font-size:32px;margin-bottom:8px;animation:soul-float 4s ease infinite">\uD83D\uDD2E</div>
-    <div class="soul-card-title" style="justify-content:center;font-size:16px">Du Er Ikke Din Karakter</div>
-    <div class="soul-divider"></div>
-    <div class="soul-card-body" style="text-align:center;font-size:13px">
-      Du er <em>consciousness</em>. Awareness. Universets opmærksomhed.<br><br>
-      Du render rundt i et meatsuit — et kødhus — som du kalder din krop.<br>
-      Du spiller en karakter med et navn, en historie, traumer og drømme.<br><br>
-      <strong style="color:var(--text-bright);font-size:15px">Men du er ikke den karakter.</strong><br><br>
-      Du er den der <em>observerer</em> karakteren.
-    </div>
-  </div>`;
+  // The Character's Story (Backstory) (Dropdown)
+  const isOpen4 = S._soulDropdowns['backstory'];
+  h+='<div class="soul-card" style="cursor:pointer" onclick="S._soulDropdowns[\'backstory\']=!S._soulDropdowns[\'backstory\'];render()">';
+  h+='<div style="display:flex;align-items:center;justify-content:space-between">';
+  h+='<div class="soul-card-title" style="justify-content:center;font-size:16px;margin:0">📖 Karakterens Backstory</div>';
+  h+='<span style="font-size:12px;color:var(--text-dim)">'+(isOpen4?'▲':'▼')+'</span>';
+  h+='</div>';
+  if(isOpen4) {
+    h+='<div class="soul-divider"></div>';
+    h+='<div class="soul-card-body">';
+    h+='Ligesom enhver RPG-karakter har din en backstory:<br><br>';
+    h+='<em>Kernetraumer. Opvækst. Mønstre. Overbevisninger der blev programmeret ind, før du var gammel nok til at vælge dem.</em><br><br>';
+    h+='Det er ikke fejl. Det er <strong>character quests</strong>. Ting sjælen valgte at udforske i denne inkarnation.<br><br>';
+    h+='Du kan heale dem. Du kan transformere dem. Men først: se dem som en del af spillets design — ikke som noget der er "galt med dig."<br><br>';
+    h+='<div class="soul-quote" style="text-align:center;font-size:12px;font-weight:600;border-left:3px solid var(--gold);padding:10px 14px;margin:8px 0 0;background:rgba(212,163,64,.06)">';
+    h+='En karakter i et RPG starter ikke på Level 99. Den starter med begrænsninger, svagheder, og en historie der former rejsen. Det er det, der gør eventyret interessant.';
+    h+='</div>';
+    h+='</div>';
+  }
+  h+='</div>';
 
-  // Core Quote
-  h+=`<div class="soul-quote" style="text-align:center;font-size:14px;font-weight:600;border-left:3px solid var(--gold);padding:16px 20px;margin:0 0 14px;background:rgba(212,163,64,.06)">
-    "Resistance is the audition to the next level."
-  </div>`;
+  // Two Operating Systems (Dropdown)
+  const isOpen5 = S._soulDropdowns['operating'];
+  h+='<div class="soul-card" style="cursor:pointer" onclick="S._soulDropdowns[\'operating\']=!S._soulDropdowns[\'operating\'];render()">';
+  h+='<div style="display:flex;align-items:center;justify-content:space-between">';
+  h+='<div class="soul-card-title" style="justify-content:center;font-size:16px;margin:0">🖥️ To Operating Systems</div>';
+  h+='<span style="font-size:12px;color:var(--text-dim)">'+(isOpen5?'▲':'▼')+'</span>';
+  h+='</div>';
+  if(isOpen5) {
+    h+='<div class="soul-divider"></div>';
+    h+='<div class="soul-card-body">';
+    h+='<div style="display:flex;gap:10px;margin:8px 0">';
+    h+='<div style="flex:1;padding:12px;background:rgba(232,93,74,.06);border:1px solid rgba(232,93,74,.15);border-radius:10px">';
+    h+='<div style="font-size:12px;font-weight:700;color:var(--danger);margin-bottom:4px">Frygt OS</div>';
+    h+='<div style="font-size:10px;color:var(--text-dim);line-height:1.5">';
+    h+='"Jeg er ikke nok"<br>';
+    h+='"Hvad hvis jeg fejler?"<br>';
+    h+='"Hvad tænker de om mig?"<br>';
+    h+='"Jeg SKAL præstere"';
+    h+='</div></div>';
+    h+='<div style="flex:1;padding:12px;background:rgba(123,104,238,.06);border:1px solid rgba(123,104,238,.15);border-radius:10px">';
+    h+='<div style="font-size:12px;font-weight:700;color:var(--accent-light);margin-bottom:4px">Kærlighed OS</div>';
+    h+='<div style="font-size:10px;color:var(--text-dim);line-height:1.5">';
+    h+='"Jeg er allerede komplet"<br>';
+    h+='"Hvad vil min sjæl udtrykke?"<br>';
+    h+='"Hvem kan jeg tjene?"<br>';
+    h+='"Jeg VÆLGER dette"';
+    h+='</div></div>';
+    h+='</div>';
+    h+='Før du starter din næste quest — spørg:<br>';
+    h+='<strong>Gør jeg dette fra frygt eller fra kærlighed?</strong><br>';
+    h+='Svaret ændrer ikke hvad du gør. Det ændrer <em>hvorfor</em> du gør det.';
+    h+='</div>';
+  }
+  h+='</div>';
 
-  // The iPad Metaphor
-  h+=`<div class="soul-card">
-    <div class="soul-card-title">\uD83D\uDCF1 iPaden Foran Næsen</div>
-    <div class="soul-card-body">
-      Din tænkning er som en iPad holdt helt op foran dit ansigt.<br><br>
-      Når skærmen er <em>så tæt</em>, tror du alt hvad du ser ER virkeligheden. Tanker bliver til sandheder. Bekymringer bliver til identitet. Drama bliver til dig.<br><br>
-      <strong>Meditation er at trække iPaden væk.</strong><br><br>
-      Bare et par centimeter. Nok til at du kan <em>se</em> at det er en skærm. Nok til at observere tankerne uden at drukne i dem.<br><br>
-      I det rum — mellem dig og iPaden — bor friheden.
-    </div>
-  </div>`;
-
-  // The Base & Love
-  h+=`<div class="soul-card">
-    <div class="soul-card-title">\uD83C\uDFE0 Basen & Kærligheden</div>
-    <div class="soul-card-body">
-      Din karakter har behov. Det er reglerne i spillet:<br><br>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0">
-        <div style="padding:8px;background:rgba(232,93,74,.08);border-radius:8px;text-align:center;border:1px solid rgba(232,93,74,.15)">
-          <div style="font-size:16px">\u2694\uFE0F</div><div style="font-size:11px;color:var(--text)">Krop</div>
-          <div style="font-size:9px;color:var(--text-dim)">Søvn, bevægelse, mad</div></div>
-        <div style="padding:8px;background:rgba(212,163,64,.08);border-radius:8px;text-align:center;border:1px solid rgba(212,163,64,.15)">
-          <div style="font-size:16px">\uD83C\uDFF0</div><div style="font-size:11px;color:var(--text)">Penge</div>
-          <div style="font-size:9px;color:var(--text-dim)">Sikkerhed, hjem, frihed</div></div>
-        <div style="padding:8px;background:rgba(123,104,238,.08);border-radius:8px;text-align:center;border:1px solid rgba(123,104,238,.15)">
-          <div style="font-size:16px">\uD83D\uDD2E</div><div style="font-size:11px;color:var(--text)">Sind</div>
-          <div style="font-size:9px;color:var(--text-dim)">Ro, klarhed, visdom</div></div>
-        <div style="padding:8px;background:rgba(78,205,196,.08);border-radius:8px;text-align:center;border:1px solid rgba(78,205,196,.15)">
-          <div style="font-size:16px">\u2728</div><div style="font-size:11px;color:var(--text)">Alignment</div>
-          <div style="font-size:9px;color:var(--text-dim)">Design, energi, flow</div></div>
-      </div>
-      Når basen er dækket — hvad er der så tilbage?<br><br>
-      <strong style="color:var(--accent-light);font-size:14px">Kærlighed.</strong><br><br>
-      At leve fra den kærlighed der strømmer igennem sjælen. At bruge dit unikke design. Ikke hvad verden siger du "bør" — men hvad din sjæl <em>brænder</em> for.
-    </div>
-  </div>`;
-
-  // The Character's Story
-  h+=`<div class="soul-card">
-    <div class="soul-card-title">\uD83D\uDCDC Karakterens Backstory</div>
-    <div class="soul-card-body">
-      Ligesom enhver RPG-karakter har din en backstory:<br><br>
-      <em>Kernetraumer. Opvækst. Mønstre. Overbevisninger der blev programmeret ind, før du var gammel nok til at vælge dem.</em><br><br>
-      Det er ikke fejl. Det er <strong>character quests</strong>. Ting sjælen valgte at udforske i denne inkarnation.<br><br>
-      Du kan heale dem. Du kan transformere dem. Men først: se dem som en del af spillets design — ikke som noget der er "galt med dig."
-    </div>
-    <div class="soul-quote">
-      En karakter i et RPG starter ikke på Level 99. Den starter med begrænsninger, svagheder, og en historie der former rejsen. Det er det, der gør eventyret interessant.
-    </div>
-  </div>`;
-
-  // Two Operating Systems
-  h+=`<div class="soul-card">
-    <div class="soul-card-title">\uD83D\uDDA5\uFE0F To Operating Systems</div>
-    <div class="soul-card-body">
-      <div style="display:flex;gap:10px;margin:8px 0">
-        <div style="flex:1;padding:12px;background:rgba(232,93,74,.06);border:1px solid rgba(232,93,74,.15);border-radius:10px">
-          <div style="font-size:12px;font-weight:700;color:var(--danger);margin-bottom:4px">Frygt OS</div>
-          <div style="font-size:10px;color:var(--text-dim);line-height:1.5">
-            "Jeg er ikke nok"<br>
-            "Hvad hvis jeg fejler?"<br>
-            "Hvad tænker de om mig?"<br>
-            "Jeg SKAL præstere"
-          </div>
-        </div>
-        <div style="flex:1;padding:12px;background:rgba(123,104,238,.06);border:1px solid rgba(123,104,238,.15);border-radius:10px">
-          <div style="font-size:12px;font-weight:700;color:var(--accent-light);margin-bottom:4px">Kærlighed OS</div>
-          <div style="font-size:10px;color:var(--text-dim);line-height:1.5">
-            "Jeg er allerede komplet"<br>
-            "Hvad vil min sjæl udtrykke?"<br>
-            "Hvem kan jeg tjene?"<br>
-            "Jeg VÆLGER dette"
-          </div>
-        </div>
-      </div>
-      Før du starter din næste quest — spørg:<br>
-      <strong>Gør jeg dette fra frygt eller fra kærlighed?</strong><br>
-      Svaret ændrer ikke hvad du gør. Det ændrer <em>hvorfor</em> du gør det.
-    </div>
-  </div>`;
-
-  // The Game Reminder
-  h+=`<div class="soul-card" style="border-color:rgba(212,163,64,.2);text-align:center">
-    <div style="font-size:28px;margin-bottom:8px">\uD83C\uDFAE</div>
-    <div class="soul-card-title" style="justify-content:center">Husk: Det Er Et Spil</div>
-    <div class="soul-card-body" style="text-align:center">
-      Du samler XP. Du leveler op. Du besejrer bosser.<br>
-      Og det er fedt — systemer virker.<br><br>
-      Men din sjæl har intet brug for XP.<br>
-      <em>Din sjæl er allerede Level \u221E.</em><br><br>
-      Spillet handler ikke om at vinde.<br>
-      Det handler om at <strong>opleve</strong>. At lege. At udforske hvad det vil sige at være en sjæl i et meatsuit.<br><br>
-      <div class="soul-divider"></div>
-      <em style="font-size:13px;color:var(--accent-light)">Spil spillet med fuldt hjerte.<br>Men forveksl det aldrig med hvem du er.</em>
-    </div>
-  </div>`;
+  // The Game Reminder (Dropdown)
+  const isOpen6 = S._soulDropdowns['game'];
+  h+='<div class="soul-card" style="cursor:pointer" onclick="S._soulDropdowns[\'game\']=!S._soulDropdowns[\'game\'];render()">';
+  h+='<div style="display:flex;align-items:center;justify-content:space-between">';
+  h+='<div class="soul-card-title" style="justify-content:center;font-size:16px;margin:0">🎮 Husk: Det Er Et Spil</div>';
+  h+='<span style="font-size:12px;color:var(--text-dim)">'+(isOpen6?'▲':'▼')+'</span>';
+  h+='</div>';
+  if(isOpen6) {
+    h+='<div class="soul-divider"></div>';
+    h+='<div class="soul-card-body" style="text-align:center">';
+    h+='Du samler XP. Du leveler op. Du besejrer bosser.<br>';
+    h+='Og det er fedt — systemer virker.<br><br>';
+    h+='Men din sjæl har intet brug for XP.<br>';
+    h+='<em>Din sjæl er allerede Level ∞.</em><br><br>';
+    h+='Spillet handler ikke om at vinde.<br>';
+    h+='Det handler om at <strong>opleve</strong>. At lege. At udforske hvad det vil sige at være en sjæl i et meatsuit.<br><br>';
+    h+='<div class="soul-divider"></div>';
+    h+='<em style="font-size:13px;color:var(--accent-light)">Spil spillet med fuldt hjerte.<br>Men forveksl det aldrig med hvem du er.</em>';
+    h+='</div>';
+  }
+  h+='</div>';
 
   return h;
 }
@@ -2651,28 +2687,60 @@ const HD = {
 function renderHDCharacterSheet() {
   let h='';
 
-  // Hero Card
-  h+=`<div class="hd-hero" style="animation:fadeIn .5s ease">
-    <div class="hd-type-badge">${HD.type}</div>
-    <div class="hd-name">Elvan Granth</div>
-    <div class="hd-cross">${HD.cross}</div>
+  // HD Core Identity — with superpower descriptions
+  h+=`<div class="card" style="border-color:rgba(123,104,238,.2);margin-top:12px">
+    <div style="font-size:12px;font-weight:800;color:var(--accent-light);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">Human Design</div>
 
-    <div class="hd-stat-row">
-      <div class="hd-stat"><div class="hd-stat-label">Authority</div><div class="hd-stat-val">🔥 ${HD.authority}</div></div>
-      <div class="hd-stat"><div class="hd-stat-label">Strategy</div><div class="hd-stat-val">⏳ ${HD.strategy}</div></div>
+    <div style="padding:12px;background:rgba(123,104,238,.06);border:1px solid rgba(123,104,238,.12);border-radius:10px;margin-bottom:8px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+        <span style="font-size:20px">\uD83D\uDD25</span>
+        <div>
+          <div style="font-size:9px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px">Type</div>
+          <div style="font-size:16px;font-weight:800;color:var(--accent-light)">${HD.type}</div>
+        </div>
+        <div style="margin-left:auto;text-align:right">
+          <div style="font-size:10px;color:var(--text-dim)">Strategi: ${HD.strategy}</div>
+          <div style="font-size:10px;color:var(--text-dim)">Authority: ${HD.authority}</div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--text);line-height:1.6;margin-top:6px">
+        <strong style="color:var(--accent-light)">Superpower:</strong> Du har en uudt\u00F8mmelig sacral energi \u2014 en livskraft-motor som 99% af mennesker ikke har. N\u00E5r du reagerer p\u00E5 det der t\u00E6nder dig, er din energi ustoppelig. Du bygger, skaber og manifesterer ved at svare fra maven \u2014 ikke fra hovedet. Dit sakrale respons (uuh-huh / unh-unh) er dit GPS-system. Stol p\u00E5 det.
+      </div>
+      <div style="font-size:10px;color:var(--text-dim);margin-top:6px;font-style:italic">
+        Signature: <span style="color:#4ecdc4">\u2728 ${HD.signature}</span> \u00B7 Not-Self: <span style="color:var(--danger)">\u26A0 ${HD.notSelf}</span>
+      </div>
     </div>
-    <div class="hd-stat-row">
-      <div class="hd-stat"><div class="hd-stat-label">Profile</div><div class="hd-stat-val">${HD.profile}</div></div>
-      <div class="hd-stat"><div class="hd-stat-label">Definition</div><div class="hd-stat-val">${HD.definition}</div></div>
+
+    <div style="padding:12px;background:rgba(78,205,196,.06);border:1px solid rgba(78,205,196,.12);border-radius:10px;margin-bottom:8px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+        <span style="font-size:20px">\uD83C\uDF1F</span>
+        <div>
+          <div style="font-size:9px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px">Incarnation Cross</div>
+          <div style="font-size:14px;font-weight:800;color:var(--success)">${HD.cross}</div>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--text);line-height:1.6;margin-top:6px">
+        <strong style="color:var(--success)">Superpower:</strong> Sfinksens Kors handler om retning og fundament. Du er her for at besvare det mest fundamentale sp\u00F8rgsm\u00E5l: <em>"Hvor skal vi hen, og hvad bygger vi det p\u00E5?"</em> Du har en naturlig evne til at skabe stabilitet, struktur og retning for dig selv og andre. Gate 7 (Lederen) og Gate 13 (Lytteren) giver dig b\u00E5de vision og evnen til at samle andres historier ind. Gate 2 (Retning) og Gate 1 (Kreativitet) giver dig den indre kompas-f\u00F8lelse og kreativ selvudfoldelse.
+      </div>
     </div>
-    <div class="hd-stat-row">
-      <div class="hd-stat" style="border-color:rgba(78,205,196,.2)"><div class="hd-stat-label">Signature</div><div class="hd-stat-val" style="color:#4ecdc4">✨ ${HD.signature}</div></div>
-      <div class="hd-stat" style="border-color:rgba(232,93,74,.2)"><div class="hd-stat-label">Not-Self</div><div class="hd-stat-val" style="color:var(--danger)">⚠ ${HD.notSelf}</div></div>
+
+    <div style="padding:12px;background:rgba(212,163,64,.06);border:1px solid rgba(212,163,64,.12);border-radius:10px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+        <span style="font-size:20px">\uD83C\uDFAD</span>
+        <div>
+          <div style="font-size:9px;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px">Profil</div>
+          <div style="font-size:16px;font-weight:800;color:var(--gold-light)">${HD.profile}</div>
+        </div>
+        <div style="margin-left:auto;font-size:10px;color:var(--text-dim)">${HD.definition}</div>
+      </div>
+      <div style="font-size:11px;color:var(--text);line-height:1.6;margin-top:6px">
+        <strong style="color:var(--gold-light)">Superpower:</strong> Du er Martyren-Heretikeren \u2014 den der l\u00E6rer af erfaring og leverer universelle l\u00F8sninger. Linje 3 betyder at du er designet til at pr\u00F8ve, fejle, og finde ud af hvad der VIRKER gennem f\u00F8rsteh\u00E5ndserfaring. Hvert "fejltrin" er v\u00E6rdifuld data. Linje 5 g\u00F8r dig til en naturlig probleml\u00F8ser \u2014 folk projicerer h\u00E5b p\u00E5 dig og ser dig som den der kan fikse ting. Din kombination er sj\u00E6lden: du LEVER det (L3) og pakker det ind i noget der hj\u00E6lper mange (L5). Du er den praktiske visionær.
+      </div>
     </div>
   </div>`;
 
   // 3 Superpowers (Channels)
-  h+=`<div class="hd-section-title">⚡ Dine 3 Superpowers (Kanaler)</div>`;
+  h+=`<div class="hd-section-title">⚡ Superpowers (Kanaler)</div>`;
   HD.channels.forEach(ch=>{
     h+=`<div class="hd-channel">
       <div class="hd-channel-name">${ch.name}</div>
@@ -2709,7 +2777,7 @@ function renderHDCharacterSheet() {
 
   // Open Centers (preview — detailed in Unblock)
   h+=`<div class="hd-section-title">⚪ Åbne Centre (Dine Læringsområder)</div>`;
-  h+=`<div style="font-size:11px;color:var(--text-dim);margin-bottom:10px">Disse centre er åbne — du absorberer andres energi her. Se <span style="color:#4ecdc4;cursor:pointer" onclick="setSubView('unblock')">Unblock Guide</span> for dybere forståelse.</div>`;
+  h+=`<div style="font-size:11px;color:var(--text-dim);margin-bottom:10px">Disse centre er \u00E5bne \u2014 du absorberer andres energi her.</div>`;
   HD.centers.open.forEach(c=>{
     h+=`<div class="hd-center">
       <div class="hd-center-icon hd-center-open">${c.icon}</div>
@@ -3331,26 +3399,14 @@ function renderEveningLog() {
 
 // ── Stats Hub (Weekly + Monthly + Calendar combined) ──
 function renderStatsHub() {
-  if(!S.statsTab) S.statsTab='weekly';
+  if(!S.statsTab) S.statsTab='historik';
   let h=`<div style="padding:8px 0">`;
   h+=`<div class="tabs">
-    <div class="tab ${S.statsTab==='weekly'?'active':''}" onclick="S.statsTab='weekly';render()">📊 Uge</div>
-    <div class="tab ${S.statsTab==='calendar'?'active':''}" onclick="S.statsTab='calendar';render()">🗓️ Kalender</div>
-    <div class="tab ${S.statsTab==='report'?'active':''}" onclick="S.statsTab='report';render()">📈 Rapport</div>
-    <div class="tab ${S.statsTab==='business'?'active':''}" onclick="S.statsTab='business';render()">🏰 Business</div>
-    <div class="tab ${S.statsTab==='journal'?'active':''}" onclick="S.statsTab='journal';render()">📓 Journal</div>
-    <div class="tab ${S.statsTab==='leadership'?'active':''}" onclick="S.statsTab='leadership';render()">🎯 Focus</div>
-    <div class="tab ${S.statsTab==='direction'?'active':''}" onclick="S.statsTab='direction';render()">🧭 Review</div>
+    <div class="tab ${S.statsTab==='historik'?'active':''}" onclick="S.statsTab='historik';render()">🗓️ Historik</div>
     <div class="tab ${S.statsTab==='eveninglog'?'active':''}" onclick="S.statsTab='eveninglog';render()">🌙 Dagbog</div>
   </div>`;
 
-  if(S.statsTab==='weekly') h+=renderWeeklyMatrix();
-  else if(S.statsTab==='calendar') h+=renderCalendar();
-  else if(S.statsTab==='report') h+=renderHabitReport();
-  else if(S.statsTab==='business') h+=renderBusiness();
-  else if(S.statsTab==='journal') h+=renderJournal();
-  else if(S.statsTab==='leadership') h+=renderLeadershipSession();
-  else if(S.statsTab==='direction') h+=renderDirectionReview();
+  if(S.statsTab==='historik') h+=renderCalendar();
   else if(S.statsTab==='eveninglog') h+=renderEveningLog();
 
   h+=`</div>`;
@@ -3551,7 +3607,9 @@ function renderCalendar() {
 
 // ── Manage ──
 function renderManage() {
-  let h=`<div style="padding:16px 0"><div class="manage-hdr"><div class="manage-title">\uD83D\uDCDC Alle Quests</div>
+  let h=`<div style="padding:16px 0">
+    <button style="background:none;border:none;color:var(--text-dim);font-size:13px;cursor:pointer;padding:4px 0;margin-bottom:8px" onclick="setView('dash')">← Tilbage</button>
+    <div class="manage-hdr"><div class="manage-title">\uD83D\uDCDC Alle Quests</div>
     <button class="btn-new" onclick="editQuest(null)">+ Ny Quest</button></div>`;
 
   S.quests.forEach(q=>{
@@ -3846,15 +3904,12 @@ function renderBadges() {
   let h=`<div class="sec-title">🎖️ Badge Collection</div>`;
   h+=`<div style="text-align:center;margin-bottom:14px">
     <span style="font-size:28px;font-weight:800;color:var(--gold)">${S.badges.length}</span>
-    <span style="font-size:12px;color:var(--text-dim)"> / ${BADGES.length} badges earned</span></div>`;
+    <span style="font-size:12px;color:var(--text-dim)"> / ${BADGES.filter(b=>b.id.startsWith('streak_')||b.id.startsWith('perfect_')).length} badges earned</span></div>`;
 
-  // Group badges
+  // Show only streak milestones and perfect day badges
   const groups = [
     {label:'🔥 Streak Milestones', badges:BADGES.filter(b=>b.id.startsWith('streak_'))},
     {label:'💎 Perfect Days', badges:BADGES.filter(b=>b.id.startsWith('perfect_'))},
-    {label:'⚡ XP Milestones', badges:BADGES.filter(b=>b.id.startsWith('xp_'))},
-    {label:'🧘 Meditation', badges:BADGES.filter(b=>b.id.startsWith('med_')||b.id.startsWith('jhana_'))},
-    {label:'🏆 Rank', badges:BADGES.filter(b=>b.id.startsWith('rank_'))},
   ];
   groups.forEach(g=>{
     h+=`<div style="font-size:12px;font-weight:600;color:var(--text-dim);margin:12px 0 8px">${g.label}</div>`;
@@ -3874,6 +3929,8 @@ function renderBadges() {
 }
 
 // ── Meditation Tracker ──
+// DEPRECATED: This function is no longer used. The meditation tab has been removed from the character view.
+// Kept for backward compatibility but not accessible through the UI.
 function renderMeditation() {
   if(!S.meditationLog) S.meditationLog=[];
   if(!S.meditationHours) S.meditationHours=0;
@@ -4512,7 +4569,7 @@ function isQuestUnlocked(quest) {
 function getMoonPhase() {
   const now=new Date();
   const year=now.getFullYear(),month=now.getMonth()+1,day=now.getDate();
-  // Simplified moon phase calculation
+  // Moon phase calculation
   let c=0,e=0,jd=0,b=0;
   if(month<3){c=year-1;e=month+12;}else{c=year;e=month;}
   jd=Math.floor(365.25*(c+4716))+Math.floor(30.6001*(e+1))+day-1524.5;
@@ -4525,7 +4582,19 @@ function getMoonPhase() {
     'Handling. Overvind modstand.','Forfin og justér.','Høst. Fejr. Reflektér.',
     'Giv tilbage. Del din visdom.','Slip. Lad gå af det der ikke tjener dig.',
     'Hvil. Forbered det nye.'];
-  return {emoji:phases[phase].split(' ')[0],name:phases[phase],meaning:meanings[phase],phase};
+  // Calculate next new moon and full moon
+  const SYNODIC=29.530588853;
+  var cyclePos=b*SYNODIC; // days into current cycle
+  var daysToNew=SYNODIC-cyclePos; // new moon = cycle pos 0
+  var daysToFull=(SYNODIC/2)-cyclePos; // full moon = cycle pos ~14.76
+  if(daysToFull<0) daysToFull+=SYNODIC;
+  var nextNew=new Date(now.getTime()+daysToNew*86400000);
+  var nextFull=new Date(now.getTime()+daysToFull*86400000);
+  var mn=['jan','feb','mar','apr','maj','jun','jul','aug','sep','okt','nov','dec'];
+  return {emoji:phases[phase].split(' ')[0],name:phases[phase],meaning:meanings[phase],phase,
+    nextNew:nextNew.getDate()+'. '+mn[nextNew.getMonth()],
+    nextFull:nextFull.getDate()+'. '+mn[nextFull.getMonth()],
+    daysToNew:Math.round(daysToNew),daysToFull:Math.round(daysToFull)};
 }
 
 // ── #15: Human Design Daily Strategy Reminder ──
@@ -4736,47 +4805,8 @@ function renderSettings() {
     </div>
   </div>`;
 
-  // Export / Import
-  h+=`<div class="sec-title" style="margin-top:16px">💾 Data</div>`;
-  h+=`<div class="card">
-    <div style="font-size:12px;color:var(--text-dim);margin-bottom:10px;line-height:1.5">
-      Alt din data ligger i browserens localStorage OG synkes automatisk til skyen. Eksporter for at lave backup — importer for at gendanne.
-    </div>
-    <div style="display:flex;gap:8px">
-      <button class="btn-save" style="flex:1;font-size:12px;padding:9px" onclick="exportData()">📤 Eksporter JSON</button>
-      <button class="btn-cancel" style="flex:1;font-size:12px;padding:9px;cursor:pointer" onclick="document.getElementById('import_file').click()">📥 Importer JSON</button>
-    </div>
-    <input type="file" id="import_file" accept=".json" style="display:none" onchange="importData(event)">
-  </div>`;
 
-  // Business Monthly Reset
-  h+=`<div class="sec-title" style="margin-top:16px">🏰 Business</div>`;
-  const bMonth = S._bizMonth || '';
-  const currentMonth = todayStr.slice(0,7);
-  h+=`<div class="card">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-      <span style="font-size:13px;color:var(--text)">Nuværende måned: <strong style="color:var(--gold)">${currentMonth}</strong></span>
-      <button class="biz-btn" onclick="resetBizMonth()">Nulstil måned</button>
-    </div>`;
-  // Show history if any
-  if(S.bizHistory && S.bizHistory.length>0) {
-    h+=`<div style="font-size:11px;color:var(--text-dim);margin-top:8px;border-top:1px solid var(--border);padding-top:8px">
-      <strong>Historik:</strong></div>`;
-    S.bizHistory.slice(-6).reverse().forEach(m=>{
-      h+=`<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:11px;border-bottom:1px solid rgba(255,255,255,.03)">
-        <span style="color:var(--text-dim)">${m.month}</span>
-        <span style="color:var(--text)">L:${m.leads} C:${m.conversations} O:${m.offers} S:${m.sales} R:${m.revenue}</span>
-      </div>`;
-    });
-  }
-  h+=`</div>`;
-
-  // Language Toggle
-  h+=`<div class="sec-title" style="margin-top:16px">🌐 Sprog / Language</div>`;
-  h+=`<div class="card" style="display:flex;gap:8px">
-    <button class="biz-btn" style="${S.lang==='da'?'background:rgba(78,205,196,.15);border-color:rgba(78,205,196,.3);color:var(--success)':''}" onclick="S.lang='da';save();render()">🇩🇰 Dansk</button>
-    <button class="biz-btn" style="${S.lang==='en'?'background:rgba(78,205,196,.15);border-color:rgba(78,205,196,.3);color:var(--success)':''}" onclick="S.lang='en';save();render()">🇬🇧 English</button>
-  </div>`;
+  // Language: disabled for now
 
   // Moon Phase
   const moon=getMoonPhase();
@@ -4787,6 +4817,11 @@ function renderSettings() {
       <div>
         <div style="font-size:13px;font-weight:600;color:var(--text)">${moon.name}</div>
         <div style="font-size:11px;color:var(--text-dim);margin-top:2px;line-height:1.4">${moon.meaning}</div>
+        <div style="margin-top:6px;font-size:10px;color:var(--text-dim)">
+          ${moon.daysToNew<=moon.daysToFull
+            ?'\uD83C\uDF11 N\u00E6ste nym\u00E5ne: <strong>'+moon.nextNew+'</strong> ('+moon.daysToNew+' dage)'
+            :'\uD83C\uDF15 N\u00E6ste fuldm\u00E5ne: <strong>'+moon.nextFull+'</strong> ('+moon.daysToFull+' dage)'}
+        </div>
       </div>
     </div>
   </div>`;
@@ -4801,32 +4836,9 @@ function renderSettings() {
     </div>`;
   }
 
-  // Share Rank Card
-  h+=`<div class="sec-title" style="margin-top:16px">📸 Del</div>`;
-  h+=`<div class="card">
-    <button class="btn-save" style="width:100%;font-size:12px;padding:9px" onclick="shareRankCard()">📸 Download Rank Card (PNG)</button>
-    <div style="font-size:10px;color:var(--text-dim);margin-top:6px;text-align:center">Del dit rank card på social media!</div>
-  </div>`;
 
 
-  // Quest Presets
-  h+=`<div class="sec-title" style="margin-top:16px">📦 Quest Pakker</div>`;
-  Object.entries(QUEST_PRESETS).forEach(([key,preset])=>{
-    h+=`<div class="card" style="padding:10px 14px;margin-bottom:6px">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <div>
-          <div style="font-size:12px;font-weight:600;color:var(--text)">${preset.name}</div>
-          <div style="font-size:10px;color:var(--text-dim)">${preset.desc} · ${preset.quests.length} quests</div>
-        </div>
-        <button class="biz-btn" onclick="installPreset('${key}')">Installer</button>
-      </div></div>`;
-  });
 
-  // Danger Zone
-  h+=`<div class="sec-title" style="margin-top:16px;color:var(--danger)">⚠️ Danger Zone</div>`;
-  h+=`<div class="card" style="border-color:rgba(232,93,74,.2)">
-    <button class="btn-del" style="width:100%" onclick="if(confirm('Er du SIKKER? Alt data slettes permanent.')){localStorage.removeItem('soulLevelingState');location.reload();}">🗑️ Slet ALT data og start forfra</button>
-  </div>`;
 
   h+=`</div>`;
   return h;

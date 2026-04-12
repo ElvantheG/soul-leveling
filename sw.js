@@ -1,4 +1,4 @@
-const CACHE_NAME = 'soul-leveling-v21';
+const CACHE_NAME = 'soul-leveling-v29';
 const ASSETS = ['/', '/index.html', '/manifest.json', '/icon-192.png', '/icon-512.png'];
 
 self.addEventListener('install', e => {
